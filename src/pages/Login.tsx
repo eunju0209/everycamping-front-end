@@ -1,3 +1,5 @@
+import Auth from "../components/Login/EmailLogin";
+
 export default function Login() {
-  return <div>Login</div>;
+  return <div><Auth/></div>;
 }
