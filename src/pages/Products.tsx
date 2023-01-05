@@ -29,11 +29,16 @@ export default function Products({ category }: ProductsProps) {
   if (error) return <p>Something is wrong...</p>;
 
   return (
-    <ul>
-      {products &&
-        products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-    </ul>
+    <>
+      {category && (
+        <h1 className='text-4xl mb-8 text-center uppercase'>{category}</h1>
+      )}
+      <ul className='grid grid-cols-4 gap-6'>
+        {products &&
+          products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+      </ul>
+    </>
   );
 }

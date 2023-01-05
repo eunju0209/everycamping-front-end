@@ -9,7 +9,7 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <div className='flex flex-col min-h-screen'>
         <Header />
-        <section className='grow w-full max-w-screen-2xl m-auto px-5 pt-10'>
+        <section className='grow w-full max-w-screen-2xl m-auto px-5 py-10'>
           <Outlet />
         </section>
         <Footer />
