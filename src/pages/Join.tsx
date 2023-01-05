@@ -59,7 +59,7 @@ export default function Join() {
       <form className="flex flex-col mt-10" onSubmit={(e) => onSubmit(e)}>
         <div className="flex relative w-full">
           <input
-            className="p-2 w-full"
+            className="p-2 input w-full max-w-xs bg-white"
             name="email"
             type="email"
             placeholder="Email"
@@ -68,7 +68,7 @@ export default function Join() {
             onChange={(e) => onChange(e)}
           />
           <button
-            className="absolute left-full w-24 ml-2 p-2 rounded text-white bg-indigo-500"
+            className="absolute left-full w-24 ml-2 p-2 btn btn-primary"
             name="email"
             onClick={(e) => checked(e)}
           >
@@ -77,7 +77,7 @@ export default function Join() {
         </div>
         <div className="flex relative mt-2 w-full">
           <input
-            className="p-2 w-full"
+            className="p-2 input w-full max-w-xs bg-white"
             name="nickName"
             type="text"
             placeholder="Nick Name"
@@ -86,7 +86,7 @@ export default function Join() {
             onChange={(e) => onChange(e)}
           />
           <button
-            className="absolute left-full w-24 ml-2 p-2 rounded text-white bg-indigo-500"
+            className="absolute left-full w-24 ml-2 p-2 btn btn-primary"
             name="nickName"
             onClick={(e) => checked(e)}
           >
@@ -94,7 +94,7 @@ export default function Join() {
           </button>
         </div>
         <input
-          className="mt-2 p-2"
+          className="mt-2 p-2 input w-full max-w-xs bg-white "
           name="password"
           type="password"
           placeholder="Password"
@@ -103,7 +103,7 @@ export default function Join() {
           onChange={(e) => onChange(e)}
         />
         <input
-          className="mt-2 p-2"
+          className="mt-2 p-2 input w-full max-w-xs bg-white "
           name="passwordConfirm"
           type="password"
           placeholder="Password Confirm"
@@ -112,7 +112,7 @@ export default function Join() {
           onChange={(e) => onChange(e)}
         />
         <input
-          className="mt-2 p-2"
+          className="mt-2 p-2 input w-full max-w-xs bg-white "
           name="phoneNumber"
           type="tel"
           placeholder="Phone Number"
@@ -121,23 +121,40 @@ export default function Join() {
           onChange={(e) => onChange(e)}
           pattern="[0,1]{3}-[0-9]{4}-[0-9]{4}"
         />
-        <label className="mt-2">
+        <div className="form-control">
+          <label className="label cursor-pointer justify-start">
+            <input
+              type="checkbox"
+              className="checkbox mr-1"
+              name="seller"
+              checked={seller}
+              onClick={sellerHandler}
+            />
+            <span>판매자로 가입</span>
+          </label>
+          <div>
+            <p className="absolute mt-0.5 text-sm text-red-500">
+              * 판매자 가입은 승인까지 2~3일 정도 소요 됩니다.
+            </p>
+          </div>
+        </div>
+        {/* <label className="mt-2">
           <input
-            className="mr-2"
+            className="mr-2 "
             type="radio"
             name="seller"
             checked={seller}
             onClick={sellerHandler}
           />
           판매자로 가입
-        </label>
-        <div>
+        </label> */}
+        {/* <div>
           <p className="absolute mt-0.5 text-sm text-red-500">
             * 판매자 가입은 승인까지 2~3일 정도 소요 됩니다.
           </p>
-        </div>
+        </div> */}
         <input
-          className="mt-10 p-1.5 text-white cursor-pointer bg-indigo-500"
+          className="mt-10 p-1.5 cursor-pointer btn btn-primary"
           type="submit"
           value="Join"
         />
