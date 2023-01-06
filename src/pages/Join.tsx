@@ -138,21 +138,6 @@ export default function Join() {
             </p>
           </div>
         </div>
-        {/* <label className="mt-2">
-          <input
-            className="mr-2 "
-            type="radio"
-            name="seller"
-            checked={seller}
-            onClick={sellerHandler}
-          />
-          판매자로 가입
-        </label> */}
-        {/* <div>
-          <p className="absolute mt-0.5 text-sm text-red-500">
-            * 판매자 가입은 승인까지 2~3일 정도 소요 됩니다.
-          </p>
-        </div> */}
         <input
           className="mt-10 p-1.5 cursor-pointer btn btn-primary"
           type="submit"
