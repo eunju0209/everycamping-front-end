@@ -15,6 +15,7 @@ import Oders from './pages/Oders';
 import OrderForm from './pages/OrderForm';
 import ProductDetail from './pages/ProductDetail';
 import Products from './pages/Products';
+import SellerConfirm from './pages/SellerConfirm';
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,7 @@ const router = createBrowserRouter([
       { path: 'mypage/orders', element: <Oders /> },
       { path: 'mypage/products', element: <Products /> },
       { path: 'kakaoLoginCallback', element: <KaKaoLoginCallback /> },
+      { path: 'sellerConfirm', element: <SellerConfirm /> },
     ],
   },
 ]);
