@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import FakeProductsService from '../api/fakeProductsService';
 import ProductCard from '../components/ProductCard';
 
 export type ProductType = {
@@ -9,39 +10,35 @@ export type ProductType = {
   imagePath: string;
 };
 
-export default function Products() {
-  const [products, setProducts] = useState<ProductType[]>([
-    {
-      id: '123',
-      category: 'tent',
-      name: 'tent',
-      price: 12000,
-      imagePath:
-        'https://images.unsplash.com/photo-1478827536114-da961b7f86d2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-    },
-    {
-      id: '456',
-      category: 'cook',
-      name: 'cook',
-      price: 12000,
-      imagePath:
-        'https://images.unsplash.com/photo-1510672981848-a1c4f1cb5ccf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1172&q=80',
-    },
-    {
-      id: '789',
-      category: 'accessory',
-      name: 'accessory',
-      price: 12000,
-      imagePath:
-        'https://images.unsplash.com/photo-1608005109415-c397b60f6027?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1331&q=80',
-    },
-  ]);
+type ProductsProps = {
+  category?: 'tent' | 'cook' | 'accessory';
+};
+
+const productsService = new FakeProductsService();
+export default function Products({ category }: ProductsProps) {
+  const {
+    isLoading,
+    error,
+    data: products,
+  } = useQuery<ProductType[]>({
+    queryKey: ['products', category],
+    queryFn: () => productsService.getProducts(category),
+  });
+
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Something is wrong...</p>;
 
   return (
-    <ul>
-      {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
-      ))}
-    </ul>
+    <>
+      {category && (
+        <h1 className='text-4xl mb-8 text-center uppercase'>{category}</h1>
+      )}
+      <ul className='grid grid-cols-4 gap-6'>
+        {products &&
+          products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+      </ul>
+    </>
   );
 }
