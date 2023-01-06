@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
+import KaKaoLoginCallback from './components/Login/KakaoLoginCallback';
 import './index.css';
 import Cart from './pages/Cart';
 import Home from './pages/Home';
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
       { path: 'order', element: <OrderForm /> },
       { path: 'mypage/orders', element: <Oders /> },
       { path: 'mypage/products', element: <Products /> },
+      { path: 'kakaoLoginCallback', element: <KaKaoLoginCallback /> },
     ],
   },
 ]);
