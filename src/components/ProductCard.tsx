@@ -1,4 +1,4 @@
-import { ProductType } from '../pages/Products';
+import { ProductType } from './ProductList';
 
 type ProductCardProps = {
   product: ProductType;
