@@ -1,55 +1,66 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+type JoinInfoType = {
+  email: string;
+  nickName: string;
+  password: string;
+  phoneNumber: string;
+  seller: boolean;
+};
+
 export default function Join() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [nickName, setNickName] = useState('');
+  const [joinInfo, setJoinInfo] = useState<JoinInfoType>({
+    email: '',
+    nickName: '',
+    password: '',
+    phoneNumber: '',
+    seller: false,
+  });
   const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [seller, setSeller] = useState(false);
   const navigate = useNavigate();
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
-      target: { name, value },
+      target: { name, value, checked },
     } = event;
-    switch (name) {
-      case 'email':
-        setEmail(value);
-        break;
-      case 'nickName':
-        setNickName(value);
-        break;
-      case 'password':
-        setPassword(value);
-        break;
-      case 'passwordConfirm':
-        setPasswordConfirm(value);
-        if (password !== passwordConfirm) {
-        }
-        break;
-      case 'phoneNumber':
-        setPhoneNumber(value);
-        break;
+
+    if (name === 'passwordConfirm') {
+      setPasswordConfirm(value);
+    } else if (name === 'seller') {
+      setJoinInfo((prev) => ({
+        ...prev,
+        seller: checked,
+      }));
+    } else {
+      setJoinInfo((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
     }
   };
-
-  const sellerHandler = () => {
-    setSeller((prev) => !prev);
-  };
-
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (joinInfo.password.length < 6 || joinInfo.password !== passwordConfirm)
+      return;
+
     try {
+      // user 정보 서버에 전송 , 구매자 판매자 구분해서 전송
+
+      console.log(joinInfo);
+
       navigate('/');
     } catch (error) {}
   };
 
   const checked = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const name = (event.target as HTMLButtonElement).name;
+    const { name } = event.target as HTMLButtonElement;
+    //email, nickName 서버 전송 / 중복 확인
+
     if (name === 'email') {
+      joinInfo.email;
     } else if (name === 'nickName') {
+      joinInfo.nickName;
     }
   };
 
@@ -64,12 +75,14 @@ export default function Join() {
             type='email'
             placeholder='Email'
             required
-            value={email}
+            autoComplete='off'
+            value={joinInfo.email}
             onChange={(e) => onChange(e)}
           />
           <button
             className='absolute left-full w-24 ml-2 p-2 btn btn-primary'
             name='email'
+            type='button'
             onClick={(e) => checked(e)}
           >
             중복확인
@@ -82,42 +95,63 @@ export default function Join() {
             type='text'
             placeholder='Nick Name'
             required
-            value={nickName}
+            autoComplete='off'
+            value={joinInfo.nickName}
             onChange={(e) => onChange(e)}
           />
           <button
             className='absolute left-full w-24 ml-2 p-2 btn btn-primary'
             name='nickName'
+            type='button'
             onClick={(e) => checked(e)}
           >
             중복확인
           </button>
         </div>
-        <input
-          className='mt-2 p-2 input w-full max-w-xs bg-white '
-          name='password'
-          type='password'
-          placeholder='Password'
-          required
-          value={password}
-          onChange={(e) => onChange(e)}
-        />
-        <input
-          className='mt-2 p-2 input w-full max-w-xs bg-white '
-          name='passwordConfirm'
-          type='password'
-          placeholder='Password Confirm'
-          required
-          value={passwordConfirm}
-          onChange={(e) => onChange(e)}
-        />
+        <div className='flex relative w-full'>
+          <input
+            className='mt-2 p-2 input w-full max-w-xs bg-white '
+            name='password'
+            type='password'
+            placeholder='Password'
+            required
+            value={joinInfo.password}
+            onChange={(e) => onChange(e)}
+          />
+          {joinInfo.password && joinInfo.password.length < 6 ? (
+            <span className='absolute left-full bottom-2 ml-2 whitespace-nowrap text-sm text-red-500'>
+              비밀번호는 최소 6글자 이상 이어야 합니다.
+            </span>
+          ) : (
+            ''
+          )}
+        </div>
+        <div className='flex relative w-full'>
+          <input
+            className='mt-2 p-2 input w-full max-w-xs bg-white '
+            name='passwordConfirm'
+            type='password'
+            placeholder='Password Confirm'
+            required
+            value={passwordConfirm}
+            onChange={(e) => onChange(e)}
+          />
+          {passwordConfirm && passwordConfirm !== joinInfo.password ? (
+            <span className='absolute left-full bottom-2 ml-2 whitespace-nowrap text-sm text-red-500'>
+              비밀번호가 일치하지 않습니다.
+            </span>
+          ) : (
+            ''
+          )}
+        </div>
         <input
           className='mt-2 p-2 input w-full max-w-xs bg-white '
           name='phoneNumber'
           type='tel'
-          placeholder='Phone Number'
+          placeholder='010-0000-0000'
           required
-          value={phoneNumber}
+          autoComplete='off'
+          value={joinInfo.phoneNumber}
           onChange={(e) => onChange(e)}
           pattern='[0,1]{3}-[0-9]{4}-[0-9]{4}'
         />
@@ -127,8 +161,8 @@ export default function Join() {
               type='checkbox'
               className='checkbox mr-1'
               name='seller'
-              checked={seller}
-              onClick={sellerHandler}
+              checked={joinInfo.seller}
+              onChange={(e) => onChange(e)}
             />
             <span>판매자로 가입</span>
           </label>

@@ -12,7 +12,7 @@ const KaKaoLoginCallback = () => {
         );
         const client_id = import.meta.env.VITE_KAKAO_LOGIN_RESTAPI_KEY;
 
-        const result = await axios.post(
+        const token = await axios.post(
           `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${client_id}&redirect_uri=http://localhost:5173/kakaoLoginCallback&code=${code}`,
           {
             headers: {
@@ -20,11 +20,13 @@ const KaKaoLoginCallback = () => {
             },
           }
         );
-        window.Kakao.Auth.setAccessToken(result.data.access_token);
+        // window.Kakao.Auth.setAccessToken(token.data.access_token);
         const userInfo = await window.Kakao.API.request({
           url: '/v2/user/me',
         });
 
+        // 서버로 토큰값과 유저 인포 전달. 자동 회원가입 진행 후 로그인
+        console.log(token);
         console.log(userInfo);
         navigate('/');
       } catch (err) {
