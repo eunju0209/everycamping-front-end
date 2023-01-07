@@ -19,8 +19,10 @@ export default function Join() {
   const [isSeller, setIsSeller] = useState(false);
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [code, setCode] = useState('');
-  const [toggleModal, setToggleModal] = useState(false);
+  const [toggleEmailModal, setToggleEmailModal] = useState(false);
+  const [toggleCodeModal, setToggleCodeModal] = useState(false);
   const emailInputRef = useRef<HTMLInputElement>(null);
+  const emailButtonRef = useRef<HTMLButtonElement>(null);
   const codeDivRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
@@ -56,7 +58,7 @@ export default function Join() {
 
       console.log(joinInfo);
 
-      navigate('/');
+      navigate('/login');
     } catch (error) {}
   };
 
@@ -65,14 +67,16 @@ export default function Join() {
     //email, nickName 서버 전송 / 중복 확인
 
     if (name === 'email') {
-      setToggleModal(true);
+      setToggleEmailModal(true);
       //email 인증 코드 전송.
       joinInfo.email;
       (codeDivRef.current as HTMLDivElement).style.display = 'flex';
     } else if (name === 'code') {
-      // 코드 일치 확인
+      //email 인증 코드 일치 확인
+      setToggleCodeModal(true);
       (codeDivRef.current as HTMLDivElement).style.display = 'none';
       (emailInputRef.current as HTMLInputElement).disabled = true;
+      (emailButtonRef.current as HTMLInputElement).disabled = true;
     } else if (name === 'nickName') {
       joinInfo.nickName;
     }
@@ -99,6 +103,7 @@ export default function Join() {
             name='email'
             type='button'
             onClick={(e) => checked(e)}
+            ref={emailButtonRef}
           >
             인증하기
           </button>
@@ -213,8 +218,14 @@ export default function Join() {
           value='Join'
         />
       </form>
-      <Modal toggleModal={toggleModal} setToggleModal={setToggleModal}>
+      <Modal
+        toggleModal={toggleEmailModal}
+        setToggleModal={setToggleEmailModal}
+      >
         이메일로 코드가 전송 되었습니다.
+      </Modal>
+      <Modal toggleModal={toggleCodeModal} setToggleModal={setToggleCodeModal}>
+        이메일 인증이 완료 되었습니다.
       </Modal>
     </div>
   );
