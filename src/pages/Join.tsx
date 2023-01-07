@@ -1,55 +1,81 @@
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Modal from '../components/Modal/Modal';
+
+type JoinInfoType = {
+  email: string;
+  nickName: string;
+  password: string;
+  phoneNumber: string;
+};
 
 export default function Join() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [nickName, setNickName] = useState('');
+  const [joinInfo, setJoinInfo] = useState<JoinInfoType>({
+    email: '',
+    nickName: '',
+    password: '',
+    phoneNumber: '',
+  });
+  const [isSeller, setIsSeller] = useState(false);
   const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [seller, setSeller] = useState(false);
+  const [code, setCode] = useState('');
+  const [toggleModal, setToggleModal] = useState(false);
+  const codeInputRef = useRef<HTMLInputElement>(null);
+  const emailInputRef = useRef<HTMLInputElement>(null);
+  const divRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
       target: { name, value },
     } = event;
-    switch (name) {
-      case 'email':
-        setEmail(value);
-        break;
-      case 'nickName':
-        setNickName(value);
-        break;
-      case 'password':
-        setPassword(value);
-        break;
-      case 'passwordConfirm':
-        setPasswordConfirm(value);
-        if (password !== passwordConfirm) {
-        }
-        break;
-      case 'phoneNumber':
-        setPhoneNumber(value);
-        break;
+
+    if (name === 'passwordConfirm') {
+      setPasswordConfirm(value);
+    } else if (name === 'code') {
+      setCode(value);
+    } else if (name === 'seller') {
+      setIsSeller((prev) => !prev);
+    } else {
+      setJoinInfo((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
     }
   };
-
-  const sellerHandler = () => {
-    setSeller((prev) => !prev);
-  };
-
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (joinInfo.password.length < 6 || joinInfo.password !== passwordConfirm)
+      return;
+
     try {
+      if (isSeller) {
+        // 판매자 회원가입 api 전송
+      } else {
+        // 구매자 회원가입 api 전송
+      }
+
+      console.log(joinInfo);
+
       navigate('/');
     } catch (error) {}
   };
 
   const checked = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const name = (event.target as HTMLButtonElement).name;
+    const { name } = event.target as HTMLButtonElement;
+    //email, nickName 서버 전송 / 중복 확인
+
     if (name === 'email') {
+      setToggleModal(true);
+      //email 인증 코드 전송.
+      joinInfo.email;
+      (divRef.current as HTMLDivElement).style.display = 'flex';
+    } else if (name === 'code') {
+      // 코드 일치 확인
+      (codeInputRef.current as HTMLInputElement).disabled = true;
+      (emailInputRef.current as HTMLInputElement).disabled = true;
     } else if (name === 'nickName') {
+      joinInfo.nickName;
     }
   };
 
@@ -64,15 +90,39 @@ export default function Join() {
             type='email'
             placeholder='Email'
             required
-            value={email}
+            autoComplete='off'
+            value={joinInfo.email}
             onChange={(e) => onChange(e)}
+            ref={emailInputRef}
           />
           <button
             className='absolute left-full w-24 ml-2 p-2 btn btn-primary'
             name='email'
+            type='button'
             onClick={(e) => checked(e)}
           >
-            중복확인
+            인증하기
+          </button>
+        </div>
+        <div className='flex relative mt-2 w-full hidden' ref={divRef}>
+          <input
+            className='p-2 input w-full max-w-xs bg-white'
+            name='code'
+            type='text'
+            placeholder='인증코드'
+            required
+            autoComplete='off'
+            value={code}
+            onChange={(e) => onChange(e)}
+            ref={codeInputRef}
+          />
+          <button
+            className='absolute left-full w-24 ml-2 p-2 btn btn-primary'
+            name='code'
+            type='button'
+            onClick={(e) => checked(e)}
+          >
+            인증완료
           </button>
         </div>
         <div className='flex relative mt-2 w-full'>
@@ -82,42 +132,63 @@ export default function Join() {
             type='text'
             placeholder='Nick Name'
             required
-            value={nickName}
+            autoComplete='off'
+            value={joinInfo.nickName}
             onChange={(e) => onChange(e)}
           />
           <button
             className='absolute left-full w-24 ml-2 p-2 btn btn-primary'
             name='nickName'
+            type='button'
             onClick={(e) => checked(e)}
           >
             중복확인
           </button>
         </div>
-        <input
-          className='mt-2 p-2 input w-full max-w-xs bg-white '
-          name='password'
-          type='password'
-          placeholder='Password'
-          required
-          value={password}
-          onChange={(e) => onChange(e)}
-        />
-        <input
-          className='mt-2 p-2 input w-full max-w-xs bg-white '
-          name='passwordConfirm'
-          type='password'
-          placeholder='Password Confirm'
-          required
-          value={passwordConfirm}
-          onChange={(e) => onChange(e)}
-        />
+        <div className='flex relative w-full'>
+          <input
+            className='mt-2 p-2 input w-full max-w-xs bg-white '
+            name='password'
+            type='password'
+            placeholder='Password'
+            required
+            value={joinInfo.password}
+            onChange={(e) => onChange(e)}
+          />
+          {joinInfo.password && joinInfo.password.length < 6 ? (
+            <span className='absolute left-full bottom-2 ml-2 whitespace-nowrap text-sm text-red-500'>
+              비밀번호는 최소 6글자 이상 이어야 합니다.
+            </span>
+          ) : (
+            ''
+          )}
+        </div>
+        <div className='flex relative w-full'>
+          <input
+            className='mt-2 p-2 input w-full max-w-xs bg-white '
+            name='passwordConfirm'
+            type='password'
+            placeholder='Password Confirm'
+            required
+            value={passwordConfirm}
+            onChange={(e) => onChange(e)}
+          />
+          {passwordConfirm && passwordConfirm !== joinInfo.password ? (
+            <span className='absolute left-full bottom-2 ml-2 whitespace-nowrap text-sm text-red-500'>
+              비밀번호가 일치하지 않습니다.
+            </span>
+          ) : (
+            ''
+          )}
+        </div>
         <input
           className='mt-2 p-2 input w-full max-w-xs bg-white '
           name='phoneNumber'
           type='tel'
-          placeholder='Phone Number'
+          placeholder='010-0000-0000'
           required
-          value={phoneNumber}
+          autoComplete='off'
+          value={joinInfo.phoneNumber}
           onChange={(e) => onChange(e)}
           pattern='[0,1]{3}-[0-9]{4}-[0-9]{4}'
         />
@@ -127,8 +198,8 @@ export default function Join() {
               type='checkbox'
               className='checkbox mr-1'
               name='seller'
-              checked={seller}
-              onClick={sellerHandler}
+              checked={isSeller}
+              onChange={(e) => onChange(e)}
             />
             <span>판매자로 가입</span>
           </label>
@@ -144,6 +215,9 @@ export default function Join() {
           value='Join'
         />
       </form>
+      <Modal toggleModal={toggleModal} setToggleModal={setToggleModal}>
+        이메일로 코드가 전송 되었습니다.
+      </Modal>
     </div>
   );
 }
