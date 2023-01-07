@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Modal from '../components/Modal/Modal';
 
 type JoinInfoType = {
   email: string;
   nickName: string;
   password: string;
   phoneNumber: string;
-  seller: boolean;
 };
 
 export default function Join() {
@@ -15,23 +15,27 @@ export default function Join() {
     nickName: '',
     password: '',
     phoneNumber: '',
-    seller: false,
   });
+  const [isSeller, setIsSeller] = useState(false);
   const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [code, setCode] = useState('');
+  const [toggleModal, setToggleModal] = useState(false);
+  const codeInputRef = useRef<HTMLInputElement>(null);
+  const emailInputRef = useRef<HTMLInputElement>(null);
+  const divRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
-      target: { name, value, checked },
+      target: { name, value },
     } = event;
 
     if (name === 'passwordConfirm') {
       setPasswordConfirm(value);
+    } else if (name === 'code') {
+      setCode(value);
     } else if (name === 'seller') {
-      setJoinInfo((prev) => ({
-        ...prev,
-        seller: checked,
-      }));
+      setIsSeller((prev) => !prev);
     } else {
       setJoinInfo((prev) => ({
         ...prev,
@@ -45,7 +49,11 @@ export default function Join() {
       return;
 
     try {
-      // user 정보 서버에 전송 , 구매자 판매자 구분해서 전송
+      if (isSeller) {
+        // 판매자 회원가입 api 전송
+      } else {
+        // 구매자 회원가입 api 전송
+      }
 
       console.log(joinInfo);
 
@@ -58,7 +66,14 @@ export default function Join() {
     //email, nickName 서버 전송 / 중복 확인
 
     if (name === 'email') {
+      setToggleModal(true);
+      //email 인증 코드 전송.
       joinInfo.email;
+      (divRef.current as HTMLDivElement).style.display = 'flex';
+    } else if (name === 'code') {
+      // 코드 일치 확인
+      (codeInputRef.current as HTMLInputElement).disabled = true;
+      (emailInputRef.current as HTMLInputElement).disabled = true;
     } else if (name === 'nickName') {
       joinInfo.nickName;
     }
@@ -78,6 +93,7 @@ export default function Join() {
             autoComplete='off'
             value={joinInfo.email}
             onChange={(e) => onChange(e)}
+            ref={emailInputRef}
           />
           <button
             className='absolute left-full w-24 ml-2 p-2 btn btn-primary'
@@ -85,7 +101,28 @@ export default function Join() {
             type='button'
             onClick={(e) => checked(e)}
           >
-            중복확인
+            인증하기
+          </button>
+        </div>
+        <div className='flex relative mt-2 w-full hidden' ref={divRef}>
+          <input
+            className='p-2 input w-full max-w-xs bg-white'
+            name='code'
+            type='text'
+            placeholder='인증코드'
+            required
+            autoComplete='off'
+            value={code}
+            onChange={(e) => onChange(e)}
+            ref={codeInputRef}
+          />
+          <button
+            className='absolute left-full w-24 ml-2 p-2 btn btn-primary'
+            name='code'
+            type='button'
+            onClick={(e) => checked(e)}
+          >
+            인증완료
           </button>
         </div>
         <div className='flex relative mt-2 w-full'>
@@ -161,7 +198,7 @@ export default function Join() {
               type='checkbox'
               className='checkbox mr-1'
               name='seller'
-              checked={joinInfo.seller}
+              checked={isSeller}
               onChange={(e) => onChange(e)}
             />
             <span>판매자로 가입</span>
@@ -178,6 +215,9 @@ export default function Join() {
           value='Join'
         />
       </form>
+      <Modal toggleModal={toggleModal} setToggleModal={setToggleModal}>
+        이메일로 코드가 전송 되었습니다.
+      </Modal>
     </div>
   );
 }

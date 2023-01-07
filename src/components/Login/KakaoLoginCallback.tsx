@@ -20,14 +20,16 @@ const KaKaoLoginCallback = () => {
             },
           }
         );
-        // window.Kakao.Auth.setAccessToken(token.data.access_token);
+        window.Kakao.Auth.setAccessToken(token.data.access_token);
         const userInfo = await window.Kakao.API.request({
           url: '/v2/user/me',
         });
 
-        // 서버로 토큰값과 유저 인포 전달. 자동 회원가입 진행 후 로그인
-        console.log(token);
-        console.log(userInfo);
+        // 유저 인포 전달. 이미 가입 된 회원이면 로그인 / 아니면 회원가입 페이지로 보냄
+
+        console.log(userInfo.kakao_account.email);
+
+        // userInfo
         navigate('/');
       } catch (err) {
         console.log(err);
