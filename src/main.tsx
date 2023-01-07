@@ -16,6 +16,7 @@ import OrderForm from './pages/OrderForm';
 import ProductDetail from './pages/ProductDetail';
 import Products from './pages/Products';
 import SellerConfirm from './pages/SellerConfirm';
+import UserInfoEdit from './pages/UserInfoEdit';
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,7 @@ const router = createBrowserRouter([
       { path: 'mypage/products', element: <Products /> },
       { path: 'kakaoLoginCallback', element: <KaKaoLoginCallback /> },
       { path: 'sellerConfirm', element: <SellerConfirm /> },
+      { path: 'userInfo/edit', element: <UserInfoEdit /> },
     ],
   },
 ]);

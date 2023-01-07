@@ -31,9 +31,9 @@ export default function Login() {
     try {
       // user login 정보 받아서 서버에 전송
       if (isSeller) {
-        // 판매자 로그인 api 전송
+        // 판매자 로그인 api 전송 // accesstoken 받기
       } else {
-        // 구매자 로그인 api 전송
+        // 구매자 로그인 api 전송 // accesstoken 받기
       }
 
       navigate('/');
