@@ -20,9 +20,8 @@ export default function Join() {
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [code, setCode] = useState('');
   const [toggleModal, setToggleModal] = useState(false);
-  const codeInputRef = useRef<HTMLInputElement>(null);
   const emailInputRef = useRef<HTMLInputElement>(null);
-  const divRef = useRef<HTMLDivElement>(null);
+  const codeDivRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,10 +68,10 @@ export default function Join() {
       setToggleModal(true);
       //email 인증 코드 전송.
       joinInfo.email;
-      (divRef.current as HTMLDivElement).style.display = 'flex';
+      (codeDivRef.current as HTMLDivElement).style.display = 'flex';
     } else if (name === 'code') {
       // 코드 일치 확인
-      (codeInputRef.current as HTMLInputElement).disabled = true;
+      (codeDivRef.current as HTMLDivElement).style.display = 'none';
       (emailInputRef.current as HTMLInputElement).disabled = true;
     } else if (name === 'nickName') {
       joinInfo.nickName;
@@ -104,7 +103,7 @@ export default function Join() {
             인증하기
           </button>
         </div>
-        <div className='flex relative mt-2 w-full hidden' ref={divRef}>
+        <div className='flex relative mt-2 w-full hidden' ref={codeDivRef}>
           <input
             className='p-2 input w-full max-w-xs bg-white'
             name='code'
@@ -114,7 +113,6 @@ export default function Join() {
             autoComplete='off'
             value={code}
             onChange={(e) => onChange(e)}
-            ref={codeInputRef}
           />
           <button
             className='absolute left-full w-24 ml-2 p-2 btn btn-primary'
