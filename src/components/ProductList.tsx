@@ -13,15 +13,20 @@ export type ProductType = {
 type ProductsProps = {
   category?: 'all' | 'tent' | 'cook' | 'accessory';
   filter?: 'new' | 'best' | 'price';
+  keyword?: string;
 };
 
-export default function ProductList({ category, filter }: ProductsProps) {
+export default function ProductList({
+  category,
+  filter,
+  keyword,
+}: ProductsProps) {
   const {
     isLoading,
     error,
     data: products,
-  } = useQuery<ProductType[]>(['products', category, filter], () =>
-    getProducts(category, filter)
+  } = useQuery<ProductType[]>(['products', keyword, category, filter], () =>
+    getProducts(category, filter, keyword)
   );
 
   if (isLoading) return <p>Loading...</p>;

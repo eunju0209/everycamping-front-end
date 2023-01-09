@@ -15,6 +15,7 @@ import Oders from './pages/Oders';
 import OrderForm from './pages/OrderForm';
 import ProductDetail from './pages/ProductDetail';
 import Products from './pages/Products';
+import Search from './pages/Search';
 import SellerConfirm from './pages/SellerConfirm';
 import UserInfoEdit from './pages/UserInfoEdit';
 
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
       { path: 'tent', element: <Products category='tent' /> },
       { path: 'cook', element: <Products category='cook' /> },
       { path: 'accessory', element: <Products category='accessory' /> },
-      { path: 'products/:keyword', element: <Products /> },
+      { path: 'products/:keyword', element: <Search /> },
       { path: 'products/detail/:id', element: <ProductDetail /> },
       { path: 'products/new', element: <NewProduct /> },
       { path: 'products/update/:productId', element: <NewProduct /> },
