@@ -1,10 +1,21 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { TbTent } from 'react-icons/tb';
 import { BiSearch } from 'react-icons/bi';
 import { FaShoppingCart } from 'react-icons/fa';
+import { FormEvent, useEffect, useState } from 'react';
 
 export default function Header() {
+  const { keyword } = useParams();
   const navigate = useNavigate();
+  const [text, setText] = useState('');
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    navigate(`/products/${text}`);
+  };
+
+  useEffect(() => setText(keyword || ''), [keyword]);
+
   return (
     <header className='w-full bg-white'>
       <div className='flex items-center justify-between py-4 px-5 border-b border-base-100'>
@@ -15,11 +26,13 @@ export default function Header() {
           <TbTent className='text-3xl mr-0.5' />
           <h1>EveryCamping</h1>
         </Link>
-        <form className='flex items-center w-2/6'>
+        <form className='flex items-center w-2/6' onSubmit={handleSubmit}>
           <input
             type='text'
             placeholder='search'
             className='w-full h-10 px-2 outline-none border rounded-l-lg'
+            value={text}
+            onChange={(e) => setText(e.target.value)}
           />
           <button
             type='submit'
