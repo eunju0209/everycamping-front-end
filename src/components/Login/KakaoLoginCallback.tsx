@@ -27,9 +27,15 @@ const KaKaoLoginCallback = () => {
 
         // 유저 인포 전달.
         //이미 가입 된 회원이면 로그인 navigate('/');
-        // 아니면 회원가입 페이지로 보냄 navigate('/join')
 
+        //아니면 회원가입 페이지로 보냄
         console.log(userInfo.kakao_account.email);
+
+        navigate('/join/social', {
+          state: {
+            email: userInfo.kakao_account.email,
+          },
+        });
       } catch (err) {
         console.log(err);
       }

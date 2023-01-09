@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import KakaoLogin from '../components/Login/KakaoLogin';
+import { useUserInfo } from '../context/UserInfoProvider';
+import UserInfo from './UserInfo/UserInfo';
 
 type stateType = {
   email: string;
@@ -13,6 +15,7 @@ export default function Login() {
     password: '',
   });
   const [isSeller, setIsSeller] = useState(false);
+  const { userInfo, setUserInfo } = useUserInfo();
   const navigate = useNavigate();
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,11 +32,13 @@ export default function Login() {
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      // user login 정보 받아서 서버에 전송
+      //  login 정보 받아서 서버에 전송
       if (isSeller) {
         // 판매자 로그인 api 전송 // accesstoken 받기
+        // setUserInfo()
       } else {
         // 구매자 로그인 api 전송 // accesstoken 받기
+        // setUserInfo()
       }
 
       navigate('/');
