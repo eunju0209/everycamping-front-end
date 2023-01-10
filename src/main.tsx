@@ -6,7 +6,8 @@ import KaKaoLoginCallback from './components/Login/KakaoLoginCallback';
 import './index.css';
 import Cart from './pages/Cart';
 import Home from './pages/Home';
-import Join from './pages/Join';
+import JoinEmail from './pages/Join/JoinEmail';
+import JoinSocial from './pages/Join/JoinSocial';
 import Login from './pages/Login';
 import NewProduct from './pages/NewProduct';
 import NewReview from './pages/NewReview';
@@ -17,7 +18,7 @@ import ProductDetail from './pages/ProductDetail';
 import Products from './pages/Products';
 import Search from './pages/Search';
 import SellerConfirm from './pages/SellerConfirm';
-import UserInfoEdit from './pages/UserInfoEdit';
+import UserInfo from './pages/UserInfo/UserInfo';
 
 const router = createBrowserRouter([
   {
@@ -27,7 +28,8 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: 'login', element: <Login /> },
-      { path: 'join', element: <Join /> },
+      { path: 'join', element: <JoinEmail /> },
+      { path: 'join/social', element: <JoinSocial /> },
       { path: 'tent', element: <Products category='tent' /> },
       { path: 'cook', element: <Products category='cook' /> },
       { path: 'accessory', element: <Products category='accessory' /> },
@@ -42,7 +44,7 @@ const router = createBrowserRouter([
       { path: 'mypage/products', element: <Products /> },
       { path: 'kakaoLoginCallback', element: <KaKaoLoginCallback /> },
       { path: 'sellerConfirm', element: <SellerConfirm /> },
-      { path: 'userInfo/edit', element: <UserInfoEdit /> },
+      { path: 'userInfo', element: <UserInfo /> },
     ],
   },
 ]);
