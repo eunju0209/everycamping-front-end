@@ -1,13 +1,30 @@
+import { useEffect, useState } from 'react';
+
 type CartItemCardProps = {
+  key: number;
   title: string;
   count: number;
   price: number;
 };
 
-const CartItemCard = ({ title, count, price }: CartItemCardProps) => {
+const CartItemCard = ({ key, title, count, price }: CartItemCardProps) => {
+  const [itemCounts, setItemCounts] = useState(0);
+  useEffect(() => {
+    setItemCounts(count);
+  }, []);
   const handleCount = {
-    minus: () => {},
-    plus: () => {},
+    minus: () => {
+      if (itemCounts <= 1) return;
+      setItemCounts((prev) => (prev -= 1));
+      // patch api ?? or reactQuery ??
+    },
+    plus: () => {
+      setItemCounts((prev) => (prev += 1));
+    },
+  };
+
+  const deleteBtn = () => {
+    key;
   };
 
   return (
@@ -23,7 +40,7 @@ const CartItemCard = ({ title, count, price }: CartItemCardProps) => {
             >
               -
             </button>
-            <span className='inline-block px-3'>{count}</span>
+            <span className='inline-block px-3'>{itemCounts}</span>
             <button
               className='btn btn-sm rounded-l-none'
               onClick={handleCount.plus}
@@ -33,10 +50,13 @@ const CartItemCard = ({ title, count, price }: CartItemCardProps) => {
           </div>
         </div>
         <div className='flex flex-col justify-between relative'>
-          <button className='btn btn-xs px-0 w-6 relative left-full bottom-5'>
+          <button
+            className='btn btn-xs px-0 w-6 relative left-full bottom-5'
+            onClick={deleteBtn}
+          >
             x
           </button>
-          <p>가격 : {price.toLocaleString()}원</p>
+          <p>가격 : {(price * itemCounts).toLocaleString()}원</p>
         </div>
       </div>
     </div>
