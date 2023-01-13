@@ -32,7 +32,7 @@ const UserInfo = () => {
   const eidited = (event: React.MouseEvent<HTMLButtonElement>) => {
     setIsEdit((prev) => !prev);
     //newUserInfo api 전송
-    setUserInfo(newUserInfo);
+    setUserInfo((prev) => ({ ...prev, ...newUserInfo }));
   };
 
   return (
