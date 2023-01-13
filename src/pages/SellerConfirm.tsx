@@ -1,7 +1,7 @@
 import SellerConfirmCard from '../components/Seller/SellerConfirmCard';
 
 const SellerConfirm = () => {
-  // 승인 대기 판매자 리스트 받아오기
+  // 승인 대기 판매자 리스트 받아오기 api
 
   const sellerList = [
     {

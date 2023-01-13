@@ -9,6 +9,16 @@ module.exports = {
       maxHeight: {
         '700px': '700px',
       },
+      minHeight: {
+        '40px' : '40px',
+      },
+      maxWidth: {
+        '310px': '310px',
+        'cartDiv' : '800px'
+      },
+      minWidth: {
+        '74px': '74px',
+      }
     },
   },
   plugins: [require('daisyui')],

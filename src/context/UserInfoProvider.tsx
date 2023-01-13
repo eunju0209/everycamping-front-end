@@ -1,18 +1,14 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 
-type UserInfoContext = {
-  userInfo: {
-    email: string;
-    nickName: string;
-    phoneNumber: string;
-  };
-  setUserInfo: React.Dispatch<
-    React.SetStateAction<{
-      email: string;
-      nickName: string;
-      phoneNumber: string;
-    }>
-  >;
+export type UserInfo = {
+  email: string;
+  nickName: string;
+  phoneNumber: string;
+};
+
+export type UserInfoContext = {
+  userInfo: UserInfo;
+  setUserInfo: React.Dispatch<React.SetStateAction<UserInfo>>;
 };
 
 type UserInfoProviderProps = {
