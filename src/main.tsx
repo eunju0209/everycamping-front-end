@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
-import KaKaoLoginCallback from './components/Login/KakaoLoginCallback';
+
 import './index.css';
 import Cart from './pages/Cart';
 import Home from './pages/Home';
@@ -12,13 +12,15 @@ import Login from './pages/Login';
 import NewProduct from './pages/NewProduct';
 import NewReview from './pages/NewReview';
 import NotFound from './pages/NotFound';
-import MyOders from './pages/MyOders';
+import UserOrderList from './pages/User/UserOrderList';
 import OrderForm from './pages/OrderForm';
 import ProductDetail from './pages/ProductDetail';
 import Products from './pages/Products';
 import Search from './pages/Search';
 import SellerConfirm from './pages/SellerConfirm';
-import UserInfo from './pages/UserInfo/UserInfo';
+import UserInfo from './pages/User/UserInfo';
+import KaKaoLoginCallback from './components/Login/socialLogin/KakaoLoginCallback';
+import SellerOrderList from './pages/SellerOrderList';
 
 const router = createBrowserRouter([
   {
@@ -40,7 +42,8 @@ const router = createBrowserRouter([
       { path: 'review/new', element: <NewReview /> },
       { path: 'cart', element: <Cart /> },
       { path: 'order', element: <OrderForm /> },
-      { path: 'mypage/orders', element: <MyOders /> },
+      { path: 'mypage/user/orders', element: <UserOrderList /> },
+      { path: 'mypage/seller/orders', element: <SellerOrderList /> },
       { path: 'mypage/products', element: <Products /> },
       { path: 'kakaoLoginCallback', element: <KaKaoLoginCallback /> },
       { path: 'sellerConfirm', element: <SellerConfirm /> },
