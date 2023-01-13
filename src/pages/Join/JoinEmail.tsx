@@ -89,7 +89,7 @@ const JoinEmail = () => {
       <form className='flex flex-col mt-10' onSubmit={(e) => onSubmit(e)}>
         <div className='flex relative w-full'>
           <input
-            className='p-2 input w-full max-w-xs bg-white'
+            className='p-2 input w-full max-w-xs bg-white focus:outline-none'
             name='email'
             type='email'
             placeholder='Email'
@@ -111,7 +111,7 @@ const JoinEmail = () => {
         </div>
         <div className='flex relative mt-2 w-full hidden' ref={codeDivRef}>
           <input
-            className='p-2 input w-full max-w-xs bg-white'
+            className='p-2 input w-full max-w-xs bg-white focus:outline-none'
             name='code'
             type='text'
             placeholder='인증코드'
@@ -131,7 +131,7 @@ const JoinEmail = () => {
         </div>
         <div className='flex relative mt-2 w-full'>
           <input
-            className='p-2 input w-full max-w-xs bg-white'
+            className='p-2 input w-full max-w-xs bg-white focus:outline-none'
             name='nickName'
             type='text'
             placeholder='Nick Name'
@@ -151,7 +151,7 @@ const JoinEmail = () => {
         </div>
         <div className='flex relative w-full'>
           <input
-            className='mt-2 p-2 input w-full max-w-xs bg-white '
+            className='mt-2 p-2 input w-full max-w-xs bg-white focus:outline-none'
             name='password'
             type='password'
             placeholder='Password'
@@ -169,7 +169,7 @@ const JoinEmail = () => {
         </div>
         <div className='flex relative w-full'>
           <input
-            className='mt-2 p-2 input w-full max-w-xs bg-white '
+            className='mt-2 p-2 input w-full max-w-xs bg-white focus:outline-none'
             name='passwordConfirm'
             type='password'
             placeholder='Password Confirm'
@@ -186,7 +186,7 @@ const JoinEmail = () => {
           )}
         </div>
         <input
-          className='mt-2 p-2 input w-full max-w-xs bg-white '
+          className='mt-2 p-2 input w-full max-w-xs bg-white focus:outline-none'
           name='phoneNumber'
           type='tel'
           placeholder='010-0000-0000'

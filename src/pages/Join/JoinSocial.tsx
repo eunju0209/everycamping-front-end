@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 type JoinSocialType = {
@@ -69,7 +69,7 @@ const JoinSocial = () => {
       <form className='flex flex-col mt-10' onSubmit={(e) => onSubmit(e)}>
         <div className='flex relative w-full'>
           <input
-            className='p-2 input w-full max-w-xs bg-white'
+            className='p-2 input w-full max-w-xs bg-white focus:outline-none'
             name='email'
             type='email'
             placeholder='Email'
@@ -90,7 +90,7 @@ const JoinSocial = () => {
         </div>
         <div className='flex relative mt-2 w-full'>
           <input
-            className='p-2 input w-full max-w-xs bg-white'
+            className='p-2 input w-full max-w-xs bg-white focus:outline-none'
             name='nickName'
             type='text'
             placeholder='Nick Name'
@@ -110,7 +110,7 @@ const JoinSocial = () => {
         </div>
         <div className='flex relative w-full'>
           <input
-            className='mt-2 p-2 input w-full max-w-xs bg-white '
+            className='mt-2 p-2 input w-full max-w-xs bg-white focus:outline-none'
             name='password'
             type='password'
             placeholder='Password'
@@ -128,7 +128,7 @@ const JoinSocial = () => {
         </div>
         <div className='flex relative w-full'>
           <input
-            className='mt-2 p-2 input w-full max-w-xs bg-white '
+            className='mt-2 p-2 input w-full max-w-xs bg-white focus:outline-none'
             name='passwordConfirm'
             type='password'
             placeholder='Password Confirm'
@@ -145,7 +145,7 @@ const JoinSocial = () => {
           )}
         </div>
         <input
-          className='mt-2 p-2 input w-full max-w-xs bg-white '
+          className='mt-2 p-2 input w-full max-w-xs bg-white focus:outline-none'
           name='phoneNumber'
           type='tel'
           placeholder='010-0000-0000'

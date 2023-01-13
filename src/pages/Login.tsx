@@ -55,7 +55,7 @@ export default function Login() {
       <p className='flex justify-center text-4xl'>로그인</p>
       <form className='flex flex-col mt-10' onSubmit={(e) => onSubmit(e)}>
         <input
-          className='p-2 input w-full max-w-xs bg-white'
+          className='p-2 input w-full max-w-xs bg-white focus:outline-none'
           name='email'
           type='email'
           placeholder='Email'
@@ -65,7 +65,7 @@ export default function Login() {
           onChange={(e) => onChange(e)}
         />
         <input
-          className='mt-2 p-2 input w-full max-w-xs bg-white'
+          className='mt-2 p-2 input w-full max-w-xs bg-white focus:outline-none'
           name='password'
           type='password'
           placeholder='Password'
