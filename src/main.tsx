@@ -12,7 +12,7 @@ import Login from './pages/Login';
 import NewProduct from './pages/NewProduct';
 import NewReview from './pages/NewReview';
 import NotFound from './pages/NotFound';
-import Oders from './pages/Oders';
+import MyOders from './pages/MyOders';
 import OrderForm from './pages/OrderForm';
 import ProductDetail from './pages/ProductDetail';
 import Products from './pages/Products';
@@ -40,7 +40,7 @@ const router = createBrowserRouter([
       { path: 'review/new', element: <NewReview /> },
       { path: 'cart', element: <Cart /> },
       { path: 'order', element: <OrderForm /> },
-      { path: 'mypage/orders', element: <Oders /> },
+      { path: 'mypage/orders', element: <MyOders /> },
       { path: 'mypage/products', element: <Products /> },
       { path: 'kakaoLoginCallback', element: <KaKaoLoginCallback /> },
       { path: 'sellerConfirm', element: <SellerConfirm /> },
