@@ -11,7 +11,11 @@ const Modal = ({ toggleModal, setToggleModal, children }: ModalProps) => {
     setToggleModal(false);
   };
   return (
-    <div className={`modal ${toggleModal ? 'visible opacity-100 ' : ''} `}>
+    <div
+      className={`modal ${
+        toggleModal ? 'visible opacity-100 pointer-events-auto' : ''
+      } `}
+    >
       <div className='modal-box'>
         <p className='py-4'>{children}</p>
         <div className='modal-action'>
