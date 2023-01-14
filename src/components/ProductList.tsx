@@ -7,7 +7,7 @@ export type ProductType = {
   category: string;
   name: string;
   price: number;
-  imagePath: string;
+  imageUri: string;
 };
 
 type ProductsProps = {
