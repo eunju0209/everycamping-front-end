@@ -1,5 +1,13 @@
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {
+  postEmailCheck,
+  postEmailCheckReturn,
+  postNickNameCheck,
+  postSellerJoin,
+  postUserJoin,
+} from '../../api/userService';
+
 import Modal from '../Modal/Modal';
 
 type JoinEmailCompType = {
@@ -52,8 +60,10 @@ const JoinEmailComp = () => {
     try {
       if (isSeller) {
         // 판매자 회원가입 api 전송
+        postSellerJoin();
       } else {
         // 구매자 회원가입 api 전송
+        postUserJoin();
       }
 
       console.log(joinInfo);
@@ -69,16 +79,19 @@ const JoinEmailComp = () => {
     if (name === 'email') {
       setToggleEmailModal(true);
       //email 인증 코드 전송.
+      postEmailCheck(joinInfo.email);
       joinInfo.email;
       (codeDivRef.current as HTMLDivElement).style.display = 'flex';
     } else if (name === 'code') {
       //email 인증 코드 일치 확인
+      postEmailCheckReturn();
       setToggleCodeModal(true);
       (codeDivRef.current as HTMLDivElement).style.display = 'none';
       (emailInputRef.current as HTMLInputElement).disabled = true;
       (emailButtonRef.current as HTMLInputElement).disabled = true;
     } else if (name === 'nickName') {
       // nickName 중복 확인
+      postNickNameCheck();
       joinInfo.nickName;
     }
   };

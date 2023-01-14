@@ -8,12 +8,14 @@ type UserInfoEditCompProps = {
   userInfo: newUserInfo;
   newUserInfo: newUserInfo;
   setNewUserInfo: React.Dispatch<React.SetStateAction<newUserInfo>>;
+  isSeller: boolean;
 };
 
 const UserInfoEditComp = ({
   userInfo,
   newUserInfo,
   setNewUserInfo,
+  isSeller,
 }: UserInfoEditCompProps) => {
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
