@@ -6,8 +6,7 @@ import App from './App';
 import './index.css';
 import Cart from './pages/Cart';
 import Home from './pages/Home';
-import JoinEmail from './pages/Join/JoinEmail';
-import JoinSocial from './pages/Join/JoinSocial';
+import Join from './pages/Join';
 import Login from './pages/Login';
 import NewProduct from './pages/NewProduct';
 import NewReview from './pages/NewReview';
@@ -30,8 +29,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: 'login', element: <Login /> },
-      { path: 'join', element: <JoinEmail /> },
-      { path: 'join/social', element: <JoinSocial /> },
+      { path: 'join', element: <Join /> },
       { path: 'tent', element: <Products category='tent' /> },
       { path: 'cook', element: <Products category='cook' /> },
       { path: 'accessory', element: <Products category='accessory' /> },
