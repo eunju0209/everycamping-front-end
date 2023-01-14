@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import UserInfoComp from '../../components/User/UserInfoComp';
 import UserInfoEditComp from '../../components/User/UserInfoEditComp';
 import { useUserInfo } from '../../context/UserInfoProvider';
 
 const UserInfo = () => {
+  const navigate = useNavigate();
   const [isEdit, setIsEdit] = useState(false);
   const { userInfo, setUserInfo } = useUserInfo();
   const [newUserInfo, setNewUserInfo] = useState({
@@ -11,6 +13,7 @@ const UserInfo = () => {
     nickName: '',
     phoneNumber: '',
   });
+  const [isSeller, setIsSeller] = useState(false);
 
   useEffect(() => {
     setNewUserInfo(userInfo);
@@ -32,19 +35,34 @@ const UserInfo = () => {
           userInfo={userInfo}
           newUserInfo={newUserInfo}
           setNewUserInfo={setNewUserInfo}
+          isSeller={isSeller}
         />
       ) : (
         <UserInfoComp userInfo={userInfo} />
       )}
-
-      <div className='flex justify-center mt-10'>
-        <button
-          className='w-24 p-2 btn btn-primary'
-          type='button'
-          onClick={(e) => eidited(e)}
-        >
-          {isEdit ? '수정완료' : '수정하기'}
-        </button>
+      <div className='flex justify-center'>
+        <div className='flex justify-center mt-10'>
+          <button
+            className='w-24 p-2 btn btn-primary'
+            type='button'
+            onClick={(e) => eidited(e)}
+          >
+            {isEdit ? '수정완료' : '수정하기'}
+          </button>
+        </div>
+        <div className='flex justify-center mt-10 ml-3'>
+          <button
+            className='w-24 p-2 btn btn-primary'
+            type='button'
+            onClick={(e) =>
+              navigate('/PasswordEdit', {
+                state: isSeller,
+              })
+            }
+          >
+            비밀번호 수정
+          </button>
+        </div>
       </div>
     </div>
   );
