@@ -20,6 +20,7 @@ import SellerConfirm from './pages/SellerConfirm';
 import UserInfo from './pages/User/UserInfo';
 import KaKaoLoginCallback from './components/Login/socialLogin/KakaoLoginCallback';
 import SellerOrderList from './pages/SellerOrderList';
+import PasswordEdit from './pages/User/PasswordEdit';
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,7 @@ const router = createBrowserRouter([
       { path: 'kakaoLoginCallback', element: <KaKaoLoginCallback /> },
       { path: 'sellerConfirm', element: <SellerConfirm /> },
       { path: 'userInfo', element: <UserInfo /> },
+      { path: 'PasswordEdit', element: <PasswordEdit /> },
     ],
   },
 ]);
