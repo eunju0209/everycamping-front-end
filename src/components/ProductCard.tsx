@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { ProductType } from './ProductList';
 
 type ProductCardProps = {
@@ -5,11 +6,15 @@ type ProductCardProps = {
 };
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const { name, price, imagePath } = product;
+  const navigate = useNavigate();
+  const { id, name, price, imageUri } = product;
   return (
-    <li className='card bg-base-100 shadow-xl hover:cursor-pointer hover:brightness-110 transition-all'>
+    <li
+      className='card bg-base-100 shadow-xl hover:cursor-pointer hover:brightness-110 transition-all'
+      onClick={() => navigate(`/products/detail/${id}`, { state: { id } })}
+    >
       <figure>
-        <img className='object-cover w-full h-56' src={imagePath} alt={name} />
+        <img className='object-cover w-full h-56' src={imageUri} alt={name} />
       </figure>
       <div className='card-body'>
         <h2 className='card-title'>{name}</h2>
