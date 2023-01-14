@@ -8,3 +8,12 @@ export const getCartItems = async () => {
     console.error(error)
   }
 }
+export const patchCartItems = async () => {
+  try {
+    const result = await axios.patch(`/carts/${id}`, {
+    })
+    return result
+  } catch (error) {
+    console.error(error)
+  }
+}
