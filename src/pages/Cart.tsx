@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getCartItems } from '../api/cartService';
 import CartItemCard from '../components/CartItemCard';
@@ -16,11 +15,16 @@ export default function Cart() {
   const totalPrice = cartItems.reduce((acc, cur) => {
     return acc + cur.count * cur.price;
   }, 0);
+
   // react-query api 호출
   // const cartItems = getCartItems()
 
   const orderClick = () => {
-    navigate('/order');
+    navigate('/order', {
+      state: {
+        totalPrice: totalPrice,
+      },
+    });
   };
   return (
     <div className='flex flex-col justify-center mx-auto max-w-cartDiv'>
@@ -36,9 +40,25 @@ export default function Cart() {
           />
         ))}
       </div>
-      <div className='flex'>
-        <div>
-          <p>합계 : {totalPrice.toLocaleString()}원</p>
+      <div className='flex justify-end mt-6'>
+        <div className='grid grid-cols-2 text-lg'>
+          <span className='flex justify-end mr-3'>합계 : </span>
+          <span className='flex justify-end'>
+            {totalPrice.toLocaleString()}원
+          </span>
+
+          <span className='flex justify-end mr-3'>배송비 : </span>
+          <span className='flex justify-end'>
+            {totalPrice > 70000 ? '0' : '3,000'}원
+          </span>
+          <div className='divider col-start-1 col-end-3'></div>
+          <span className='flex justify-end mr-3 text-xl'>총 결제금액 : </span>
+          <span className='flex justify-end'>
+            {totalPrice > 70000
+              ? totalPrice.toLocaleString()
+              : (totalPrice + 3000).toLocaleString()}
+            원
+          </span>
         </div>
       </div>
       <div className='flex justify-center mt-10'>
