@@ -31,9 +31,10 @@ const KaKaoLoginCallback = () => {
         //아니면 회원가입 페이지로 보냄
         console.log(userInfo.kakao_account.email);
 
-        navigate('/join/social', {
+        navigate('/join', {
           state: {
             email: userInfo.kakao_account.email,
+            type: 'social',
           },
         });
       } catch (err) {

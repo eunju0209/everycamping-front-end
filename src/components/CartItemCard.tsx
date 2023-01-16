@@ -1,17 +1,19 @@
 import { useEffect, useState } from 'react';
 
 type CartItemCardProps = {
-  key: number;
+  id: number;
   title: string;
   count: number;
   price: number;
 };
 
-const CartItemCard = ({ key, title, count, price }: CartItemCardProps) => {
+const CartItemCard = ({ id, title, count, price }: CartItemCardProps) => {
   const [itemCounts, setItemCounts] = useState(0);
+
   useEffect(() => {
     setItemCounts(count);
   }, []);
+
   const handleCount = {
     minus: () => {
       if (itemCounts <= 1) return;
@@ -24,7 +26,7 @@ const CartItemCard = ({ key, title, count, price }: CartItemCardProps) => {
   };
 
   const deleteBtn = () => {
-    key;
+    id;
   };
 
   return (
@@ -56,7 +58,7 @@ const CartItemCard = ({ key, title, count, price }: CartItemCardProps) => {
           >
             x
           </button>
-          <p>가격 : {(price * itemCounts).toLocaleString()}원</p>
+          <p>{(price * itemCounts).toLocaleString()}원</p>
         </div>
       </div>
     </div>

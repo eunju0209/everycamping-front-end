@@ -18,6 +18,7 @@ module.exports = {
       },
       minWidth: {
         '74px': '74px',
+        '100px' : '100px'
       }
     },
   },

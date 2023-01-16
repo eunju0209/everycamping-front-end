@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getUserInfo, sellerLogin, userLogin } from '../../api/userService';
 import { useUserInfo } from '../../context/UserInfoProvider';
 import KakaoLogin from './socialLogin/KakaoLogin';
 
@@ -35,12 +34,12 @@ const LoginComp = () => {
       //  login 정보 받아서 서버에 전송
       if (isSeller) {
         // 판매자 로그인 api 전송 // accesstoken 받기
-        // const userToken = await sellerLogin(loginInfo);
+        // const userToken = await postSellerLogin(loginInfo);
         // const result = await getUserInfo(userToken);
         // setUserInfo({type: seller});
       } else {
         // 구매자 로그인 api 전송 // accesstoken 받기
-        // const userToken = await userLogin(loginInfo);
+        // const userToken = await postUserLogin(loginInfo);
         // const result = await getUserInfo(userToken);
         // setUserInfo({type: user})
       }

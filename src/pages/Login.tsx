@@ -11,7 +11,13 @@ export default function Login() {
       <div className='w-10/12 mx-auto mt-6 border border-gray-300'></div>
       <button
         className='mt-6 p-1.5 btn btn-primary'
-        onClick={() => navigate(`/join`)}
+        onClick={() =>
+          navigate(`/join`, {
+            state: {
+              type: 'email',
+            },
+          })
+        }
       >
         Join
       </button>
