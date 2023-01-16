@@ -1,4 +1,4 @@
-import SellerConfirmCard from '../components/Seller/SellerConfirmCard';
+import SellerConfirmCard from '../components/Admin/SellerConfirmCard';
 
 const SellerConfirm = () => {
   // 승인 대기 판매자 리스트 받아오기 api
@@ -18,7 +18,7 @@ const SellerConfirm = () => {
         <p>판매자 승인</p>
       </div>
       <div className='mt-10'>
-        <div className='overflow-x-auto '>
+        <div className='overflow-x-auto'>
           <table className='table w-full'>
             <thead>
               <tr className='text-center'>

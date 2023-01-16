@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { useUserInfo } from '../context/UserInfoProvider';
+import { useLocation } from 'react-router-dom';
+import { useUserInfo } from '../../context/UserInfoProvider';
 import AddressSearch from './AddressSearch';
+import OrderFormItemCard from './OrderFormItemCard';
 
 export type OrderInfo = {
   email: string;
@@ -9,15 +11,12 @@ export type OrderInfo = {
   address: string;
   items: object;
   request: string;
-  price: {
-    itemsPrice: string;
-    deliveryPrice: string;
-    totalPrice: string;
-  };
 };
 
 const OrderFormComp = () => {
   const { userInfo } = useUserInfo();
+  const location = useLocation();
+  const { totalPrice } = location.state;
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [orderInfo, setOrderInfo] = useState<OrderInfo>({
     email: '',
@@ -26,11 +25,6 @@ const OrderFormComp = () => {
     address: '',
     items: [],
     request: '',
-    price: {
-      itemsPrice: '0',
-      deliveryPrice: '3,000',
-      totalPrice: '0',
-    },
   });
 
   useEffect(() => {
@@ -113,7 +107,9 @@ const OrderFormComp = () => {
             <span className='justify-center min-w-74px whitespace-nowrap'>
               주문 정보
             </span>
-            <div className='input input-bordered w-full text-lg bg-white focus:outline-none'></div>
+            <div className='input input-bordered w-full bg-white focus:outline-none'>
+              <OrderFormItemCard />
+            </div>
           </label>
         </div>
       </div>
@@ -141,15 +137,23 @@ const OrderFormComp = () => {
           <tbody>
             <tr>
               <th>금액</th>
-              <td className='text-right'>{orderInfo.price.itemsPrice}</td>
+              <td className='text-right'>{totalPrice.toLocaleString()}원</td>
             </tr>
             <tr>
               <th>배송비</th>
-              <td className='text-right'>{orderInfo.price.deliveryPrice}</td>
+              <td className='text-right'>
+                {totalPrice > 70000 ? '0' : '3,000'}원
+              </td>
             </tr>
             <tr>
               <th>총 금액</th>
-              <td className='text-right'>{orderInfo.price.totalPrice}</td>
+              <td className='text-right'>
+                {' '}
+                {totalPrice > 70000
+                  ? totalPrice.toLocaleString()
+                  : (totalPrice + 3000).toLocaleString()}
+                원
+              </td>
             </tr>
           </tbody>
         </table>

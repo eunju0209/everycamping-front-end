@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import DaumPostcode, { Address } from 'react-daum-postcode';
-import { OrderInfo } from '../pages/OrderForm';
+import { OrderInfo } from './OrderFormComp';
 
 type AddressSearchPops = {
   setOrderInfo: React.Dispatch<React.SetStateAction<OrderInfo>>;
