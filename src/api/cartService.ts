@@ -17,3 +17,12 @@ export const patchCartItems = async () => {
     console.error(error)
   }
 }
+export const deleteCartItems = async () => {
+  try {
+    const result = await axios.delete(`/carts/${id}`, {
+    })
+    return result
+  } catch (error) {
+    console.error(error)
+  }
+}
