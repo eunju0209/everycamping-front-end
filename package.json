@@ -21,7 +21,8 @@
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.6.1",
     "react-toastify": "^9.1.1",
-    "sort-by": "^1.2.0"
+    "sort-by": "^1.2.0",
+    "timeago.js": "^4.0.2"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",
