@@ -1,6 +1,7 @@
 import { ProductType } from './../components/ProductList';
 import axios from 'axios';
 import { ProductDetailType } from '../components/ProductInfo';
+import { ReviewType } from '../components/ReviewList';
 
 export async function getProducts(
   category?: string,
@@ -13,6 +14,11 @@ export async function getProducts(
 export async function getProductDetail(id: string): Promise<ProductDetailType> {
   const res = await axios.get('/assets/data/detail.json');
   return res.data.items[0];
+}
+
+export async function getReviews(productId: string): Promise<ReviewType[]> {
+  const res = await axios.get('/assets/data/review.json');
+  return res.data.items;
 }
 
 async function search(keyword: string): Promise<ProductType[]> {

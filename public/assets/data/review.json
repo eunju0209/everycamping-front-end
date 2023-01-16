@@ -1,0 +1,36 @@
+{
+  "items": [
+    {
+      "id": "1",
+      "customerName": "bori",
+      "score": 5,
+      "text": "추천합니다!",
+      "imageUri": "https://images.unsplash.com/photo-1478827536114-da961b7f86d2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+      "createdAt": "2022-12-11T18:46:39Z"
+    },
+    {
+      "id": "2",
+      "customerName": "bori2",
+      "score": 3.5,
+      "text": "추천합니다!!",
+      "imageUri": "https://images.unsplash.com/photo-1478827536114-da961b7f86d2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+      "createdAt": "2022-12-11T18:46:39Z"
+    },
+    {
+      "id": "3",
+      "customerName": "bori3",
+      "score": 3,
+      "text": "추천합니다!!!",
+      "imageUri": "https://images.unsplash.com/photo-1478827536114-da961b7f86d2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+      "createdAt": "2022-12-11T18:46:39Z"
+    },
+    {
+      "id": "4",
+      "customerName": "bori4",
+      "score": 4.5,
+      "text": "추천합니다!!!!",
+      "imageUri": "https://images.unsplash.com/photo-1478827536114-da961b7f86d2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+      "createdAt": "2022-12-11T18:46:39Z"
+    }
+  ]
+}
