@@ -1,4 +1,4 @@
-import OrderFormComp from '../components/OrderFormComp';
+import OrderFormComp from '../components/OrderForm/OrderFormComp';
 
 export default function OrderForm() {
   return (
