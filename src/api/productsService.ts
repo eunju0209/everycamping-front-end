@@ -3,6 +3,7 @@ import axios from 'axios';
 import { ProductDetailType } from '../components/ProductInfo';
 import { ReviewType } from '../components/ReviewList';
 import { NewProductType } from '../components/ProductForm';
+import { NewReviewType } from '../components/ReviewForm';
 
 export async function getProducts(
   category?: string,
@@ -24,6 +25,10 @@ export async function addNewProduct(product: NewProductType) {
 export async function getReviews(productId: string): Promise<ReviewType[]> {
   const res = await axios.get('/assets/data/review.json');
   return res.data.items;
+}
+
+export async function addNewReview(review: NewReviewType) {
+  return axios.post('/', review);
 }
 
 async function search(keyword: string): Promise<ProductType[]> {
