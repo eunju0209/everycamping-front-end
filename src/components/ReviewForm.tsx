@@ -3,12 +3,12 @@ import { addNewReview } from '../api/productsService';
 
 export type NewReviewType = {
   image: string;
-  score: string;
+  score: number;
   text: string;
 };
 
 export default function ReviewForm() {
-  const [review, setReview] = useState({ image: '', score: '', text: '' });
+  const [review, setReview] = useState({ image: '', score: 0, text: '' });
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -32,18 +32,21 @@ export default function ReviewForm() {
         required
         onChange={handleChange}
       />
-      <input
-        type='number'
-        name='score'
-        value={review.score ?? ''}
-        min='0'
-        max='5'
-        step={0.5}
-        placeholder='평점(0 ~ 5)'
-        className='input w-full max-w-xs bg-white'
-        required
-        onChange={handleChange}
-      />
+      <label className='input-group w-full max-w-xs'>
+        <span className='w-20 justify-center'>평점</span>
+        <input
+          type='number'
+          name='score'
+          value={review.score ?? ''}
+          min='0'
+          max='5'
+          step={0.5}
+          placeholder='0 ~ 5'
+          className='input bg-white w-full'
+          required
+          onChange={handleChange}
+        />
+      </label>
       <textarea
         name='text'
         value={review.text ?? ''}
