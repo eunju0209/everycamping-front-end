@@ -4,8 +4,8 @@ import { addNewProduct } from '../api/productsService';
 export type NewProductType = {
   category: string;
   name: string;
-  price: string;
-  stock: string;
+  price: number;
+  stock: number;
   image: string;
   description: string;
   onsale: boolean;
@@ -15,8 +15,8 @@ export default function ProductForm() {
   const [product, setProduct] = useState({
     category: 'category',
     name: '',
-    price: '',
-    stock: '',
+    price: 0,
+    stock: 0,
     image: '',
     description: '',
     onsale: false,
@@ -63,26 +63,30 @@ export default function ProductForm() {
         required
         onChange={handleChange}
       />
-      <input
-        type='number'
-        name='price'
-        value={product.price ?? ''}
-        min='0'
-        placeholder='가격'
-        className='input w-full max-w-xs bg-white'
-        required
-        onChange={handleChange}
-      />
-      <input
-        type='number'
-        name='stock'
-        value={product.stock ?? ''}
-        min='0'
-        placeholder='수량'
-        className='input w-full max-w-xs bg-white'
-        required
-        onChange={handleChange}
-      />
+      <label className='input-group w-full max-w-xs'>
+        <span className='w-20 justify-center'>가격</span>
+        <input
+          type='number'
+          name='price'
+          value={product.price ?? ''}
+          min='0'
+          className='input bg-white w-full'
+          required
+          onChange={handleChange}
+        />
+      </label>
+      <label className='input-group w-full max-w-xs'>
+        <span className='w-20 justify-center'>수량</span>
+        <input
+          type='number'
+          name='stock'
+          value={product.stock ?? ''}
+          min='0'
+          className='input bg-white w-full'
+          required
+          onChange={handleChange}
+        />
+      </label>
       <input
         type='file'
         name='image'
