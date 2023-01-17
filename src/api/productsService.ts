@@ -2,6 +2,7 @@ import { ProductType } from './../components/ProductList';
 import axios from 'axios';
 import { ProductDetailType } from '../components/ProductInfo';
 import { ReviewType } from '../components/ReviewList';
+import { NewProductType } from '../components/ProductForm';
 
 export async function getProducts(
   category?: string,
@@ -14,6 +15,10 @@ export async function getProducts(
 export async function getProductDetail(id: string): Promise<ProductDetailType> {
   const res = await axios.get('/assets/data/detail.json');
   return res.data.items[0];
+}
+
+export async function addNewProduct(product: NewProductType) {
+  return axios.post('/', product);
 }
 
 export async function getReviews(productId: string): Promise<ReviewType[]> {
