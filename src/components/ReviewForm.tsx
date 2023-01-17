@@ -1,4 +1,11 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { addNewReview } from '../api/productsService';
+
+export type NewReviewType = {
+  image: string;
+  score: string;
+  text: string;
+};
 
 export default function ReviewForm() {
   const [review, setReview] = useState({ image: '', score: '', text: '' });
@@ -12,6 +19,7 @@ export default function ReviewForm() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    addNewReview(review);
   };
 
   return (
