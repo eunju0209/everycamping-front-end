@@ -5,6 +5,7 @@ export type UserInfo = {
   nickName: string;
   phoneNumber: string;
   type: 'user' | 'seller' | 'admin';
+  isLogin: boolean;
 };
 
 export type UserInfoContextType = {
@@ -16,15 +17,17 @@ type UserInfoProviderProps = {
   children: ReactNode;
 };
 
-export const UserInfoContext = createContext<UserInfoContextType | null>(null);
+const UserInfoContext = createContext<UserInfoContextType | null>(null);
 
 const UserInfoProvider = (props: UserInfoProviderProps) => {
+  const [accessToken, setAccessToken] = useState('');
   const [userInfo, setUserInfo] = useState<UserInfo>({
     //샘플 데이터
     email: 'cow_boy27@naver.com',
     nickName: '재재',
     phoneNumber: '010-3558-3752',
     type: 'user',
+    isLogin: true,
   });
   return (
     <UserInfoContext.Provider value={{ userInfo, setUserInfo }}>
