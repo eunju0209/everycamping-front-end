@@ -6,6 +6,8 @@ import { NewProductType } from '../components/ProductForm';
 import { NewReviewType } from '../components/ReviewForm';
 import { authAxios } from './authAxios';
 
+const token = '';
+
 export async function getProducts(
   category?: string,
   filter?: string,
@@ -19,8 +21,25 @@ export async function getProductDetail(id: string): Promise<ProductDetailType> {
   return res.data.items[0];
 }
 
-export async function addNewProduct(product: NewProductType) {
-  return authAxios.post('/api//manage/products', product);
+export async function addNewProduct(
+  product: NewProductType,
+  image: File,
+  detailImage: File
+) {
+  const formData = new FormData();
+  const blob = new Blob([JSON.stringify(product)], {
+    type: 'application/json',
+  });
+  formData.append('form', blob);
+  formData.append('image', image);
+  formData.append('detailImage', detailImage);
+
+  return axios.post('api/manage/products', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: token,
+    },
+  });
 }
 
 export async function getReviews(productId: string): Promise<ReviewType[]> {
@@ -28,8 +47,19 @@ export async function getReviews(productId: string): Promise<ReviewType[]> {
   return res.data.items;
 }
 
-export async function addNewReview(review: NewReviewType) {
-  return axios.post('/', review);
+export async function addNewReview(review: NewReviewType, image: File) {
+  const formData = new FormData();
+  const blob = new Blob([JSON.stringify(review)], {
+    type: 'application/json',
+  });
+  formData.append('form', blob);
+  formData.append('image', image);
+  return axios.post('/api/reviews', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: token,
+    },
+  });
 }
 
 async function search(keyword: string): Promise<ProductType[]> {

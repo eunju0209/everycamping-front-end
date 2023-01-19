@@ -2,24 +2,29 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { addNewReview } from '../api/productsService';
 
 export type NewReviewType = {
-  image: string;
   score: number;
   text: string;
 };
 
 export default function ReviewForm() {
-  const [review, setReview] = useState({ image: '', score: 0, text: '' });
+  const [image, setImage] = useState<File>();
+  const [review, setReview] = useState({ score: 0, text: '' });
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
+    const { files } = e.target as HTMLInputElement;
+    if (name === 'image') {
+      setImage((files as FileList)[0]);
+      return;
+    }
     setReview((review) => ({ ...review, [name]: value }));
   };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    addNewReview(review);
+    image && addNewReview(review, image);
   };
 
   return (

@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { postOrders } from '../../api/orderService';
-import { cartContentType } from '../../pages/Cart';
 import { useUserInfo } from '../../store/UserInfoProvider';
 import AddressSearch from './AddressSearch';
 import OrderFormItemCard from './OrderFormItemCard';
