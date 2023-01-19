@@ -1,3 +1,6 @@
+import { useNavigate } from 'react-router-dom';
+import { patchOrderCancel, patchOrderConfirm } from '../../api/orderService';
+
 type UserOrderListCardProps = {
   list: {
     id: number;
@@ -25,9 +28,16 @@ const UserOrderListCard = ({
     orderDate,
   },
 }: UserOrderListCardProps) => {
+  const navigate = useNavigate();
+  const orderConfirm = async () => {
+    await patchOrderConfirm(id);
+  };
+  const orderCancel = async () => {
+    await patchOrderCancel(id);
+  };
   return (
     <div className='flex rounded bg-white mt-3 p-2'>
-      <img src='https://via.placeholder.com/150' className='rounded' />
+      <img src={img} className='rounded' />
       <div className='flex justify-between w-full p-2'>
         <div className='flex flex-col justify-between p-1'>
           <ul>
@@ -40,14 +50,28 @@ const UserOrderListCard = ({
 
           <ul className='flex flex-col'>
             <li>결제금액 : {payPrice.toLocaleString()}원</li>
-            <li>배송상태 : 배송중</li>
+            <li>진행상황 : 배송중</li>
           </ul>
         </div>
         <div className='flex flex-col justify-center'>
-          <button className='btn btn-primary btn-sm my-1'>구매확정</button>
-          <button className='btn btn-primary btn-sm my-1'>리뷰작성</button>
-          <button className='btn btn-primary btn-sm my-1'>
-            {'배송준비중' ? '주문취소' : '환불신청'}
+          <button
+            className='btn btn-primary btn-sm my-1'
+            onClick={orderConfirm}
+          >
+            구매확정
+          </button>
+          <button
+            className='btn btn-primary btn-sm my-1'
+            onClick={() =>
+              navigate('/review/new', {
+                state: id,
+              })
+            }
+          >
+            리뷰작성
+          </button>
+          <button className='btn btn-primary btn-sm my-1' onClick={orderCancel}>
+            {'판매자 확인' || '상품 준비중' ? '주문취소' : '환불요청'}
           </button>
         </div>
       </div>

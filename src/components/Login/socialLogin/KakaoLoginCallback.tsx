@@ -1,9 +1,13 @@
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { postUserSocialLogin, useGetUserInfo } from '../../../api/userService';
+import { useUserInfo } from '../../../store/UserInfoProvider';
 
 const KaKaoLoginCallback = () => {
   const navigate = useNavigate();
+  const { userInfo, setUserInfo } = useUserInfo();
+  let kakaoRequest: { kakao_account: { email: string } };
   useEffect(() => {
     (async () => {
       try {
@@ -21,28 +25,38 @@ const KaKaoLoginCallback = () => {
           }
         );
         window.Kakao.Auth.setAccessToken(token.data.access_token);
-        const userInfo = await window.Kakao.API.request({
+        kakaoRequest = await window.Kakao.API.request({
           url: '/v2/user/me',
         });
 
-        // 유저 인포 전달.
-        //이미 가입 된 회원이면 로그인 navigate('/');
+        await postUserSocialLogin(kakaoRequest.kakao_account.email);
 
-        //아니면 회원가입 페이지로 보냄
-        console.log(userInfo.kakao_account.email);
-
+        // useGetUserInfo(storedToken.Token, {
+        //   onSuccess: (data) => {
+        //     console.log(data);
+        //     // setUserInfo({
+        //     //   ...data,
+        //     //   type: 'user',
+        //     //   isLogin: true,
+        //     // });
+        //     navigate('/');
+        //   },
+        //   onError: (err) => {
+        //     alert('로그인에 실패 했습니다.');
+        //   },
+        // });
+      } catch (err) {
+        console.log(err);
         navigate('/join', {
           state: {
-            email: userInfo.kakao_account.email,
+            email: kakaoRequest.kakao_account.email,
             type: 'social',
           },
         });
-      } catch (err) {
-        console.log(err);
       }
     })();
   }, []);
-  return <div></div>;
+  return <div>...loading</div>;
 };
 
 export default KaKaoLoginCallback;

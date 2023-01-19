@@ -1,3 +1,5 @@
+import { putAdminSellerList } from '../../api/adminService';
+
 type SellerConfirmCardProps = {
   seller: {
     ID: string;
@@ -10,8 +12,9 @@ type SellerConfirmCardProps = {
 const SellerConfirmCard = ({
   seller: { ID, Name, PhoneNumber, sellerConfirm },
 }: SellerConfirmCardProps) => {
-  const onConfirm = () => {
+  const onConfirm = async () => {
     //승인 완료 판매자 post
+    await putAdminSellerList();
   };
 
   return (

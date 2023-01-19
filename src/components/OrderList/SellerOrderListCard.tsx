@@ -32,7 +32,7 @@ const SellerOrderListCard = ({
 
   return (
     <div className='flex rounded bg-white mt-3 p-2'>
-      <img src='https://via.placeholder.com/150' className='rounded' />
+      <img src={img} className='rounded' />
       <div className='flex justify-between w-full p-2'>
         <div className='flex flex-col justify-between w-full p-1'>
           <ul>
