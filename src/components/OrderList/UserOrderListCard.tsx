@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { patchOrderCancel, patchOrderConfirm } from '../../api/orderService';
 import { UserOrderListType } from '../../pages/User/UserOrderList';
@@ -16,16 +17,32 @@ const UserOrderListCard = ({
     userName,
     phoneNumber,
     address,
+    status,
     orderDate,
   },
 }: UserOrderListCardProps) => {
   const navigate = useNavigate();
+  const [itemStatus, setItemStatus] = useState('');
+
+  useEffect(() => {
+    setItemStatus(status);
+  }, []);
+
   const orderConfirm = async () => {
-    await patchOrderConfirm(productId);
+    try {
+      await patchOrderConfirm(productId);
+    } catch (error) {
+      console.error(error);
+    }
   };
   const orderCancel = async () => {
-    await patchOrderCancel(productId);
+    try {
+      await patchOrderCancel(productId);
+    } catch (error) {
+      console.error(error);
+    }
   };
+
   return (
     <div className='flex rounded bg-white mt-3 p-2'>
       <img src={img} className='rounded' />
@@ -41,7 +58,7 @@ const UserOrderListCard = ({
 
           <ul className='flex flex-col'>
             <li>결제금액 : {payPrice.toLocaleString()}원</li>
-            <li>진행상황 : 배송중</li>
+            <li>진행상황 : {itemStatus}</li>
           </ul>
         </div>
         <div className='flex flex-col justify-center'>
@@ -62,6 +79,7 @@ const UserOrderListCard = ({
             리뷰작성
           </button>
           <button className='btn btn-primary btn-sm my-1' onClick={orderCancel}>
+            {/* 추후 수정 */}
             {'판매자 확인' || '상품 준비중' ? '주문취소' : '환불요청'}
           </button>
         </div>

@@ -20,7 +20,6 @@ type UserInfoProviderProps = {
 const UserInfoContext = createContext<UserInfoContextType | null>(null);
 
 const UserInfoProvider = (props: UserInfoProviderProps) => {
-  const [accessToken, setAccessToken] = useState('');
   const [userInfo, setUserInfo] = useState<UserInfo>({
     //샘플 데이터
     email: 'cow_boy27@naver.com',

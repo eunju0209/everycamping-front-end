@@ -1,8 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { putSellerInfo, putUserInfo } from '../../api/userService';
 import UserInfoComp from '../../components/UserInfo/UserInfoComp';
 import UserInfoEditComp from '../../components/UserInfo/UserInfoEditComp';
 import { useUserInfo } from '../../store/UserInfoProvider';
+
+export type NewUserInfoType = {
+  email: string;
+  nickName: string;
+  phoneNumber: string;
+};
 
 const UserInfo = () => {
   const navigate = useNavigate();
@@ -18,10 +25,18 @@ const UserInfo = () => {
     setNewUserInfo(userInfo);
   }, []);
 
-  const eidited = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setIsEdit((prev) => !prev);
-    //newUserInfo api 전송
-    setUserInfo((prev) => ({ ...prev, ...newUserInfo }));
+  const eidited = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    try {
+      if (userInfo.type === 'user') {
+        await putUserInfo(newUserInfo);
+      } else if (userInfo.type === 'seller') {
+        await putSellerInfo(newUserInfo);
+      }
+      setIsEdit((prev) => !prev);
+      setUserInfo((prev) => ({ ...prev, ...newUserInfo }));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

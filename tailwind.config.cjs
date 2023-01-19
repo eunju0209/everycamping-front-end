@@ -13,7 +13,8 @@ module.exports = {
         '700px': '700px',
       },
       minHeight: {
-        '40px' : '40px',
+        '40px': '40px',
+        '50px': '50px'
       },
       maxWidth: {
         '310px': '310px',

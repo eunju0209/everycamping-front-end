@@ -53,7 +53,6 @@ const LoginComp = () => {
         //     alert('로그인에 실패 했습니다.');
         // },
         // });
-        navigate('/');
       } else {
         await postUserLogin(loginInfo).then(() => navigate('/'));
         // useGetUserInfo(storedToken.Token, {
@@ -77,7 +76,7 @@ const LoginComp = () => {
       });
       setIsSeller(false);
     } catch (error: any) {
-      console.log(error.response.data.message);
+      console.error(error);
       if (error.response.data.message === '존재하지 않는 회원입니다.') {
         alert('존재하지 않는 회원입니다.');
       }
