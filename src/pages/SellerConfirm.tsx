@@ -1,14 +1,21 @@
+import { useEffect, useState } from 'react';
 import { getAdminSellerList } from '../api/adminService';
 import SellerConfirmCard from '../components/Admin/SellerConfirmCard';
 
 const SellerConfirm = () => {
-  // 승인 대기 판매자 리스트 받아오기 api
-  // getAdminSellerList()
+  const [sellerList, setSellerList] = useState([]);
 
-  const sellerList = async () => {
-    const result = await getAdminSellerList();
-    return result;
-  };
+  useEffect(() => {
+    (async () => {
+      try {
+        const result = await getAdminSellerList();
+        setSellerList(result);
+      } catch (error) {
+        console.error(error);
+        alert('오류가 발생 했습니다.');
+      }
+    })();
+  }, []);
 
   return (
     <div className='max-w-screen-xl mx-auto'>
@@ -28,7 +35,7 @@ const SellerConfirm = () => {
             </thead>
             <tbody>
               {sellerList.map((seller) => (
-                <SellerConfirmCard key={seller.ID} seller={seller} />
+                <SellerConfirmCard key={seller.id} seller={seller} />
               ))}
             </tbody>
           </table>

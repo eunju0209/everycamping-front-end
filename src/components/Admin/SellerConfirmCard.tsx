@@ -13,8 +13,11 @@ const SellerConfirmCard = ({
   seller: { ID, Name, PhoneNumber, sellerConfirm },
 }: SellerConfirmCardProps) => {
   const onConfirm = async () => {
-    //승인 완료 판매자 post
-    await putAdminSellerList();
+    try {
+      await putAdminSellerList();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

@@ -2,6 +2,7 @@ import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
 import { JoinEmailCompType } from '../components/Join/JoinEmailComp';
 import { loginInfoType } from '../components/Login/LoginComp';
+import { NewUserInfoType } from '../pages/User/UserInfo';
 import { storedToken } from '../store/accessToken';
 import { getCookie, setCookie } from '../store/cookie';
 import { authAxios } from './authAxios';
@@ -10,75 +11,46 @@ axios.defaults.withCredentials = true;
 
 //common
 export const postEmailCheck = async (email: string) => {
-  try {
-    const result = await axios.post(`/api/common/auth`, {
-      email
-    })
-    console.log(result)
+    const result = await axios.post(`/api/commons/auth-request`, {email})
     return result
-
-  } catch(error) {
-    console.error(error)
-  }
 }
-export const postEmailCheckReturn = async (code: string) => {
-  try {
-    const result = await axios.post(`/api/common/auth`, {
-      code
-    })
-    console.log(result)
+export const postEmailCheckReturn = async (email: string,code: string) => {
+    const result = await axios.post(`/api/commons/auth-verify`, {email,code})
     return result
-
-  } catch(error) {
-    console.error(error)
-  }
 }
-
-
 
 // user
 export const postUserJoin = async (joinInfo : JoinEmailCompType) => {
-  try {
-    const result = await axios.post(`/api/customers/signup`,
-      joinInfo
-    )
+    const result = await axios.post(`/api/customers/signup`,joinInfo)
     return result
-
-  } catch(error) {
-    console.error(error)
-  }
 }
 
 export const postUserLogin = async (loginInfo: loginInfoType) => {
-  
   const result = await axios.post(`/api/customers/signin`, loginInfo);
 
-    
-  storedToken.Token = result.data.accessToken;
+  // storedToken.Token = result.data.accessToken;
+  setCookie('accessToken', result.data.accessToken);
   setCookie('refreshToken', result.data.refreshToken);
 
   console.log(storedToken.Token)
 }
 
 export const postUserSocialLogin = async (email: string) => {
-  try {
     const result = await axios.post(`/api/customers/signin`, { email })
 
-    storedToken.Token = result.data.accessToken;
+    // storedToken.Token = result.data.accessToken;
+    setCookie('accessToken', result.data.accessToken);
     setCookie('refreshToken', result.data.refreshToken);
-
-  } catch(error) {
-    console.error(error)
-  }
 }
+
 export const getUserNewToken = async () => {
   try {
     const result = await axios.post(`/api/customers/reissue`,{
-      accessToken : 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0YXJwVEFZSzNzbUFrTWJzdnh3d0pQcHJ3Znd3a1g1Q01lVE9lUFc3V2tJPSIsImp0aSI6IkdNWE1IZ0hOQXkyNmtWM3pMZGJoWlE9PSIsInJvbGVzIjoiQ1VTVE9NRVIiLCJpYXQiOjE2NzQxMDc3MzgsImV4cCI6MTY3NDEwOTUzOH0.93DOSKwinCxevHpNzXD5q5Km8cA-qByS9IdSk7iNyEc',
+      accessToken : getCookie('accessToken'),
       refreshToken : getCookie('refreshToken')
     })
-
-    storedToken.Token = result.data.accessToken;
+    // storedToken.Token = result.data.accessToken;
+    setCookie('accessToken', result.data.accessToken);
     setCookie('refreshToken', result.data.refreshToken);
 
   } catch (error) {
@@ -109,75 +81,56 @@ export const useGetUserInfo = (accessToken : string, options?: (Omit<UseQueryOpt
   useQuery(['@userInfo'], () => getUserInfo(),options)
 }
 
-export const putUserInfo = async () => {
-  try {
-    const result = await axios.put(`/api/customers/info`)
+export const putUserInfo = async (newUserInfo : NewUserInfoType) => {
+    const result = await axios.put(`/api/customers/info`,{newUserInfo})
     console.log(result)
     return result
-
-  } catch (error) {
-    console.error(error)
-  }
 }
-export const patchUserPassword = async () => {
-  try {
-    const result = await axios.patch(`/api/customers/password`)
+export const patchUserPassword = async (passwordEdit:string , oldPassword:string) => {
+    const result = await axios.patch(`/api/customers/password`,{
+      passwordEdit,
+      oldPassword
+    })
     console.log(result)
     return result
-
-  } catch (error) {
-    console.error(error)
-  }
 }
 
 
 // seller
 export const postSellerJoin = async (joinInfo : JoinEmailCompType) => {
-  try {
     const result = await axios.post(`/api/sellers/signup`, joinInfo)
-
     return result
-
-  } catch(error) {
-    console.error(error)
-  }
 }
 
-
 export const postSellerLogin = async (loginInfo : loginInfoType) => {
- 
   const result = await axios.post(`/api/sellers/signin`, loginInfo)
 
-  storedToken.Token = result.data.accessToken;
+  // storedToken.Token = result.data.accessToken;
+  setCookie('accessToken', result.data.accessToken);
   setCookie('refreshToken', result.data.refreshToken);
   
   console.log(storedToken.Token)
-
 }
 
 export const getSellerNewToken = async () => {
   try {
     const result = await axios.post(`/api/customers/reissue`,{
-      accessToken : storedToken.Token,
+      accessToken : getCookie('accessToken'),
       refreshToken : getCookie('refreshToken')
     })
 
-    storedToken.Token = result.data.accessToken;
-    setCookie('refreshToken', result.data.refreshToken);
+  // storedToken.Token = result.data.accessToken;
+  setCookie('accessToken', result.data.accessToken);
+  setCookie('refreshToken', result.data.refreshToken);
 
   } catch (error) {
     console.log(error)
   }
 }
 export const getSellerLogOut = async () => {
-  try {
     const result = await axios.post(`/api/sellers/signout`)
     console.log(result)
     return result
-
-  } catch(error) {
-    console.error(error)
-  }
 }
 const getSellerInfo = async (accessToken : string) => {
   try {
@@ -197,23 +150,19 @@ export const useGetSellerInfo = (accessToken : string , options?: (Omit<UseQuery
   useQuery(['@sellerInfo', accessToken], () => getSellerInfo(accessToken),options)
 }
 
-export const putSellerInfo = async () => {
-  try {
-    const result = await axios.put(`/api/sellers/info`)
+export const putSellerInfo = async (newSellerInfo:NewUserInfoType) => {
+    const result = await axios.put(`/api/sellers/info`,{newSellerInfo})
+    console.log(result)
+    return result
+}
+
+export const patchSellerPassword = async (newPasswordEdit:string, oldPassword:string) => {
+
+    const result = await axios.patch(`/api/sellers/password`, {
+      newPasswordEdit,
+      oldPassword
+    })
     console.log(result)
     return result
 
-  } catch (error) {
-    console.error(error)
-  }
-}
-export const patchSellerPassword = async () => {
-  try {
-    const result = await axios.get(`/api/sellers/password`)
-    console.log(result)
-    return result
-    
-  } catch (error) {
-    console.error(error)
-  }
 }

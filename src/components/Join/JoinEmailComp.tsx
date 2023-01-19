@@ -57,9 +57,9 @@ const JoinEmailComp = () => {
     if (joinInfo.password.length < 6 || joinInfo.password !== passwordConfirm)
       return;
 
-    // if (code === '') {
-    //   return alert('이메일 인증이 완료되지 않았습니다.');
-    // }
+    if (code === '') {
+      return alert('이메일 인증이 완료되지 않았습니다.');
+    }
     try {
       if (isSeller) {
         await postSellerJoin(joinInfo).then(() => navigate('/login'));
@@ -67,6 +67,7 @@ const JoinEmailComp = () => {
         await postUserJoin(joinInfo).then(() => navigate('/login'));
       }
     } catch (error) {
+      console.error(error);
       alert('회원 가입에 실패 했습니다.');
     }
   };
@@ -78,20 +79,28 @@ const JoinEmailComp = () => {
       if (!joinInfo.email.match(EMAIL_STYLE)) {
         return alert('이메일 형식에 맞지 않습니다.');
       }
-      const result = await postEmailCheck(joinInfo.email);
-      console.log(result);
+
+      try {
+        await postEmailCheck(joinInfo.email);
+      } catch (err) {
+        console.log(err);
+        // if (err) return alert('이미 사용중인 이메일 입니다.');
+        return;
+      }
 
       //result에 맞게 조건 수정
-      if (result) return alert('이미 사용중인 이메일 입니다.');
 
       setToggleEmailModal(true);
       (codeDivRef.current as HTMLDivElement).style.display = 'flex';
     }
     if (name === 'code') {
-      const result = await postEmailCheckReturn(code);
-
-      //result에 맞게 조건 수정
-      if (result) return alert('잘못된 코드 입니다.');
+      try {
+        await postEmailCheckReturn(joinInfo.email, code);
+      } catch (err) {
+        console.error(err);
+        alert('잘못된 코드 입니다.');
+        return;
+      }
 
       setToggleCodeModal(true);
       (codeDivRef.current as HTMLDivElement).style.display = 'none';
@@ -125,7 +134,7 @@ const JoinEmailComp = () => {
             인증하기
           </button>
         </div>
-        {/* <div className='flex relative mt-2 w-full hidden' ref={codeDivRef}>
+        <div className='flex relative mt-2 w-full hidden' ref={codeDivRef}>
           <input
             className='p-2 input w-full max-w-xs bg-white focus:outline-none'
             name='code'
@@ -143,7 +152,7 @@ const JoinEmailComp = () => {
           >
             인증완료
           </button>
-        </div> */}
+        </div>
         <div className='flex relative mt-2 w-full'>
           <input
             className='p-2 input w-full max-w-xs bg-white focus:outline-none'

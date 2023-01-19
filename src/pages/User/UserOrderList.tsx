@@ -11,6 +11,7 @@ export type UserOrderListType = {
   userName: string;
   phoneNumber: string;
   address: string;
+  status: string;
   orderDate: string;
 };
 
@@ -19,9 +20,13 @@ export default function UserOrderList() {
 
   useEffect(() => {
     (async () => {
-      const result = await getUserOrderLIst();
-      console.log(result);
-      setOrderList(result);
+      try {
+        const result = await getUserOrderLIst();
+        setOrderList(result);
+      } catch (error) {
+        console.log(error);
+        alert('오류가 생겼습니다.');
+      }
     })();
   }, []);
 

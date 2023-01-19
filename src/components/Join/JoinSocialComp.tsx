@@ -52,7 +52,9 @@ const JoinSocialComp = () => {
 
     try {
       await postUserJoin(joinInfo).then(() => navigate('/login'));
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { postOrders } from '../../api/orderService';
+import { cartContentType } from '../../pages/Cart';
 import { useUserInfo } from '../../store/UserInfoProvider';
 import AddressSearch from './AddressSearch';
 import OrderFormItemCard from './OrderFormItemCard';
@@ -112,7 +114,7 @@ const OrderFormComp = () => {
               주문 정보
             </span>
             <div
-              className='input input-bordered w-full bg-white h-fit px-3 pb-3 focus:outline-none'
+              className='input input-bordered w-full bg-white min-h-50px h-fit px-3 pb-3 focus:outline-none'
               ref={orderDetailRef}
             >
               {orderItems.map((item: cartContentType) => (
@@ -156,7 +158,7 @@ const OrderFormComp = () => {
             <tr>
               <th>배송비</th>
               <td className='text-right'>
-                {totalPrice > 70000 ? '0' : deliveryPrice}원
+                {totalPrice > 70000 ? '0' : deliveryPrice.toLocaleString()}원
               </td>
             </tr>
             <tr>

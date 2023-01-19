@@ -20,9 +20,13 @@ const SellerOrderList = () => {
 
   useEffect(() => {
     (async () => {
-      const result = await getSellerOrderLIst();
-      console.log(result);
-      setOrderList(result);
+      try {
+        const result = await getSellerOrderLIst();
+        setOrderList(result);
+      } catch (error) {
+        console.error(error);
+        alert('오류가 발생 했습니다.');
+      }
     })();
   }, []);
 

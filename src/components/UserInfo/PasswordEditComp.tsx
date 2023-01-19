@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { patchUserPassword } from '../../api/userService';
+import { patchSellerPassword, patchUserPassword } from '../../api/userService';
+import { useUserInfo } from '../../store/UserInfoProvider';
 
 const PasswordEditComp = () => {
-  const [passwordEdit, setPasswordEdit] = useState('');
-  const [passwordEditConfirm, setPasswordEditConfirm] = useState('');
+  const [newPasswordEdit, setNewPasswordEdit] = useState('');
+  const [newPasswordEditConfirm, setNewPasswordEditConfirm] = useState('');
+  const [oldPassword, setOldPassword] = useState('');
+  const { userInfo, setUserInfo } = useUserInfo();
   const navgate = useNavigate();
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -13,16 +16,28 @@ const PasswordEditComp = () => {
     } = event;
 
     if (name === 'passwordConfirm') {
-      setPasswordEditConfirm(value);
+      setNewPasswordEditConfirm(value);
     } else if (name === 'password') {
-      setPasswordEdit(value);
+      setNewPasswordEdit(value);
+    } else if (name === 'oldPassword') {
+      setOldPassword(value);
     }
   };
 
-  const eidited = (event: React.MouseEvent<HTMLButtonElement>) => {
-    //password수정 api 전송
-    patchUserPassword();
-    navgate('/userinfo');
+  const eidited = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    try {
+      if (userInfo.type === 'user') {
+        await patchUserPassword(newPasswordEdit, oldPassword).then(() =>
+          navgate('/userinfo')
+        );
+      } else if (userInfo.type === 'seller') {
+        await patchSellerPassword(newPasswordEdit, oldPassword).then(() =>
+          navgate('/userinfo')
+        );
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -30,14 +45,32 @@ const PasswordEditComp = () => {
       <div className='flex relative mt-10 w-full'>
         <input
           className='mt-2 p-2 input w-full max-w-xs bg-white focus:outline-none'
-          name='password'
+          name='oldPassword'
           type='password'
-          placeholder='Password'
+          placeholder='Old Password'
           required
-          value={passwordEdit}
+          value={oldPassword}
           onChange={(e) => onChange(e)}
         />
-        {passwordEdit && passwordEdit.length < 6 ? (
+        {oldPassword && oldPassword.length < 6 ? (
+          <span className='absolute left-full bottom-2 ml-2 whitespace-nowrap text-sm text-red-500'>
+            비밀번호는 최소 6글자 이상 이어야 합니다.
+          </span>
+        ) : (
+          ''
+        )}
+      </div>
+      <div className='flex relative w-full'>
+        <input
+          className='mt-2 p-2 input w-full max-w-xs bg-white focus:outline-none'
+          name='password'
+          type='password'
+          placeholder='New Password'
+          required
+          value={newPasswordEdit}
+          onChange={(e) => onChange(e)}
+        />
+        {newPasswordEdit && newPasswordEdit.length < 6 ? (
           <span className='absolute left-full bottom-2 ml-2 whitespace-nowrap text-sm text-red-500'>
             비밀번호는 최소 6글자 이상 이어야 합니다.
           </span>
@@ -50,12 +83,13 @@ const PasswordEditComp = () => {
           className='mt-2 p-2 input w-full max-w-xs bg-white focus:outline-none'
           name='passwordConfirm'
           type='password'
-          placeholder='Password Confirm'
+          placeholder='New Password Confirm'
           required
-          value={passwordEditConfirm}
+          value={newPasswordEditConfirm}
           onChange={(e) => onChange(e)}
         />
-        {passwordEditConfirm && passwordEditConfirm !== passwordEdit ? (
+        {newPasswordEditConfirm &&
+        newPasswordEditConfirm !== newPasswordEdit ? (
           <span className='absolute left-full bottom-2 ml-2 whitespace-nowrap text-sm text-red-500'>
             비밀번호가 일치하지 않습니다.
           </span>
