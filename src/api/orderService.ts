@@ -1,5 +1,3 @@
-import axios from 'axios';
-import { EVERY_CAMPIING_URL } from '../constant/URL';
 import { authAxios } from './authAxios';
 
 export const postOrders = async (orderInfo : {  email: string;
@@ -22,8 +20,8 @@ export const postOrders = async (orderInfo : {  email: string;
 export const getUserOrderLIst = async () => {
   try {
     const result = await authAxios.get('/api/orders/customer')
-    console.log(result)
-    return result
+    console.log(result.data.content)
+    return result.data.content
 
   } catch (error) {
     console.error(error)
@@ -31,13 +29,9 @@ export const getUserOrderLIst = async () => {
 }
 export const getSellerOrderLIst = async () => {
   try {
-    const result = await axios.get(`/api/orders/seller`, {
-      headers: {
-        Authorization : `eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjVnZmNXNRSlphcGJSbW1nbzJqK0Z3PT0iLCJqdGkiOiJ2QTN3c0lIckxFdGRQU01hNCtRSTVnPT0iLCJyb2xlcyI6IlNFTExFUiIsImlhdCI6MTY3NDA1MjE1OSwiZXhwIjoxNjc0MDUzOTU5fQ.ml3OV9jj-38EcF7OLpL6tbG8ih9bJuV1mUgolZXoeBE`
-      }
-      })
+    const result = await authAxios.get(`/api/orders/seller`)
     
-    console.log(result.data.items)
+    console.log(result.data.content)
     // return result.data.content.map((items) => {
     //   return {
     //     productId : items.productId ,
@@ -51,7 +45,7 @@ export const getSellerOrderLIst = async () => {
     //     orderDate : items.createdAt,
     //   }
     // }
-    return result
+    return result.data.content
 
   } catch (error) {
     console.error(error)

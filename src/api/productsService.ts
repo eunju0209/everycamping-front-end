@@ -68,7 +68,9 @@ async function getItems(
   filter?: string
 ): Promise<ProductType[]> {
   const res = await authAxios.get(
+
     `/api/products?category=${category}&sorting=${filter}`
+
   );
   return res.data.content;
 }
