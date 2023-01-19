@@ -1,27 +1,41 @@
-import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
+import { authAxios } from './authAxios';
 
-export const getCartItems = async () => {
+
+const getCartItems = async () => {
   try {
-    const result = await axios.get('/carts')
-    return result
+    const result = await authAxios.get(`/assets/data/cartItem.json`)
+
+    return result.data.content
+    
   } catch (error) {
     console.error(error)
   }
 }
-export const patchCartItems = async () => {
+export const useGetCartItems = () => {
+  return useQuery(['@CartItem'],getCartItems)
+}
+
+export const patchCartItems = async ({ id, itemCounts }: {
+  id: number;
+  itemCounts: number;
+} ) => {
   try {
-    const result = await axios.patch(`/carts/${id}`, {
+    const result = await authAxios.patch(`/api/carts/${id}`, {itemCounts
     })
+    console.log(result)
     return result
+
   } catch (error) {
     console.error(error)
   }
 }
-export const deleteCartItems = async () => {
+export const deleteCartItems = async (id : number) => {
   try {
-    const result = await axios.delete(`/carts/${id}`, {
-    })
+    const result = await authAxios.delete(`/api/carts/${id}`)
+    console.log(result)
     return result
+
   } catch (error) {
     console.error(error)
   }

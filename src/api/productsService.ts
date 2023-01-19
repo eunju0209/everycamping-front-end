@@ -4,6 +4,7 @@ import { ProductDetailType } from '../components/ProductInfo';
 import { ReviewType } from '../components/ReviewList';
 import { NewProductType } from '../components/ProductForm';
 import { NewReviewType } from '../components/ReviewForm';
+import { authAxios } from './authAxios';
 
 export async function getProducts(
   category?: string,
@@ -19,7 +20,7 @@ export async function getProductDetail(id: string): Promise<ProductDetailType> {
 }
 
 export async function addNewProduct(product: NewProductType) {
-  return axios.post('/', product);
+  return authAxios.post('/api//manage/products', product);
 }
 
 export async function getReviews(productId: string): Promise<ReviewType[]> {
