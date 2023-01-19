@@ -10,7 +10,6 @@ const Chat = () => {
 
   const popChat = () => {
     if (chatRef.current) {
-      console.log(chatRef.current.style.display);
       chatRef.current.style.display === 'flex'
         ? (chatRef.current.style.display = 'none')
         : (chatRef.current.style.display = 'flex');
@@ -18,13 +17,14 @@ const Chat = () => {
   };
 
   const handleContentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // setMassage(event.target.value);
+    setMassage(event.target.value);
   };
 
   const messageSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setChatedMessage((prev) => [...prev, message]);
     SendMessage(message);
+    console.log(event);
     setMassage('');
   };
 
@@ -46,8 +46,8 @@ const Chat = () => {
       >
         <div className='px-3 py-5 h-600px overflow-auto' ref={messageBoxRef}>
           <ChatLeft />
-          {chatedMessage.map((message) => (
-            <ChatRight message={message} />
+          {chatedMessage.map((message, idx) => (
+            <ChatRight key={idx} message={message} />
           ))}
         </div>
         <form className='form-control' onSubmit={messageSubmit}>
@@ -58,11 +58,11 @@ const Chat = () => {
               className='input input-bordered w-full focus:outline-none'
               id='name'
               value={message}
-              onChange={handleContentChange}
+              onChange={(e) => handleContentChange(e)}
               autoComplete='off'
             />
             <span>
-              <button id='send'>send</button>
+              <button type='submit'>send</button>
             </span>
           </label>
         </form>

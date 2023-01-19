@@ -16,7 +16,7 @@ export default function App() {
             <Outlet />
           </section>
           <Footer />
-          {/* <Chatting /> */}
+          <Chatting />
         </div>
       </QueryClientProvider>
     </UserInfoProvider>

@@ -4,7 +4,7 @@ import { authAxios } from './authAxios';
 
 const getCartItems = async () => {
   try {
-    const result = await authAxios.get(`/assets/data/cartItem.json`)
+    const result = await authAxios.get(`/api/carts`)
 
     return result.data.content
     

@@ -42,7 +42,7 @@ export default function Cart() {
       return (
         <>
           <div className='mt-7'>
-            {cartItems?.map((items: cartContentType) => (
+            {cartItems.map((items: cartContentType) => (
               <CartItemCard
                 key={items.productId}
                 id={items.productId}

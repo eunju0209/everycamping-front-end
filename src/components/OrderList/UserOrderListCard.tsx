@@ -1,23 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { patchOrderCancel, patchOrderConfirm } from '../../api/orderService';
+import { UserOrderListType } from '../../pages/User/UserOrderList';
 
 type UserOrderListCardProps = {
-  list: {
-    id: number;
-    img: string;
-    productName: string;
-    count: number;
-    payPrice: number;
-    userName: string;
-    phoneNumber: string;
-    address: string;
-    orderDate: string;
-  };
+  list: UserOrderListType;
 };
 
 const UserOrderListCard = ({
   list: {
-    id,
+    productId,
     img,
     productName,
     count,
@@ -30,10 +21,10 @@ const UserOrderListCard = ({
 }: UserOrderListCardProps) => {
   const navigate = useNavigate();
   const orderConfirm = async () => {
-    await patchOrderConfirm(id);
+    await patchOrderConfirm(productId);
   };
   const orderCancel = async () => {
-    await patchOrderCancel(id);
+    await patchOrderCancel(productId);
   };
   return (
     <div className='flex rounded bg-white mt-3 p-2'>
@@ -64,7 +55,7 @@ const UserOrderListCard = ({
             className='btn btn-primary btn-sm my-1'
             onClick={() =>
               navigate('/review/new', {
-                state: id,
+                state: productId,
               })
             }
           >

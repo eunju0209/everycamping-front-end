@@ -71,8 +71,8 @@ async function getItems(
   category?: string,
   filter?: string
 ): Promise<ProductType[]> {
-  const res = await axios.get(
-    `/assets/data/${filter ? filter : category}.json`
+  const res = await authAxios.get(
+    `/api/products`
   );
   return res.data.items;
 }

@@ -1,22 +1,13 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { SellerOrderListType } from '../../pages/SellerOrderList';
 
 type SellerOrderListCardProps = {
-  list: {
-    id: number;
-    img: string;
-    productName: string;
-    count: number;
-    payPrice: number;
-    userName: string;
-    phoneNumber: string;
-    address: string;
-    orderDate: string;
-  };
+  list: SellerOrderListType;
 };
 
 const SellerOrderListCard = ({
   list: {
-    id,
+    productId,
     img,
     productName,
     count,
@@ -24,11 +15,16 @@ const SellerOrderListCard = ({
     userName,
     phoneNumber,
     address,
+    status,
     orderDate,
   },
 }: SellerOrderListCardProps) => {
-  const [orderState, setOrderState] = useState('--------');
+  const [orderState, setOrderState] = useState('');
   const labelRef = useRef<HTMLUListElement>(null);
+
+  useEffect(() => {
+    setOrderState(status);
+  }, [status]);
 
   return (
     <div className='flex rounded bg-white mt-3 p-2'>
@@ -62,7 +58,7 @@ const SellerOrderListCard = ({
             className='dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52'
             ref={labelRef}
           >
-            <li>
+            {/* <li>
               <p
                 onClick={() => {
                   setOrderState('주문 확인');
@@ -81,7 +77,7 @@ const SellerOrderListCard = ({
               >
                 배송 준비중
               </p>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>
