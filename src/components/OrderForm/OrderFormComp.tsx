@@ -9,23 +9,23 @@ export type OrderInfo = {
   nickName: string;
   phoneNumber: string;
   address: string;
-  items: object;
   request: string;
 };
 
 const OrderFormComp = () => {
   const { userInfo } = useUserInfo();
   const location = useLocation();
-  const { totalPrice } = location.state;
+  const { totalPrice, orderItems } = location.state;
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const orderDetailRef = useRef<HTMLDivElement>(null);
   const [orderInfo, setOrderInfo] = useState<OrderInfo>({
     email: '',
     nickName: '',
     phoneNumber: '',
     address: '',
-    items: [],
     request: '',
   });
+  const deliveryPrice = 3000;
 
   useEffect(() => {
     setOrderInfo((prev) => ({
@@ -50,7 +50,6 @@ const OrderFormComp = () => {
   };
 
   const handleResizeHeight = () => {
-    console.log('a');
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
       textareaRef.current.style.height =
@@ -58,8 +57,13 @@ const OrderFormComp = () => {
     }
   };
 
-  const formSubmit = () => {
-    console.log(orderInfo);
+  const formSubmit = async () => {
+    console.log(orderInfo, orderItems, totalPrice);
+    await postOrders({
+      ...orderInfo,
+      orderItems,
+      totalPrice,
+    });
   };
   return (
     <>
@@ -107,8 +111,18 @@ const OrderFormComp = () => {
             <span className='justify-center min-w-74px whitespace-nowrap'>
               주문 정보
             </span>
-            <div className='input input-bordered w-full bg-white focus:outline-none'>
-              <OrderFormItemCard />
+            <div
+              className='input input-bordered w-full bg-white h-fit px-3 pb-3 focus:outline-none'
+              ref={orderDetailRef}
+            >
+              {orderItems.map((item: cartContentType) => (
+                <OrderFormItemCard
+                  key={item.productId}
+                  title={item.name}
+                  count={item.quantity}
+                  price={item.price}
+                />
+              ))}
             </div>
           </label>
         </div>
@@ -120,7 +134,7 @@ const OrderFormComp = () => {
               요청 사항
             </span>
             <textarea
-              className='input input-bordered pt-2 w-full text-lg bg-white focus:outline-none'
+              className='input input-bordered pt-2 w-full text-lg bg-white focus:outline-none h-fit'
               name='request'
               value={orderInfo.request}
               ref={textareaRef}
@@ -142,16 +156,15 @@ const OrderFormComp = () => {
             <tr>
               <th>배송비</th>
               <td className='text-right'>
-                {totalPrice > 70000 ? '0' : '3,000'}원
+                {totalPrice > 70000 ? '0' : deliveryPrice}원
               </td>
             </tr>
             <tr>
               <th>총 금액</th>
               <td className='text-right'>
-                {' '}
                 {totalPrice > 70000
                   ? totalPrice.toLocaleString()
-                  : (totalPrice + 3000).toLocaleString()}
+                  : (totalPrice + deliveryPrice).toLocaleString()}
                 원
               </td>
             </tr>

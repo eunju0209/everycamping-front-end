@@ -8,14 +8,12 @@ type UserInfoEditCompProps = {
   userInfo: newUserInfo;
   newUserInfo: newUserInfo;
   setNewUserInfo: React.Dispatch<React.SetStateAction<newUserInfo>>;
-  isSeller: boolean;
 };
 
 const UserInfoEditComp = ({
   userInfo,
   newUserInfo,
   setNewUserInfo,
-  isSeller,
 }: UserInfoEditCompProps) => {
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
@@ -28,9 +26,6 @@ const UserInfoEditComp = ({
     }));
   };
 
-  const checked = (event: React.MouseEvent<HTMLButtonElement>) => {
-    //닉네임 중복체크
-  };
   return (
     <div>
       <div className='flex flex-col mt-10'>
@@ -57,15 +52,6 @@ const UserInfoEditComp = ({
               autoComplete='off'
             />
           </label>
-          <button
-            className='absolute left-full w-24 ml-2 btn btn-primary'
-            name='nickName'
-            type='button'
-            onClick={(e) => checked(e)}
-          >
-            중복확인
-          </button>
-
           <div className='form-control mt-3'>
             <label className='input-group'>
               <span className='whitespace-nowrap'>연락처</span>

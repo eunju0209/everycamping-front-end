@@ -13,7 +13,6 @@ const UserInfo = () => {
     nickName: '',
     phoneNumber: '',
   });
-  const [isSeller, setIsSeller] = useState(false);
 
   useEffect(() => {
     setNewUserInfo(userInfo);
@@ -35,7 +34,6 @@ const UserInfo = () => {
           userInfo={userInfo}
           newUserInfo={newUserInfo}
           setNewUserInfo={setNewUserInfo}
-          isSeller={isSeller}
         />
       ) : (
         <UserInfoComp userInfo={userInfo} />
@@ -54,11 +52,7 @@ const UserInfo = () => {
           <button
             className='w-24 p-2 btn btn-primary'
             type='button'
-            onClick={(e) =>
-              navigate('/PasswordEdit', {
-                state: isSeller,
-              })
-            }
+            onClick={(e) => navigate('/PasswordEdit')}
           >
             비밀번호 수정
           </button>

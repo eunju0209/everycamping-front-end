@@ -1,16 +1,14 @@
+import { getAdminSellerList } from '../api/adminService';
 import SellerConfirmCard from '../components/Admin/SellerConfirmCard';
 
 const SellerConfirm = () => {
   // 승인 대기 판매자 리스트 받아오기 api
+  // getAdminSellerList()
 
-  const sellerList = [
-    {
-      ID: 'cow_boy27@naver.com',
-      Name: '박재형',
-      PhoneNumber: '010-3558-3752',
-      sellerConfirm: false,
-    },
-  ];
+  const sellerList = async () => {
+    const result = await getAdminSellerList();
+    return result;
+  };
 
   return (
     <div className='max-w-screen-xl mx-auto'>

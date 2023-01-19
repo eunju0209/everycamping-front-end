@@ -4,6 +4,7 @@ import { ProductDetailType } from '../components/ProductInfo';
 import { ReviewType } from '../components/ReviewList';
 import { NewProductType } from '../components/ProductForm';
 import { NewReviewType } from '../components/ReviewForm';
+import { authAxios } from './authAxios';
 
 const token = '';
 
