@@ -5,6 +5,8 @@ import { ReviewType } from '../components/ReviewList';
 import { NewProductType } from '../components/ProductForm';
 import { NewReviewType } from '../components/ReviewForm';
 
+const token = '';
+
 export async function getProducts(
   category?: string,
   filter?: string,
@@ -18,8 +20,25 @@ export async function getProductDetail(id: string): Promise<ProductDetailType> {
   return res.data.items[0];
 }
 
-export async function addNewProduct(product: NewProductType) {
-  return axios.post('/', product);
+export async function addNewProduct(
+  product: NewProductType,
+  image: File,
+  detailImage: File
+) {
+  const formData = new FormData();
+  const blob = new Blob([JSON.stringify(product)], {
+    type: 'application/json',
+  });
+  formData.append('form', blob);
+  formData.append('image', image);
+  formData.append('detailImage', detailImage);
+
+  return axios.post('api/manage/products', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: token,
+    },
+  });
 }
 
 export async function getReviews(productId: string): Promise<ReviewType[]> {

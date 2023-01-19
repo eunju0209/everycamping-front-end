@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useUserInfo } from '../../context/UserInfoProvider';
+import { useUserInfo } from '../../store/UserInfoProvider';
 import AddressSearch from './AddressSearch';
 import OrderFormItemCard from './OrderFormItemCard';
 

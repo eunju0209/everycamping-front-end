@@ -6,7 +6,7 @@ import {
   postSellerJoin,
   postUserJoin,
 } from '../../api/userService';
-import { EMAIL_STYLE } from '../../constant/emailStyle';
+// import { EMAIL_STYLE } from '../../constant/emailStyle';
 
 import Modal from '../Modal/Modal';
 

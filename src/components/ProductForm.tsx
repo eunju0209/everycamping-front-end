@@ -12,6 +12,8 @@ export type NewProductType = {
 };
 
 export default function ProductForm() {
+  const [image, setImage] = useState<File>();
+  const [detailImage, setDetailImage] = useState<File>();
   const [product, setProduct] = useState({
     category: 'category',
     name: '',
@@ -26,6 +28,15 @@ export default function ProductForm() {
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
+    const { files } = e.target as HTMLInputElement;
+    if (name === 'image') {
+      setImage((files as FileList)[0]);
+      return;
+    }
+    if (name === 'detailImage') {
+      setDetailImage((files as FileList)[0]);
+      return;
+    }
     setProduct((product) => {
       if (name === 'onsale') {
         return { ...product, onsale: !product.onsale };
@@ -36,7 +47,7 @@ export default function ProductForm() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    addNewProduct(product);
+    image && detailImage && addNewProduct(product, image, detailImage);
   };
 
   return (
@@ -47,7 +58,7 @@ export default function ProductForm() {
         onChange={handleChange}
         value={product.category ?? ''}
       >
-        <option disabled selected value='category'>
+        <option disabled value='category'>
           카테고리
         </option>
         <option value='tent'>Tent</option>
@@ -87,6 +98,7 @@ export default function ProductForm() {
           onChange={handleChange}
         />
       </label>
+      <span>대표이미지</span>
       <input
         type='file'
         name='image'
@@ -103,6 +115,15 @@ export default function ProductForm() {
         required
         onChange={handleChange}
       ></textarea>
+      <span>상세이미지</span>
+      <input
+        type='file'
+        name='detailImage'
+        className='file-input w-full max-w-xs bg-white'
+        accept='image/*'
+        required
+        onChange={handleChange}
+      />
       <label className='label cursor-pointer'>
         <span className='label-text mr-2'>판매</span>
         <input

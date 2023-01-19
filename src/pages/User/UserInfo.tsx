@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserInfoComp from '../../components/UserInfo/UserInfoComp';
 import UserInfoEditComp from '../../components/UserInfo/UserInfoEditComp';
-import { useUserInfo } from '../../context/UserInfoProvider';
+import { useUserInfo } from '../../store/UserInfoProvider';
 
 const UserInfo = () => {
   const navigate = useNavigate();
