@@ -1,7 +1,7 @@
 import ProductList from '../components/ProductList';
 
 type ProductsProps = {
-  category?: 'all' | 'tent' | 'cook' | 'accessory';
+  category?: 'ALL' | 'TENT' | 'COOK' | 'ACCESSORY';
 };
 
 export default function Products({ category }: ProductsProps) {
@@ -10,7 +10,7 @@ export default function Products({ category }: ProductsProps) {
       {category && (
         <h1 className='text-4xl mb-8 text-center uppercase'>{category}</h1>
       )}
-      <ProductList category={category} />
+      <ProductList category={category} filter='recency' />
     </>
   );
 }
