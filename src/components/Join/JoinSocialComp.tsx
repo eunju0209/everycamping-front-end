@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { postUserJoin } from '../../api/userService';
 
 type JoinSocialCompType = {
   email: string;
@@ -44,24 +45,16 @@ const JoinSocialComp = () => {
       }));
     }
   };
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (joinInfo.password.length < 6 || joinInfo.password !== passwordConfirm)
       return;
 
     try {
-      // 구매자 회원가입 api 전송
-
-      console.log(joinInfo);
-
-      navigate('/login');
+      await postUserJoin(joinInfo).then(() => navigate('/login'));
     } catch (error) {}
   };
 
-  const checked = (event: React.MouseEvent<HTMLButtonElement>) => {
-    //닉네임 중복체크
-    joinInfo.nickName;
-  };
   return (
     <div>
       <form className='flex flex-col mt-10' onSubmit={(e) => onSubmit(e)}>
@@ -97,14 +90,6 @@ const JoinSocialComp = () => {
             value={joinInfo.nickName}
             onChange={(e) => onChange(e)}
           />
-          <button
-            className='absolute left-full w-24 ml-2 p-2 btn btn-primary'
-            name='nickName'
-            type='button'
-            onClick={(e) => checked(e)}
-          >
-            중복확인
-          </button>
         </div>
         <div className='flex relative w-full'>
           <input

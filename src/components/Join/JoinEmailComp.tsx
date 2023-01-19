@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import {
   postEmailCheck,
   postEmailCheckReturn,
-  postNickNameCheck,
   postSellerJoin,
   postUserJoin,
 } from '../../api/userService';
+import { EMAIL_STYLE } from '../../constant/emailStyle';
 
 import Modal from '../Modal/Modal';
 
-type JoinEmailCompType = {
+export type JoinEmailCompType = {
   email: string;
   nickName: string;
   password: string;
@@ -52,49 +52,54 @@ const JoinEmailComp = () => {
       }));
     }
   };
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (joinInfo.password.length < 6 || joinInfo.password !== passwordConfirm)
       return;
 
+    // if (code === '') {
+    //   return alert('이메일 인증이 완료되지 않았습니다.');
+    // }
     try {
       if (isSeller) {
-        // 판매자 회원가입 api 전송
-        postSellerJoin();
+        await postSellerJoin(joinInfo).then(() => navigate('/login'));
       } else {
-        // 구매자 회원가입 api 전송
-        postUserJoin();
+        await postUserJoin(joinInfo).then(() => navigate('/login'));
       }
-
-      console.log(joinInfo);
-
-      navigate('/login');
-    } catch (error) {}
+    } catch (error) {
+      alert('회원 가입에 실패 했습니다.');
+    }
   };
 
-  const checked = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const checked = async (event: React.MouseEvent<HTMLButtonElement>) => {
     const { name } = event.target as HTMLButtonElement;
-    //email, nickName 서버 전송 / 중복 확인
 
     if (name === 'email') {
+      if (!joinInfo.email.match(EMAIL_STYLE)) {
+        return alert('이메일 형식에 맞지 않습니다.');
+      }
+      const result = await postEmailCheck(joinInfo.email);
+      console.log(result);
+
+      //result에 맞게 조건 수정
+      if (result) return alert('이미 사용중인 이메일 입니다.');
+
       setToggleEmailModal(true);
-      //email 인증 코드 전송.
-      postEmailCheck(joinInfo.email);
-      joinInfo.email;
       (codeDivRef.current as HTMLDivElement).style.display = 'flex';
-    } else if (name === 'code') {
-      //email 인증 코드 일치 확인
-      postEmailCheckReturn();
+    }
+    if (name === 'code') {
+      const result = await postEmailCheckReturn(code);
+
+      //result에 맞게 조건 수정
+      if (result) return alert('잘못된 코드 입니다.');
+
       setToggleCodeModal(true);
       (codeDivRef.current as HTMLDivElement).style.display = 'none';
       (emailInputRef.current as HTMLInputElement).disabled = true;
       (emailButtonRef.current as HTMLInputElement).disabled = true;
-    } else if (name === 'nickName') {
-      // nickName 중복 확인
-      postNickNameCheck();
-      joinInfo.nickName;
     }
   };
+
   return (
     <div>
       <form className='flex flex-col mt-10' onSubmit={(e) => onSubmit(e)}>
@@ -120,13 +125,12 @@ const JoinEmailComp = () => {
             인증하기
           </button>
         </div>
-        <div className='flex relative mt-2 w-full hidden' ref={codeDivRef}>
+        {/* <div className='flex relative mt-2 w-full hidden' ref={codeDivRef}>
           <input
             className='p-2 input w-full max-w-xs bg-white focus:outline-none'
             name='code'
             type='text'
             placeholder='인증코드'
-            required
             autoComplete='off'
             value={code}
             onChange={(e) => onChange(e)}
@@ -139,7 +143,7 @@ const JoinEmailComp = () => {
           >
             인증완료
           </button>
-        </div>
+        </div> */}
         <div className='flex relative mt-2 w-full'>
           <input
             className='p-2 input w-full max-w-xs bg-white focus:outline-none'
@@ -151,14 +155,6 @@ const JoinEmailComp = () => {
             value={joinInfo.nickName}
             onChange={(e) => onChange(e)}
           />
-          <button
-            className='absolute left-full w-24 ml-2 p-2 btn btn-primary'
-            name='nickName'
-            type='button'
-            onClick={(e) => checked(e)}
-          >
-            중복확인
-          </button>
         </div>
         <div className='flex relative w-full'>
           <input
@@ -239,6 +235,24 @@ const JoinEmailComp = () => {
       <Modal toggleModal={toggleCodeModal} setToggleModal={setToggleCodeModal}>
         이메일 인증이 완료 되었습니다.
       </Modal>
+      {/* <div className='alert alert-error shadow-lg whitespace-nowrap'>
+        <div>
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            className='stroke-current flex-shrink-0 h-6 w-6'
+            fill='none'
+            viewBox='0 0 24 24'
+          >
+            <path
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth='2'
+              d='M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z'
+            />
+          </svg>
+          <span>이메일 형식에 맞지 않습니다.</span>
+        </div>
+      </div> */}
     </div>
   );
 };
