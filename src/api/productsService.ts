@@ -46,8 +46,19 @@ export async function getReviews(productId: string): Promise<ReviewType[]> {
   return res.data.items;
 }
 
-export async function addNewReview(review: NewReviewType) {
-  return axios.post('/', review);
+export async function addNewReview(review: NewReviewType, image: File) {
+  const formData = new FormData();
+  const blob = new Blob([JSON.stringify(review)], {
+    type: 'application/json',
+  });
+  formData.append('form', blob);
+  formData.append('image', image);
+  return axios.post('/api/reviews', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: token,
+    },
+  });
 }
 
 async function search(keyword: string): Promise<ProductType[]> {
