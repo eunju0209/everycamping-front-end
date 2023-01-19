@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { addCart } from '../api/cartService';
 import { getProductDetail } from '../api/productsService';
 
 export type ProductDetailType = {
@@ -52,7 +53,11 @@ export default function ProductInfo({ productId }: ProductInfoProps) {
               +
             </button>
           </div>
-          <label htmlFor='my-modal' className='btn btn-primary'>
+          <label
+            htmlFor='my-modal'
+            className='btn btn-primary'
+            onClick={() => addCart(productId, quantity)}
+          >
             장바구니 추가
           </label>
           <input type='checkbox' id='my-modal' className='modal-toggle' />

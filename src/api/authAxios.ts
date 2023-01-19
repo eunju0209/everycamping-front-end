@@ -11,7 +11,7 @@ authAxios.interceptors.request.use(
     if (config.headers) {
       config.headers = {
         Authorization:
-          'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoMDk5WXRycE5FTUZGM0t5OUgwVWl3PT0iLCJqdGkiOiJ1RkFFaVVwZnVmdE1KN3l5WE5KRkdnPT0iLCJyb2xlcyI6IlNFTExFUiIsImlhdCI6MTY3NDEyODUyNywiZXhwIjoxNjc0MTMwMzI3fQ.SsYREMN3JbUUsdOo_g__dRmbw4YY9Nj_khwZ3G5IY_4',
+          'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoMDk5WXRycE5FTUZGM0t5OUgwVWl3PT0iLCJqdGkiOiJ1RkFFaVVwZnVmdE1KN3l5WE5KRkdnPT0iLCJyb2xlcyI6IlNFTExFUiIsImlhdCI6MTY3NDEzMDQ2MSwiZXhwIjoxNjc0MTMyMjYxfQ.AgkmmrJJyAjkwjxX6_7pgagT-Eizh64G7wYMj4zeOwQ',
       };
     }
     return config;
