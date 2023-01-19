@@ -11,8 +11,8 @@ export type ProductType = {
 };
 
 type ProductsProps = {
-  category?: 'all' | 'tent' | 'cook' | 'accessory';
-  filter?: 'new' | 'best' | 'price';
+  category?: 'ALL' | 'TENT' | 'COOK' | 'ACCESSORY';
+  filter?: string;
   keyword?: string;
 };
 
