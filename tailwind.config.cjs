@@ -6,6 +6,9 @@ module.exports = {
       spacing: {
         '700px': '700px',
       },
+      height: {
+        '600px': '600px'
+      },
       maxHeight: {
         '700px': '700px',
       },
