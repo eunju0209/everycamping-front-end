@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useUserInfo } from '../../context/UserInfoProvider';
+import {
+  postSellerLogin,
+  postUserLogin,
+  useGetSellerInfo,
+  useGetUserInfo,
+} from '../../api/userService';
+import { useUserInfo } from '../../store/UserInfoProvider';
 import KakaoLogin from './socialLogin/KakaoLogin';
 
 export type loginInfoType = {
@@ -15,7 +21,7 @@ const LoginComp = () => {
   });
   const [isSeller, setIsSeller] = useState(false);
   const navigate = useNavigate();
-  const { userInfo, setUserInfo } = useUserInfo();
+  // const { userInfo, setUserInfo } = useUserInfo();
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
@@ -30,27 +36,52 @@ const LoginComp = () => {
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     try {
-      //  login 정보 받아서 서버에 전송
       if (isSeller) {
-        // 판매자 로그인 api 전송 // accesstoken 받기
-        // const userToken = await postSellerLogin(loginInfo);
-        // const result = await getUserInfo(userToken);
-        // setUserInfo({type: seller});
+        await postSellerLogin(loginInfo).then(() => navigate('/'));
+        // useGetSellerInfo(storedToken.Token, {
+        //   onSuccess: (data) => {
+        //     console.log(data);
+        //     // setUserInfo({
+        //     //   ...data,
+        //     //   type: 'seller',
+        //     //   isLogin: true,
+        //     // });
+        //   },
+        //   onError: () => {
+        //     alert('로그인에 실패 했습니다.');
+        // },
+        // });
+        navigate('/');
       } else {
-        // 구매자 로그인 api 전송 // accesstoken 받기
-        // const userToken = await postUserLogin(loginInfo);
-        // const result = await getUserInfo(userToken);
-        // setUserInfo({type: user})
+        await postUserLogin(loginInfo).then(() => navigate('/'));
+        // useGetUserInfo(storedToken.Token, {
+        //   onSuccess: (data) => {
+        //     console.log(data);
+        //     // setUserInfo({
+        //     //   ...data,
+        //     //   type: 'user',
+        //     //   isLogin: true,
+        //     // });
+        //   },
+        //   onError: (err) => {
+        //     alert('로그인에 실패 했습니다.');
+        //   },
+        // });
       }
 
-      navigate('/');
       setLoginInfo({
         email: '',
         password: '',
       });
       setIsSeller(false);
-    } catch (error) {}
+    } catch (error: any) {
+      console.log(error.response.data.message);
+      if (error.response.data.message === '존재하지 않는 회원입니다.') {
+        alert('존재하지 않는 회원입니다.');
+      }
+    }
   };
   return (
     <>
