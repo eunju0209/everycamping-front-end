@@ -61,9 +61,9 @@ export default function ProductForm() {
         <option disabled value='category'>
           카테고리
         </option>
-        <option value='tent'>Tent</option>
-        <option value='cook'>Cook</option>
-        <option value='accessory'>Accessory</option>
+        <option value='TENT'>Tent</option>
+        <option value='COOK'>Cook</option>
+        <option value='ACCESSORY'>Accessory</option>
       </select>
       <input
         type='text'
