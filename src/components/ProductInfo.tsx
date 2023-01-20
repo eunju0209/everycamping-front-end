@@ -7,7 +7,7 @@ import { getProductDetail } from '../api/productsService';
 export type ProductDetailType = {
   name: string;
   price: number;
-  detailImageuri: string;
+  detailImageUri: string;
   tags: string[];
   avgScore: number;
 };
@@ -27,7 +27,7 @@ export default function ProductInfo({ productId }: ProductInfoProps) {
     <div className='border-b-2 border-base-200 pb-10 mb-10'>
       <div className='flex items-center max-w-5xl mx-auto'>
         <div className='basis-3/6 mr-10'>
-          <img src={product?.detailImageuri} alt={product?.name} />
+          <img src={product?.detailImageUri} alt={product?.name} />
         </div>
         <div>
           <h2 className='text-3xl mb-3 text-primary font-semibold'>
