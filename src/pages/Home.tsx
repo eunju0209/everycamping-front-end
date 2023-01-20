@@ -1,4 +1,4 @@
-import ProductList from '../components/ProductList';
+import ProductList from '../components/Product/ProductList';
 import Slider from '../components/Slider';
 
 export default function Home() {

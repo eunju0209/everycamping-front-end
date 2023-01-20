@@ -1,9 +1,9 @@
-import { ProductType } from './../components/ProductList';
+import { ProductType } from '../components/Product/ProductList';
 import axios from 'axios';
-import { ProductDetailType } from '../components/ProductInfo';
-import { ReviewType } from '../components/ReviewList';
-import { NewProductType } from '../components/ProductForm';
-import { NewReviewType } from '../components/ReviewForm';
+import { ProductDetailType } from '../components/Product/ProductInfo';
+import { ReviewType } from '../components/Review/ReviewList';
+import { NewProductType } from '../components/Product/ProductForm';
+import { NewReviewType } from '../components/Review/ReviewForm';
 import { authAxios } from './authAxios';
 
 export async function getProducts(
@@ -19,7 +19,7 @@ export async function getProducts(
 }
 
 export async function getProductDetail(id: string): Promise<ProductDetailType> {
-  const res = await authAxios.get(`/api/products/${id}`);
+  const res = await axios.get(`/api/products/${id}`);
   return res.data;
 }
 
@@ -75,7 +75,7 @@ async function getItems(
   category?: string,
   filter?: string
 ): Promise<ProductType[]> {
-  const res = await authAxios.get(
+  const res = await axios.get(
     `/api/products${category ? `?category=${category}` : '?limit=4'}`
   );
   return res.data.content;

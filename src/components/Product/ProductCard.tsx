@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { deleteProduct } from '../api/productsService';
+import { deleteProduct } from '../../api/productsService';
 import { ProductType } from './ProductList';
 
 type ProductCardProps = {

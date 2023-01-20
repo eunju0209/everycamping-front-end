@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
-import ProductInfo from '../components/ProductInfo';
-import ReviewList from '../components/ReviewList';
+import ProductInfo from '../components/Product/ProductInfo';
+import ReviewList from '../components/Review/ReviewList';
 
 type RouteState = {
   state: {

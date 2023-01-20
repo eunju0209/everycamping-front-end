@@ -1,4 +1,4 @@
-import { formatAgo } from '../util/timeago';
+import { formatAgo } from '../../util/timeago';
 import Rating from './Rating';
 import { ReviewType } from './ReviewList';
 
