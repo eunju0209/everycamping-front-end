@@ -27,10 +27,12 @@ authAxios.interceptors.response.use(
     return response;
   },
   async function (error) {
-    console.error('response error :',error)
-    await getUserNewToken()
-    // authAxios(error.config)
-    // await getSellerNewToken()
+    console.error('response error :', error)
+    if (error.response.status === 403) {
+      await getUserNewToken()
+      // authAxios(error.config)
+      // await getSellerNewToken()
+    }
     return Promise.reject(error);
   }
 );
