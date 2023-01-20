@@ -20,14 +20,14 @@ export const postOrders = async (orderInfo : {
 }
 
 export const getUserOrderLIst = async () => {
-  const result = await authAxios.get('/assets/data/cartItem.json')
-  // const result = await authAxios.get('/api/orders/customer')
+  
+  const result = await authAxios.get('/api/orders/customer')
   return result.data.content
 }
 
 export const getSellerOrderLIst = async () => {
-  const result = await authAxios.get('/assets/data/cartItem.json')
-  // const result = await authAxios.get(`/api/orders/seller`)
+  
+  const result = await authAxios.get(`/api/orders/seller`)
   return result.data.content
 }
 
