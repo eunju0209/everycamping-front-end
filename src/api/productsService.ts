@@ -19,7 +19,7 @@ export async function getProducts(
 }
 
 export async function getProductDetail(id: string): Promise<ProductDetailType> {
-  const res = await authAxios.get(`/api/products/${id}`);
+  const res = await axios.get(`/api/products/${id}`);
   return res.data;
 }
 
@@ -75,7 +75,7 @@ async function getItems(
   category?: string,
   filter?: string
 ): Promise<ProductType[]> {
-  const res = await authAxios.get(
+  const res = await axios.get(
     `/api/products${category ? `?category=${category}` : '?limit=4'}`
   );
   return res.data.content;
