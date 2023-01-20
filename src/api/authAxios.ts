@@ -14,6 +14,7 @@ authAxios.interceptors.request.use(
         Authorization : getCookie('accessToken')
       }
     }
+
     return config;
   },
   function (error) {
@@ -26,9 +27,9 @@ authAxios.interceptors.response.use(
     return response;
   },
   async function (error) {
-    console.error(error)
-    // await getUserNewToken()
-
+    console.error('response error :',error)
+    await getUserNewToken()
+    // authAxios(error.config)
     // await getSellerNewToken()
     return Promise.reject(error);
   }

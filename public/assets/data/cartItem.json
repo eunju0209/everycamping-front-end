@@ -1,20 +1,44 @@
 {
   "content": [
     {
-      "productId": "1",
-      "category": "tent",
-      "name": "tent",
-      "price": 12000,
-      "quantity":3,
-      "imagePath": "https://images.unsplash.com/photo-1478827536114-da961b7f86d2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+        "productId": 1,
+  "orderProductId": "100",
+  "imageUriSnapshot": "https://images.unsplash.com/photo-1478827536114-da961b7f86d2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+  "productNameSnapshot": "헬리녹스 노나돔 텐트 4.0",
+  "quantity": 1,
+  "amount": 180000,
+  "userName": "정우성",
+  "phone": "010-2222-3333",
+  "address": "서울어딘가",
+  "status": "COMPLETE",
+  "createdAt": "2022-02-03"
+    },
+     {
+        "productId": 2,
+  "orderProductId": "200",
+  "imageUriSnapshot": "https://images.unsplash.com/photo-1478827536114-da961b7f86d2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+  "productNameSnapshot": "헬리녹스 노나돔 텐트 4.0",
+  "quantity": 1,
+  "amount": 180000,
+  "userName": "정우성",
+  "phone": "010-2222-3333",
+  "address": "서울어딘가",
+  "status": "CONFIRM",
+  "createdAt": "2022-02-03"
     },
     {
-      "productId": "2",
-      "category": "tent",
-      "name": "tent",
-      "price": 12000,
-      "quantity":30,
-      "imagePath": "https://images.unsplash.com/photo-1478827536114-da961b7f86d2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+        "productId": 3,
+  "orderProductId": "300",
+  "imageUriSnapshot": "https://images.unsplash.com/photo-1478827536114-da961b7f86d2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+  "productNameSnapshot": "헬리녹스 노나돔 텐트 4.0",
+  "quantity": 1,
+  "amount": 180000,
+  "userName": "정우성",
+  "phone": "010-2222-3333",
+  "address": "서울어딘가",
+  "status": "CANCEL",
+  "createdAt": "2022-02-03"
     }
   ]
 }
+

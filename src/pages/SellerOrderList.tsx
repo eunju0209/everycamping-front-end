@@ -4,15 +4,17 @@ import SellerOrderListCard from '../components/OrderList/SellerOrderListCard';
 
 export type SellerOrderListType = {
   productId: number;
-  img: string;
-  productName: string;
-  count: number;
-  payPrice: number;
+  customerId: number;
+  orderProductId: number;
+  imageUriSnapshot: string;
+  productNameSnapshot: string;
+  quantity: number; //주문수량
+  amount: number; // 총 금액(구매자가 지불한 금액)
   userName: string;
-  phoneNumber: string;
+  phone: string;
   address: string;
   status: string;
-  orderDate: string;
+  createdAt: string;
 };
 
 const SellerOrderList = () => {
