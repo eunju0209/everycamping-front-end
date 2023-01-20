@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { addCart } from '../api/cartService';
-import { getProductDetail } from '../api/productsService';
+import { addCart } from '../../api/cartService';
+import { getProductDetail } from '../../api/productsService';
 
 export type ProductDetailType = {
   name: string;

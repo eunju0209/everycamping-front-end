@@ -1,9 +1,9 @@
-import { ProductType } from './../components/ProductList';
+import { ProductType } from '../components/Product/ProductList';
 import axios from 'axios';
-import { ProductDetailType } from '../components/ProductInfo';
-import { ReviewType } from '../components/ReviewList';
-import { NewProductType } from '../components/ProductForm';
-import { NewReviewType } from '../components/ReviewForm';
+import { ProductDetailType } from '../components/Product/ProductInfo';
+import { ReviewType } from '../components/Review/ReviewList';
+import { NewProductType } from '../components/Product/ProductForm';
+import { NewReviewType } from '../components/Review/ReviewForm';
 import { authAxios } from './authAxios';
 
 export async function getProducts(
