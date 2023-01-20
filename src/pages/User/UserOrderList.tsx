@@ -2,17 +2,30 @@ import { useEffect, useState } from 'react';
 import { getUserOrderLIst } from '../../api/orderService';
 import UserOrderListCard from '../../components/OrderList/UserOrderListCard';
 
+// String address //배송지 주소
+// String phone //수령자 연락처
+// Long productId //상품id
+// String productNameSnapshot // 주문 시 상품명
+// Integer stockPriceSnapshot // 주문 시 개당 가격
+// String imageUriSnapshot // 주문 시 상품 이미지 url
+// Long orderProductId //주문상품id (주문확정, 주문취소 시 필요)
+// Integer quantity //주문수량
+// Integer amount // 총 금액
+// OrderStatus status //주문 상태 (COMPLETE|CONFIRM|CANCEL|SETTLEMENT)
+// LocalDateTime createdAt : 주문 일자
+
 export type UserOrderListType = {
   productId: number;
-  img: string;
-  productName: string;
-  count: number;
-  payPrice: number;
+  orderProductId: number;
+  imageUriSnapshot: string;
+  productNameSnapshot: string;
+  quantity: number;
+  amount: number;
   userName: string;
-  phoneNumber: string;
+  phone: string;
   address: string;
   status: string;
-  orderDate: string;
+  createdAt: string;
 };
 
 export default function UserOrderList() {

@@ -4,9 +4,9 @@ const cookies = new Cookies()
 
 type CookieOption = {
   path: string;
-  expires: Date;
-  httpOnly: boolean;
-  secure: boolean
+  // expires: Date;
+  // httpOnly: boolean;
+  // secure: boolean
 }
 
 export const setCookie = (name: string, value: string, option?: CookieOption) => {

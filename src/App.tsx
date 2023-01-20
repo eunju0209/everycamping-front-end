@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Outlet } from 'react-router-dom';
-import Chatting from './components/chatting';
+import Chatting from './components/Chatting';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import UserInfoProvider from './store/UserInfoProvider';

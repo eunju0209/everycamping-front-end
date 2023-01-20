@@ -29,10 +29,14 @@ export const postUserLogin = async (loginInfo: loginInfoType) => {
   const result = await axios.post(`/api/customers/signin`, loginInfo);
 
   // storedToken.Token = result.data.accessToken;
-  setCookie('accessToken', result.data.accessToken);
-  setCookie('refreshToken', result.data.refreshToken);
+  setCookie('accessToken', result.data.accessToken, {
+    path:'/'
+  });
+  setCookie('refreshToken', result.data.refreshToken, {
+    path:'/'
+  });
 
-  console.log(storedToken.Token)
+  console.log('login 성공')
 }
 
 export const postUserSocialLogin = async (email: string) => {
@@ -44,17 +48,21 @@ export const postUserSocialLogin = async (email: string) => {
 }
 
 export const getUserNewToken = async () => {
-  try {
+  try { 
     const result = await axios.post(`/api/customers/reissue`,{
       accessToken : getCookie('accessToken'),
       refreshToken : getCookie('refreshToken')
     })
     // storedToken.Token = result.data.accessToken;
-    setCookie('accessToken', result.data.accessToken);
-    setCookie('refreshToken', result.data.refreshToken);
-
+    setCookie('accessToken', result.data.accessToken, {
+      path:'/'
+    });
+    setCookie('refreshToken', result.data.refreshToken, {
+      path:'/'
+    });
+    return result
   } catch (error) {
-    console.log(error)
+    console.error('newToken error : ', error)
   }
 }
 export const getUserLogOut = async () => {

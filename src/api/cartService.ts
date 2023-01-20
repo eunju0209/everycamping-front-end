@@ -2,12 +2,9 @@ import { useQuery } from '@tanstack/react-query';
 import { authAxios } from './authAxios';
 
 const getCartItems = async () => {
-  try {
     const result = await authAxios.get(`/api/carts`)
     return result.data.content;
-  } catch (error) {
-    console.error(error);
-  }
+
 };
 export const useGetCartItems = () => {
   return useQuery(['@CartItem'], getCartItems);

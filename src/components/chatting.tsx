@@ -1,31 +1,51 @@
 import { useEffect, useRef, useState } from 'react';
 import { BsChatRight } from 'react-icons/bs';
-import { SendMessage } from '../api/chat';
+import {
+  getRoomId,
+  sendMessage,
+  stompConnect,
+  stompDisConnect,
+} from '../api/chat';
 
 const Chat = () => {
-  const [message, setMassage] = useState('');
+  const [message, setMassage] = useState<string[]>([]);
+  const [newMessage, setNewMessage] = useState('');
+  const [roomId, setRoomId] = useState<number>(0);
   const messageBoxRef = useRef<HTMLDivElement>(null);
-  const [chatedMessage, setChatedMessage] = useState<string[]>([]);
   const chatRef = useRef<HTMLDivElement>(null);
 
-  const popChat = () => {
-    if (chatRef.current) {
-      chatRef.current.style.display === 'flex'
-        ? (chatRef.current.style.display = 'none')
-        : (chatRef.current.style.display = 'flex');
+  const popChat = async () => {
+    try {
+      if (chatRef.current) {
+        if (
+          chatRef.current.style.display === 'none' ||
+          !chatRef.current.style.display
+        ) {
+          chatRef.current.style.display = 'flex';
+
+          const result = await getRoomId();
+          setRoomId(result);
+          stompConnect(roomId, setMassage);
+        } else if (chatRef.current.style.display === 'flex') {
+          chatRef.current.style.display = 'none';
+
+          stompDisConnect();
+        }
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
   const handleContentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setMassage(event.target.value);
+    setNewMessage(event.target.value);
   };
 
   const messageSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setChatedMessage((prev) => [...prev, message]);
-    SendMessage(message);
-    console.log(event);
-    setMassage('');
+    sendMessage(roomId, newMessage);
+    setMassage((prev) => [...prev, newMessage]);
+    setNewMessage('');
   };
 
   const scrollToBottom = () => {
@@ -46,7 +66,7 @@ const Chat = () => {
       >
         <div className='px-3 py-5 h-600px overflow-auto' ref={messageBoxRef}>
           <ChatLeft />
-          {chatedMessage.map((message, idx) => (
+          {message.map((message, idx) => (
             <ChatRight key={idx} message={message} />
           ))}
         </div>
@@ -57,7 +77,7 @@ const Chat = () => {
               placeholder='메시지를 입력하세요...'
               className='input input-bordered w-full focus:outline-none'
               id='name'
-              value={message}
+              value={newMessage}
               onChange={(e) => handleContentChange(e)}
               autoComplete='off'
             />
