@@ -67,15 +67,17 @@ export async function addNewReview(review: NewReviewType, image: File) {
 }
 
 async function search(keyword: string): Promise<ProductType[]> {
-  const res = await axios.get('/assets/data/search.json');
-  return res.data.items;
+  const res = await axios.get(`/api/products?name=${keyword}`);
+  return res.data.content;
 }
 
 async function getItems(
   category?: string,
   filter?: string
 ): Promise<ProductType[]> {
-  const res = await authAxios.get(`/api/products`);
+  const res = await authAxios.get(
+    `/api/products${category ? `?category=${category}` : '?limit=4'}`
+  );
   return res.data.content;
 }
 
