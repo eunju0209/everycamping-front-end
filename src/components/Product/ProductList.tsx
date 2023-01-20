@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { getProducts } from '../api/productsService';
-import ProductCard from '../components/ProductCard';
+import { getProducts } from '../../api/productsService';
+import ProductCard from './ProductCard';
 
 export type ProductType = {
   id: string;

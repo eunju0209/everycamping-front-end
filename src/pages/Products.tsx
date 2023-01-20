@@ -1,4 +1,4 @@
-import ProductList from '../components/ProductList';
+import ProductList from '../components/Product/ProductList';
 
 type ProductsProps = {
   category?: 'ALL' | 'TENT' | 'COOK' | 'ACCESSORY';

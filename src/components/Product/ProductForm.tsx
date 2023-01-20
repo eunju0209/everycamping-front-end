@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { addNewProduct } from '../api/productsService';
+import { addNewProduct } from '../../api/productsService';
 
 export type NewProductType = {
   category: string;

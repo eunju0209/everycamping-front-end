@@ -1,9 +1,9 @@
-import { ProductType } from './../components/ProductList';
+import { ProductType } from '../components/Product/ProductList';
 import axios from 'axios';
-import { ProductDetailType } from '../components/ProductInfo';
-import { ReviewType } from '../components/ReviewList';
-import { NewProductType } from '../components/ProductForm';
-import { NewReviewType } from '../components/ReviewForm';
+import { ProductDetailType } from '../components/Product/ProductInfo';
+import { ReviewType } from '../components/Review/ReviewList';
+import { NewProductType } from '../components/Product/ProductForm';
+import { NewReviewType } from '../components/Review/ReviewForm';
 import { authAxios } from './authAxios';
 
 export async function getProducts(
@@ -19,7 +19,7 @@ export async function getProducts(
 }
 
 export async function getProductDetail(id: string): Promise<ProductDetailType> {
-  const res = await authAxios.get(`/api/products/${id}`);
+  const res = await axios.get(`/api/products/${id}`);
   return res.data;
 }
 
@@ -48,7 +48,7 @@ export async function deleteProduct(productId: string) {
 }
 
 export async function getReviews(productId: string): Promise<ReviewType[]> {
-  const res = await authAxios.get(`/api/reviews/products/${productId}`);
+  const res = await axios.get(`/api/reviews/products/${productId}`);
   return res.data;
 }
 
@@ -67,15 +67,17 @@ export async function addNewReview(review: NewReviewType, image: File) {
 }
 
 async function search(keyword: string): Promise<ProductType[]> {
-  const res = await axios.get('/assets/data/search.json');
-  return res.data.items;
+  const res = await axios.get(`/api/products?name=${keyword}`);
+  return res.data.content;
 }
 
 async function getItems(
   category?: string,
   filter?: string
 ): Promise<ProductType[]> {
-  const res = await authAxios.get(`/api/products`);
+  const res = await axios.get(
+    `/api/products${category ? `?category=${category}` : '?limit=4'}`
+  );
   return res.data.content;
 }
 

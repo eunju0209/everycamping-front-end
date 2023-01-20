@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { getReviews } from '../api/productsService';
+import { getReviews } from '../../api/productsService';
 import ReviewCard from './ReviewCard';
 
 export type ReviewType = {

@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { addNewReview } from '../api/productsService';
+import { addNewReview } from '../../api/productsService';
 
 export type NewReviewType = {
   score: number;

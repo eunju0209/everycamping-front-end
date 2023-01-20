@@ -1,4 +1,4 @@
-import ProductList from '../components/ProductList';
+import ProductList from '../components/Product/ProductList';
 import Slider from '../components/Slider';
 
 export default function Home() {
@@ -7,9 +7,9 @@ export default function Home() {
       <Slider />
       <div className='pt-[700px]'>
         <h1 className='text-3xl font-semibold mb-4 mt-10 text-center'>NEW</h1>
-        <ProductList category='ALL' filter='recency' />
+        <ProductList filter='recency' />
         <h1 className='text-3xl font-semibold mb-4 mt-14 text-center'>BEST</h1>
-        <ProductList category='ALL' filter='popul' />
+        <ProductList filter='popul' />
       </div>
     </>
   );
