@@ -14,19 +14,22 @@ type ProductsProps = {
   category?: 'ALL' | 'TENT' | 'COOK' | 'ACCESSORY';
   filter?: string;
   keyword?: string;
+  seller?: boolean;
 };
 
 export default function ProductList({
   category,
   filter,
   keyword,
+  seller,
 }: ProductsProps) {
   const {
     isLoading,
     error,
     data: products,
-  } = useQuery<ProductType[]>(['products', keyword, category, filter], () =>
-    getProducts(category, filter, keyword)
+  } = useQuery<ProductType[]>(
+    ['products', seller, keyword, category, filter],
+    () => getProducts(category, filter, keyword, seller)
   );
 
   if (isLoading) return <p>Loading...</p>;
@@ -36,7 +39,7 @@ export default function ProductList({
     <ul className='grid grid-cols-4 gap-6'>
       {products &&
         products.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard key={product.id} product={product} seller={seller} />
         ))}
     </ul>
   );

@@ -1,8 +1,9 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { TbTent } from 'react-icons/tb';
 import { BiSearch } from 'react-icons/bi';
-import { FaShoppingCart } from 'react-icons/fa';
 import { FormEvent, useEffect, useState } from 'react';
+import Navigation from './Navigation';
+import HeaderButtons from './HeaderButtons';
 
 export default function Header() {
   const { keyword } = useParams();
@@ -41,32 +42,9 @@ export default function Header() {
             <BiSearch />
           </button>
         </form>
-        <div className='flex items-center'>
-          <button
-            onClick={() => navigate('/cart')}
-            className='text-3xl mr-4 text-primary'
-          >
-            <FaShoppingCart />
-          </button>
-          <button
-            onClick={() => navigate('/login')}
-            className='btn btn-primary btn-sm'
-          >
-            Login
-          </button>
-        </div>
+        <HeaderButtons />
       </div>
-      <nav className='flex items-center justify-center gap-5 py-2 drop-shadow'>
-        <Link to='/tent' className='hover:text-primary transition-colors'>
-          Tent
-        </Link>
-        <Link to='/cook' className='hover:text-primary transition-colors'>
-          Cook
-        </Link>
-        <Link to='/accessory' className='hover:text-primary transition-colors'>
-          Accessory
-        </Link>
-      </nav>
+      <Navigation />
     </header>
   );
 }

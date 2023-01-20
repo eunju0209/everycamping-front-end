@@ -9,8 +9,12 @@ import { authAxios } from './authAxios';
 export async function getProducts(
   category?: string,
   filter?: string,
-  keyword?: string
+  keyword?: string,
+  seller?: boolean
 ): Promise<ProductType[]> {
+  if (seller) {
+    return getSellerItems();
+  }
   return keyword ? search(keyword) : getItems(category, filter);
 }
 
@@ -37,6 +41,10 @@ export async function addNewProduct(
       'Content-Type': 'multipart/form-data',
     },
   });
+}
+
+export async function deleteProduct(productId: string) {
+  return authAxios.delete(`/api/manage/products/${productId}`);
 }
 
 export async function getReviews(productId: string): Promise<ReviewType[]> {
@@ -68,5 +76,10 @@ async function getItems(
   filter?: string
 ): Promise<ProductType[]> {
   const res = await authAxios.get(`/api/products`);
+  return res.data.content;
+}
+
+async function getSellerItems() {
+  const res = await authAxios.get(`/api/manage/products`);
   return res.data.content;
 }
