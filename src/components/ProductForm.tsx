@@ -8,7 +8,7 @@ export type NewProductType = {
   stock: number;
   image: string;
   description: string;
-  onsale: boolean;
+  onSale: boolean;
 };
 
 export default function ProductForm() {
@@ -21,7 +21,7 @@ export default function ProductForm() {
     stock: 0,
     image: '',
     description: '',
-    onsale: false,
+    onSale: false,
   });
 
   const handleChange = (
@@ -38,8 +38,8 @@ export default function ProductForm() {
       return;
     }
     setProduct((product) => {
-      if (name === 'onsale') {
-        return { ...product, onsale: !product.onsale };
+      if (name === 'onSale') {
+        return { ...product, onSale: !product.onSale };
       }
       return { ...product, [name]: value };
     });
@@ -129,9 +129,9 @@ export default function ProductForm() {
         <input
           type='checkbox'
           className='checkbox checkbox-primary'
-          name='onsale'
+          name='onSale'
           onChange={handleChange}
-          checked={product.onsale}
+          checked={product.onSale}
         />
       </label>
       <button type='submit' className='btn btn-wide btn-primary mt-3'>
