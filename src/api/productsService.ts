@@ -32,7 +32,7 @@ export async function addNewProduct(
   formData.append('image', image);
   formData.append('detailImage', detailImage);
 
-  return authAxios.post('api/manage/products', formData, {
+  return authAxios.post('/api/manage/products', formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
