@@ -21,6 +21,7 @@ import UserInfo from './pages/User/UserInfo';
 import KaKaoLoginCallback from './components/Login/socialLogin/KakaoLoginCallback';
 import SellerOrderList from './pages/SellerOrderList';
 import PasswordEdit from './pages/User/PasswordEdit';
+import SellerProducts from './pages/SellerProducts';
 
 const router = createBrowserRouter([
   {
@@ -43,7 +44,7 @@ const router = createBrowserRouter([
       { path: 'order', element: <OrderForm /> },
       { path: 'mypage/user/orders', element: <UserOrderList /> },
       { path: 'mypage/seller/orders', element: <SellerOrderList /> },
-      { path: 'mypage/products', element: <Products /> },
+      { path: 'mypage/products', element: <SellerProducts /> },
       { path: 'kakaoLoginCallback', element: <KaKaoLoginCallback /> },
       { path: 'sellerConfirm', element: <SellerConfirm /> },
       { path: 'userInfo', element: <UserInfo /> },
