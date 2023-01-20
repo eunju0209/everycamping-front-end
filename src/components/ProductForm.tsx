@@ -1,4 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { addNewProduct } from '../api/productsService';
 
 export type NewProductType = {
@@ -12,6 +13,7 @@ export type NewProductType = {
 };
 
 export default function ProductForm() {
+  const navigate = useNavigate();
   const [image, setImage] = useState<File>();
   const [detailImage, setDetailImage] = useState<File>();
   const [product, setProduct] = useState({
@@ -21,7 +23,7 @@ export default function ProductForm() {
     stock: 0,
     image: '',
     description: '',
-    onSale: false,
+    onSale: true,
   });
 
   const handleChange = (
@@ -47,7 +49,9 @@ export default function ProductForm() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    image && detailImage && addNewProduct(product, image, detailImage);
+    image &&
+      detailImage &&
+      addNewProduct(product, image, detailImage).then(() => navigate(-1));
   };
 
   return (

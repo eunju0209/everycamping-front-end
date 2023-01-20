@@ -39,6 +39,10 @@ export async function addNewProduct(
   });
 }
 
+export async function deleteProduct(productId: string) {
+  return authAxios.delete(`/api/manage/products/${productId}`);
+}
+
 export async function getReviews(productId: string): Promise<ReviewType[]> {
   const res = await authAxios.get(`/api/reviews/products/${productId}`);
   return res.data;
