@@ -10,7 +10,7 @@ import {
 const Chat = () => {
   const [message, setMassage] = useState<string[]>([]);
   const [newMessage, setNewMessage] = useState('');
-  const [roomId, setRoomId] = useState<number>(0);
+  const [roomId, setRoomId] = useState<string>('');
   const messageBoxRef = useRef<HTMLDivElement>(null);
   const chatRef = useRef<HTMLDivElement>(null);
 
@@ -24,6 +24,8 @@ const Chat = () => {
           chatRef.current.style.display = 'flex';
 
           const result = await getRoomId();
+          console.log(result);
+          console.log(roomId);
           setRoomId(result);
           stompConnect(roomId, setMassage);
         } else if (chatRef.current.style.display === 'flex') {
@@ -44,7 +46,7 @@ const Chat = () => {
   const messageSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     sendMessage(roomId, newMessage);
-    setMassage((prev) => [...prev, newMessage]);
+    // setMassage((prev) => [...prev, newMessage]);
     setNewMessage('');
   };
 
