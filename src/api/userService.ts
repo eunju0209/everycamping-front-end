@@ -62,12 +62,14 @@ export const getUserNewToken = async () => {
     });
     return result
   } catch (error) {
+    console.log('토큰 재발급 실패')
     console.error('newToken error : ', error)
+    location.assign('http://localhost:5173/login')
   }
 }
 export const getUserLogOut = async () => {
   try {
-    const result = await axios.get(`/api/customers/signout`)
+    const result = await authAxios.get(`/api/customers/signout`)
     console.log(result)
     return result
 
@@ -90,13 +92,13 @@ export const useGetUserInfo = (accessToken : string, options?: (Omit<UseQueryOpt
 }
 
 export const putUserInfo = async (newUserInfo : NewUserInfoType) => {
-    const result = await axios.put(`/api/customers/info`,{newUserInfo})
+    const result = await authAxios.put(`/api/customers/info`,{newUserInfo})
     console.log(result)
     return result
 }
-export const patchUserPassword = async (passwordEdit:string , oldPassword:string) => {
-    const result = await axios.patch(`/api/customers/password`,{
-      passwordEdit,
+export const patchUserPassword = async (newPassword:string , oldPassword:string) => {
+    const result = await authAxios.patch(`/api/customers/password`,{
+      newPassword,
       oldPassword
     })
     console.log(result)
@@ -117,7 +119,7 @@ export const postSellerLogin = async (loginInfo : loginInfoType) => {
   setCookie('accessToken', result.data.accessToken);
   setCookie('refreshToken', result.data.refreshToken);
   
-  console.log(storedToken.Token)
+  // console.log(storedToken.Token)
 }
 
 export const getSellerNewToken = async () => {
@@ -136,17 +138,13 @@ export const getSellerNewToken = async () => {
   }
 }
 export const getSellerLogOut = async () => {
-    const result = await axios.post(`/api/sellers/signout`)
+    const result = await authAxios.post(`/api/sellers/signout`)
     console.log(result)
     return result
 }
-const getSellerInfo = async (accessToken : string) => {
+const getSellerInfo = async () => {
   try {
-    const result = await axios.get(`/api/sellers/info`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      }
-    })
+    const result = await authAxios.get(`/api/sellers/info`)
     console.log(result)
     return result
 
@@ -155,18 +153,18 @@ const getSellerInfo = async (accessToken : string) => {
   }
 }
 export const useGetSellerInfo = (accessToken : string , options?: (Omit<UseQueryOptions<AxiosResponse<any, any> | undefined, unknown, AxiosResponse<any, any> | undefined, string[]>, "initialData" | "queryFn" | "queryKey"> & { initialData?: (() => undefined) | undefined; }) | undefined) => {
-  useQuery(['@sellerInfo', accessToken], () => getSellerInfo(accessToken),options)
+  useQuery(['@sellerInfo', accessToken], () => getSellerInfo(),options)
 }
 
 export const putSellerInfo = async (newSellerInfo:NewUserInfoType) => {
-    const result = await axios.put(`/api/sellers/info`,{newSellerInfo})
+    const result = await authAxios.put(`/api/sellers/info`,{newSellerInfo})
     console.log(result)
     return result
 }
 
 export const patchSellerPassword = async (newPasswordEdit:string, oldPassword:string) => {
 
-    const result = await axios.patch(`/api/sellers/password`, {
+    const result = await authAxios.patch(`/api/sellers/password`, {
       newPasswordEdit,
       oldPassword
     })
