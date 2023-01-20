@@ -48,7 +48,7 @@ export async function deleteProduct(productId: string) {
 }
 
 export async function getReviews(productId: string): Promise<ReviewType[]> {
-  const res = await authAxios.get(`/api/reviews/products/${productId}`);
+  const res = await axios.get(`/api/reviews/products/${productId}`);
   return res.data;
 }
 
