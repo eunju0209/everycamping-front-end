@@ -23,6 +23,13 @@ export async function getProductDetail(id: string): Promise<ProductDetailType> {
   return res.data;
 }
 
+export async function getSellerProductDetail(
+  productId: string
+): Promise<NewProductType> {
+  const res = await authAxios.get(`/api/manage/products/${productId}`);
+  return res.data;
+}
+
 export async function addNewProduct(
   product: NewProductType,
   image: File,
@@ -37,6 +44,27 @@ export async function addNewProduct(
   formData.append('detailImage', detailImage);
 
   return authAxios.post('/api/manage/products', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+}
+
+export async function updateProduct(
+  productId: string,
+  product: NewProductType,
+  image?: File,
+  detailImage?: File
+) {
+  const formData = new FormData();
+  const blob = new Blob([JSON.stringify(product)], {
+    type: 'application/json',
+  });
+  formData.append('form', blob);
+  image && formData.append('image', image);
+  detailImage && formData.append('detailImage', detailImage);
+
+  return authAxios.put(`/api/manage/products/${productId}`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },

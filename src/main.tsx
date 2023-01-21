@@ -22,6 +22,7 @@ import KaKaoLoginCallback from './components/Login/socialLogin/KakaoLoginCallbac
 import SellerOrderList from './pages/SellerOrderList';
 import PasswordEdit from './pages/User/PasswordEdit';
 import SellerProducts from './pages/SellerProducts';
+import UpdateProduct from './pages/UpdateProduct';
 
 const router = createBrowserRouter([
   {
@@ -38,7 +39,7 @@ const router = createBrowserRouter([
       { path: 'products/:keyword', element: <Search /> },
       { path: 'products/detail/:id', element: <ProductDetail /> },
       { path: 'products/new', element: <NewProduct /> },
-      { path: 'products/update/:productId', element: <NewProduct /> },
+      { path: 'products/update/:productId', element: <UpdateProduct /> },
       { path: 'review/new', element: <NewReview /> },
       { path: 'cart', element: <Cart /> },
       { path: 'order', element: <OrderForm /> },

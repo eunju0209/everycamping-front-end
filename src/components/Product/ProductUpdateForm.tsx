@@ -1,29 +1,43 @@
+import { useQuery } from '@tanstack/react-query';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { addNewProduct } from '../../api/productsService';
+import {
+  getSellerProductDetail,
+  updateProduct,
+} from '../../api/productsService';
 
-export type NewProductType = {
-  category: string;
-  name: string;
-  price: number;
-  stock: number;
-  description: string;
-  onSale: boolean;
-  tags: string[];
+type ProductUpdateFormProps = {
+  productId: string;
 };
 
-export default function ProductForm() {
+export default function ProductUpdateForm({
+  productId,
+}: ProductUpdateFormProps) {
   const navigate = useNavigate();
+  // const { data: sellerProduct } = useQuery(['sellerProduct', productId], () =>
+  //   getSellerProductDetail(productId)
+  // );
+  const sellerProduct = {
+    category: 'tent',
+    name: '텐트',
+    price: 10000,
+    stock: 10,
+    description: '러ㅣㅏㅇㄴㅁ러ㅣ러ㅣㄴ아ㅓ',
+    onSale: true,
+    tags: ['텐트', '캠핑'],
+  };
+  const { category, name, price, stock, description, onSale, tags } =
+    sellerProduct;
   const [image, setImage] = useState<File>();
   const [detailImage, setDetailImage] = useState<File>();
-  const [product, setProduct] = useState({
-    category: 'category',
-    name: '',
-    price: 0,
-    stock: 0,
-    description: '',
-    onSale: true,
-    tags: [''],
+  const [updatedProduct, setUpdatedProduct] = useState({
+    category,
+    name,
+    price,
+    stock,
+    description,
+    onSale,
+    tags,
   });
 
   const handleChange = (
@@ -39,7 +53,7 @@ export default function ProductForm() {
       setDetailImage((files as FileList)[0]);
       return;
     }
-    setProduct((product) => {
+    setUpdatedProduct((product) => {
       if (name === 'onSale') {
         return { ...product, onSale: !product.onSale };
       }
@@ -55,10 +69,8 @@ export default function ProductForm() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    image &&
-      detailImage &&
-      addNewProduct(product, image, detailImage) //
-        .then(() => navigate(-1));
+    updateProduct(productId, updatedProduct, image, detailImage) //
+      .then(() => navigate(-1));
   };
 
   return (
@@ -67,7 +79,7 @@ export default function ProductForm() {
         className='select w-full max-w-xs bg-white'
         name='category'
         onChange={handleChange}
-        value={product.category ?? ''}
+        value={updatedProduct.category ?? 'category'}
         required
       >
         <option disabled value='category'>
@@ -80,7 +92,7 @@ export default function ProductForm() {
       <input
         type='text'
         name='name'
-        value={product.name ?? ''}
+        value={updatedProduct.name ?? ''}
         placeholder='제품명'
         className='input w-full max-w-xs bg-white'
         onChange={handleChange}
@@ -91,7 +103,7 @@ export default function ProductForm() {
         <input
           type='number'
           name='price'
-          value={product.price ?? ''}
+          value={updatedProduct.price ?? ''}
           min='0'
           className='input bg-white w-full'
           onChange={handleChange}
@@ -103,7 +115,7 @@ export default function ProductForm() {
         <input
           type='number'
           name='stock'
-          value={product.stock ?? ''}
+          value={updatedProduct.stock ?? ''}
           min='0'
           className='input bg-white w-full'
           onChange={handleChange}
@@ -113,7 +125,7 @@ export default function ProductForm() {
       <input
         type='text'
         name='tags'
-        value={product.tags ?? ''}
+        value={updatedProduct.tags ?? ''}
         placeholder='태그(텐트,캠핑)'
         className='input w-full max-w-xs bg-white'
         onChange={handleChange}
@@ -125,11 +137,10 @@ export default function ProductForm() {
         className='file-input w-full max-w-xs bg-white'
         accept='image/*'
         onChange={handleChange}
-        required
       />
       <textarea
         name='description'
-        value={product.description ?? ''}
+        value={updatedProduct.description ?? ''}
         className='textarea w-full max-w-xs bg-white text-base'
         placeholder='제품설명'
         onChange={handleChange}
@@ -142,7 +153,6 @@ export default function ProductForm() {
         className='file-input w-full max-w-xs bg-white'
         accept='image/*'
         onChange={handleChange}
-        required
       />
       <label className='label cursor-pointer'>
         <span className='label-text mr-2'>판매</span>
@@ -151,12 +161,12 @@ export default function ProductForm() {
           className='checkbox checkbox-primary'
           name='onSale'
           onChange={handleChange}
-          checked={product.onSale}
+          checked={updatedProduct.onSale}
           required
         />
       </label>
       <button type='submit' className='btn btn-wide btn-primary mt-3'>
-        등록하기
+        수정완료
       </button>
     </form>
   );

@@ -1,17 +1,13 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import ProductInfo from '../components/Product/ProductInfo';
 import ReviewList from '../components/Review/ReviewList';
 
-type RouteState = {
-  state: {
-    id: string;
-  };
+type ProductDetailParams = {
+  id: string;
 };
 
 export default function ProductDetail() {
-  const {
-    state: { id },
-  } = useLocation() as RouteState;
+  const { id } = useParams() as ProductDetailParams;
   return (
     <>
       <ProductInfo productId={id} />
