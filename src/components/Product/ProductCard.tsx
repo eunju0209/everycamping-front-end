@@ -26,6 +26,12 @@ export default function ProductCard({ product, seller }: ProductCardProps) {
             <button className='btn btn-sm' onClick={() => deleteProduct(id)}>
               삭제하기
             </button>
+            <button
+              className='btn btn-sm'
+              onClick={() => navigate(`products/update/${id}`)}
+            >
+              수정하기
+            </button>
           </div>
         )}
       </div>
