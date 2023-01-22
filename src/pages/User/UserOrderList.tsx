@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getUserOrderLIst } from '../../api/orderService';
-import UserOrderListCard from '../../components/OrderList/UserOrderListCard';
+import UserOrderCard from '../../components/OrderList/UserOrderCard';
 
 // String address //배송지 주소
 // String phone //수령자 연락처
@@ -49,7 +49,7 @@ export default function UserOrderList() {
         <h1 className='flex justify-center text-4xl'>주문내역</h1>
         <div className='mt-7'>
           {orderList.map((list: UserOrderListType) => {
-            return <UserOrderListCard key={list.productId} list={list} />;
+            return <UserOrderCard key={list.productId} list={list} />;
           })}
         </div>
       </div>
