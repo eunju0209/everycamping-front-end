@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { useGetCartItems } from '../api/cartService';
 import CartItemCard from '../components/CartItemCard';
+import { queryGetCartItems } from '../store/ReactQuery';
 
 export type cartContentType = {
   imagePath: string;
@@ -14,35 +14,29 @@ export type cartContentType = {
 
 export default function Cart() {
   const navigate = useNavigate();
+  const { isLoading, data } = queryGetCartItems();
 
   const getCartItemsFunc = () => {
-    const res = useGetCartItems();
+    if (isLoading) return;
 
-    if (res.isLoading) {
-      return <div></div>;
-    }
-
-    if (res.data) {
-      const cartItems = res.data;
-      const totalPrice = cartItems.reduce(
-        (acc: number, cur: cartContentType) => {
-          return acc + cur.quantity * cur.price;
-        },
-        0
-      );
+    if (data) {
+      const totalPrice = data.reduce((acc: number, cur: cartContentType) => {
+        return acc + cur.quantity * cur.price;
+      }, 0);
 
       const orderClick = () => {
         navigate('/order', {
           state: {
-            orderItems: cartItems,
+            orderItems: data,
             totalPrice: totalPrice,
           },
         });
       };
+
       return (
         <>
           <div className='mt-7'>
-            {cartItems.map((items: cartContentType) => (
+            {data.map((items: cartContentType) => (
               <CartItemCard
                 key={items.productId}
                 id={items.productId}
@@ -93,6 +87,7 @@ export default function Cart() {
   return (
     <div className='flex flex-col justify-center mx-auto max-w-cartDiv'>
       <h1 className='flex justify-center text-4xl'>장바구니</h1>
+
       <div>{getCartItemsFunc()}</div>
     </div>
   );
