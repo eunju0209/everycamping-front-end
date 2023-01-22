@@ -26,13 +26,14 @@ const UserInfo = () => {
   }, []);
 
   const eidited = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    setIsEdit((prev) => !prev);
+    if (!isEdit) return;
     try {
       if (userInfo.type === 'user') {
         await putUserInfo(newUserInfo);
       } else if (userInfo.type === 'seller') {
         await putSellerInfo(newUserInfo);
       }
-      setIsEdit((prev) => !prev);
       setUserInfo((prev) => ({ ...prev, ...newUserInfo }));
     } catch (error) {
       console.error(error);
