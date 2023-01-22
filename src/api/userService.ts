@@ -1,5 +1,4 @@
-import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { JoinEmailCompType } from '../components/Join/JoinEmailComp';
 import { loginInfoType } from '../components/Login/LoginComp';
 import { NewUserInfoType } from '../pages/User/UserInfo';
@@ -35,16 +34,20 @@ export const postUserLogin = async (loginInfo: loginInfoType) => {
   setCookie('refreshToken', result.data.refreshToken, {
     path:'/'
   });
-
   console.log('login 성공')
 }
 
 export const postUserSocialLogin = async (email: string) => {
     const result = await axios.post(`/api/customers/signin`, { email })
 
-    // storedToken.Token = result.data.accessToken;
-    setCookie('accessToken', result.data.accessToken);
-    setCookie('refreshToken', result.data.refreshToken);
+ // storedToken.Token = result.data.accessToken;
+  setCookie('accessToken', result.data.accessToken, {
+    path:'/'
+  });
+  setCookie('refreshToken', result.data.refreshToken, {
+    path:'/'
+  });
+  console.log('social login 성공')
 }
 
 export const getUserNewToken = async () => {
@@ -60,11 +63,10 @@ export const getUserNewToken = async () => {
     setCookie('refreshToken', result.data.refreshToken, {
       path:'/'
     });
-    return result
   } catch (error) {
     console.log('토큰 재발급 실패')
     console.error('newToken error : ', error)
-    location.assign('http://localhost:5173/login')
+    // location.assign('http://localhost:5173/login')
   }
 }
 export const getUserLogOut = async () => {
@@ -77,18 +79,15 @@ export const getUserLogOut = async () => {
     console.error(error)
   }
 }
-const getUserInfo = async () => {
+export const getUserInfo = async () => {
   try {
     const result = await authAxios.get(`/api/customers/info`)
     console.log(result)
-    return result
+    return result.data
 
   } catch (error) {
     console.error(error)
   }
-}
-export const useGetUserInfo = (accessToken : string, options?: (Omit<UseQueryOptions<AxiosResponse<any, any> | undefined, unknown, AxiosResponse<any, any> | undefined, string[]>, "initialData" | "queryFn" | "queryKey"> & { initialData?: (() => undefined) | undefined; }) | undefined) => {
-  useQuery(['@userInfo'], () => getUserInfo(),options)
 }
 
 export const putUserInfo = async (newUserInfo : NewUserInfoType) => {
@@ -142,18 +141,14 @@ export const getSellerLogOut = async () => {
     console.log(result)
     return result
 }
-const getSellerInfo = async () => {
+export const getSellerInfo = async () => {
   try {
     const result = await authAxios.get(`/api/sellers/info`)
-    console.log(result)
-    return result
+    return result.data
 
   } catch (error) {
     console.error(error)
   }
-}
-export const useGetSellerInfo = (accessToken : string , options?: (Omit<UseQueryOptions<AxiosResponse<any, any> | undefined, unknown, AxiosResponse<any, any> | undefined, string[]>, "initialData" | "queryFn" | "queryKey"> & { initialData?: (() => undefined) | undefined; }) | undefined) => {
-  useQuery(['@sellerInfo', accessToken], () => getSellerInfo(),options)
 }
 
 export const putSellerInfo = async (newSellerInfo:NewUserInfoType) => {
