@@ -23,11 +23,11 @@ const Chat = () => {
         ) {
           chatRef.current.style.display = 'flex';
 
-          const result = await getRoomId();
-          console.log(result);
-          console.log(roomId);
-          setRoomId(result);
-          stompConnect(roomId, setMassage);
+          await getRoomId().then((roomId) => {
+            console.log(roomId);
+            stompConnect(roomId, setMassage);
+            setRoomId(roomId);
+          });
         } else if (chatRef.current.style.display === 'flex') {
           chatRef.current.style.display = 'none';
 
@@ -39,7 +39,7 @@ const Chat = () => {
     }
   };
 
-  const handleContentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMessageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewMessage(event.target.value);
   };
 
@@ -67,7 +67,7 @@ const Chat = () => {
         ref={chatRef}
       >
         <div className='px-3 py-5 h-600px overflow-auto' ref={messageBoxRef}>
-          <ChatLeft />
+          {/* <ChatLeft /> */}
           {message.map((message, idx) => (
             <ChatRight key={idx} message={message} />
           ))}
@@ -80,7 +80,7 @@ const Chat = () => {
               className='input input-bordered w-full focus:outline-none'
               id='name'
               value={newMessage}
-              onChange={(e) => handleContentChange(e)}
+              onChange={(e) => handleMessageChange(e)}
               autoComplete='off'
             />
             <span>
@@ -99,10 +99,10 @@ const Chat = () => {
 
 export default Chat;
 
-const ChatLeft = () => {
+const ChatLeft = ({ message }: { message: string }) => {
   return (
     <div className='chat chat-start'>
-      <div className='chat-bubble'>비쌉니다 4달라에 주세요</div>
+      <div className='chat-bubble'>{message}</div>
     </div>
   );
 };

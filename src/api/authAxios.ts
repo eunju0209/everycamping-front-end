@@ -14,7 +14,6 @@ authAxios.interceptors.request.use(
         Authorization : getCookie('accessToken')
       }
     }
-
     return config;
   },
   function (error) {
@@ -28,9 +27,20 @@ authAxios.interceptors.response.use(
   },
   async function (error) {
     console.error('response error :', error)
-    if (error.response.status === 403) {
+
+    const errorAPI = error.config
+    const refreshToken = getCookie('refreshToken')
+
+    console.log('1:', errorAPI.retry)
+    
+    if (error.response.status === 403 && errorAPI.retry === undefined && refreshToken) {
+      errorAPI.retry = true
+
+      console.log('2:', errorAPI.retry)
+      
       await getUserNewToken()
-      // authAxios(error.config)
+
+      // return await authAxios(errorAPI)
       // await getSellerNewToken()
     }
     return Promise.reject(error);

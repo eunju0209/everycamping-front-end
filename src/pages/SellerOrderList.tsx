@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getSellerOrderLIst } from '../api/orderService';
-import SellerOrderListCard from '../components/OrderList/SellerOrderListCard';
+import SellerOrderCard from '../components/OrderList/SellerOrderCard';
 
 export type SellerOrderListType = {
   productId: number;
@@ -38,7 +38,7 @@ const SellerOrderList = () => {
         <h1 className='flex justify-center text-4xl'>주문내역</h1>
         <div className='mt-7'>
           {orderList.map((list: SellerOrderListType) => {
-            return <SellerOrderListCard key={list.productId} list={list} />;
+            return <SellerOrderCard key={list.productId} list={list} />;
           })}
         </div>
       </div>

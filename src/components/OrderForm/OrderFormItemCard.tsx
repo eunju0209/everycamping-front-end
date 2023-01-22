@@ -2,18 +2,25 @@ type OrderFormItemCardProps = {
   title: string;
   count: number;
   price: number;
+  last?: string;
 };
 
-const OrderFormItemCard = ({ title, count, price }: OrderFormItemCardProps) => {
+const OrderFormItemCard = ({
+  title,
+  count,
+  price,
+  last,
+}: OrderFormItemCardProps) => {
   return (
-    <div className='flex justify-between flex-nowrap mt-3'>
-      <div className='flex items-center'>
-        <div className='w-48 truncate mr-2'>- {title}</div>
+    <div className='flex flex-col items-start m-1'>
+      <p className='truncate'>- {title}</p>
+      <div className='flex justify-between w-full text-xs mt-1'>
+        <p>수량 : {count}</p>
+        <p className='whitespace-nowrap'>
+          {(count * price).toLocaleString()}원
+        </p>
       </div>
-      <div className='flex flex-col items-end w-full'>
-        <div className='flex justify-start w-full '>수량 : {count}</div>
-        <div>{(count * price).toLocaleString()}원</div>
-      </div>
+      {last ? '' : <div className='divider m-0'></div>}
     </div>
   );
 };

@@ -4,8 +4,7 @@ export type UserInfo = {
   email: string;
   nickName: string;
   phoneNumber: string;
-  type: 'user' | 'seller' | 'admin';
-  isLogin: boolean;
+  type: 'none' | 'user' | 'seller' | 'admin';
 };
 
 export type UserInfoContextType = {
@@ -21,13 +20,12 @@ const UserInfoContext = createContext<UserInfoContextType | null>(null);
 
 const UserInfoProvider = (props: UserInfoProviderProps) => {
   const [userInfo, setUserInfo] = useState<UserInfo>({
-    //샘플 데이터
-    email: 'cow_boy27@naver.com',
-    nickName: '재재',
-    phoneNumber: '010-3558-3752',
-    type: 'user',
-    isLogin: true,
+    email: '',
+    nickName: '',
+    phoneNumber: '',
+    type: 'none',
   });
+
   return (
     <UserInfoContext.Provider value={{ userInfo, setUserInfo }}>
       {props.children}
@@ -39,10 +37,8 @@ export default UserInfoProvider;
 
 export const useUserInfo = () => {
   const value = useContext(UserInfoContext);
-
   if (!value) {
     throw new Error('cannot find userInfo');
   }
-
   return value;
 };

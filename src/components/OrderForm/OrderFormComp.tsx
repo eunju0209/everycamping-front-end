@@ -1,40 +1,33 @@
 import { useEffect, useRef, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { postOrders } from '../../api/orderService';
 import { cartContentType } from '../../pages/Cart';
-import { useUserInfo } from '../../store/UserInfoProvider';
 import AddressSearch from './AddressSearch';
 import OrderFormItemCard from './OrderFormItemCard';
 
 export type OrderInfo = {
-  email: string;
-  nickName: string;
-  phoneNumber: string;
+  name: string;
+  phone: string;
   address: string;
   request: string;
 };
 
 const OrderFormComp = () => {
-  const { userInfo } = useUserInfo();
+  const navigate = useNavigate();
   const location = useLocation();
   const { totalPrice, orderItems } = location.state;
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const orderDetailRef = useRef<HTMLDivElement>(null);
   const [orderInfo, setOrderInfo] = useState<OrderInfo>({
-    email: '',
-    nickName: '',
-    phoneNumber: '',
+    name: '',
+    phone: '',
     address: '',
     request: '',
   });
+  const [orderProductFormList, setOrderProductFormList] = useState<object[]>(
+    []
+  );
   const deliveryPrice = 3000;
-
-  useEffect(() => {
-    setOrderInfo((prev) => ({
-      ...prev,
-      ...userInfo,
-    }));
-  }, []);
 
   const onChange = (
     event:
@@ -61,11 +54,21 @@ const OrderFormComp = () => {
 
   const formSubmit = async () => {
     console.log(orderInfo, orderItems, totalPrice);
-    await postOrders({
-      ...orderInfo,
-      orderItems,
-      totalPrice,
-    });
+    try {
+      await postOrders({
+        ...orderInfo,
+        orderProductFormList,
+      }).then(() => {
+        alert('주문이 완료 되었습니다.');
+        navigate('/mypage/user/orders');
+      });
+    } catch (error) {
+      console.error(error);
+      if (error === 'PRODUCT_NOT_ON_SALE')
+        return alert('판매가 종료된 상품이 있습니다.');
+      if (error === 'PRODUCT_NOT_ENOUGH_STOCK')
+        return alert('주문한 상품의 재고가 부족 합니다.');
+    }
   };
   return (
     <>
@@ -73,15 +76,15 @@ const OrderFormComp = () => {
         <div className='form-control'>
           <label className='input-group'>
             <span className='justify-center min-w-74px whitespace-nowrap'>
-              이름
+              수령인
             </span>
             <input
               className='input input-bordered w-full text-lg bg-white focus:outline-none'
               type='text'
               name='nickName'
-              placeholder={userInfo.nickName}
+              placeholder='이름'
               onChange={(e) => onChange(e)}
-              value={orderInfo.nickName}
+              value={orderInfo.name}
               required
               autoComplete='off'
             />
@@ -97,8 +100,8 @@ const OrderFormComp = () => {
             className='input input-bordered w-full text-lg bg-white focus:outline-none'
             name='phoneNumber'
             type='tel'
-            placeholder={userInfo.phoneNumber}
-            value={orderInfo.phoneNumber}
+            placeholder='연락처'
+            value={orderInfo.phone}
             required
             autoComplete='off'
             pattern='[0,1]{3}-[0-9]{4}-[0-9]{4}'
@@ -114,17 +117,34 @@ const OrderFormComp = () => {
               주문 정보
             </span>
             <div
-              className='input input-bordered w-full bg-white min-h-50px h-fit px-3 pb-3 focus:outline-none'
+              className='input input-bordered w-full bg-white min-h-50px h-fit p-3 focus:outline-none'
               ref={orderDetailRef}
             >
-              {orderItems.map((item: cartContentType) => (
-                <OrderFormItemCard
-                  key={item.productId}
-                  title={item.name}
-                  count={item.quantity}
-                  price={item.price}
-                />
-              ))}
+              {orderItems.map((item: cartContentType, idx: number) => {
+                setOrderProductFormList((prev) => [
+                  ...prev,
+                  {
+                    productId: item.productId,
+                    quantity: item.quantity,
+                  },
+                ]);
+                return idx !== orderItems.length - 1 ? (
+                  <OrderFormItemCard
+                    key={item.productId}
+                    title={item.name}
+                    count={item.quantity}
+                    price={item.price}
+                  />
+                ) : (
+                  <OrderFormItemCard
+                    key={item.productId}
+                    title={item.name}
+                    count={item.quantity}
+                    price={item.price}
+                    last='last'
+                  />
+                );
+              })}
             </div>
           </label>
         </div>

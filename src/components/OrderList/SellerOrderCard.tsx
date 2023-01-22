@@ -40,7 +40,7 @@ const SellerOrderListCard = ({
         setOrderState('주문 취소');
         break;
       case 'SETTLEMENT':
-        setOrderState('');
+        setOrderState('주문 완료');
         break;
     }
   };

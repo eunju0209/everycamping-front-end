@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { deleteCartItems, patchCartItems } from '../api/cartService';
 
 type CartItemCardProps = {
@@ -11,32 +12,39 @@ type CartItemCardProps = {
 };
 
 const CartItemCard = ({ id, img, title, count, price }: CartItemCardProps) => {
-  const [itemCounts, setItemCounts] = useState(0);
+  const [updateQuantity, setUpdateQuantity] = useState(0);
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { mutate } = useMutation(patchCartItems, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['@CartItem'] });
+      console.log('업데이트 성공');
     },
   });
   const deleteMutate = useMutation(deleteCartItems, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['@CartItem'] });
+      console.log('삭제 성공');
     },
   });
 
   useEffect(() => {
-    setItemCounts(count);
+    setUpdateQuantity(count);
   }, []);
+
+  useEffect(() => {
+    mutate({ id, updateQuantity: updateQuantity });
+  }, [updateQuantity]);
 
   const handleCount = {
     minus: () => {
-      if (itemCounts <= 1) return;
-      setItemCounts((prev) => (prev -= 1));
-      mutate({ id, itemCounts });
+      if (updateQuantity <= 1) return;
+      setUpdateQuantity((prev) => (prev -= 1));
+      // mutate({ id, updateQuantity: updateQuantity - 1 });
     },
     plus: () => {
-      setItemCounts((prev) => (prev += 1));
-      mutate({ id, itemCounts });
+      setUpdateQuantity((prev) => (prev += 1));
+      // mutate({ id, updateQuantity: updateQuantity + 1 });
     },
   };
 
@@ -51,7 +59,14 @@ const CartItemCard = ({ id, img, title, count, price }: CartItemCardProps) => {
       </div>
       <div className='flex justify-between w-full p-6'>
         <div className='flex flex-col justify-between'>
-          <p className='text-xl'>{title}</p>
+          <p
+            className='text-xl cursor-pointer'
+            onClick={() => {
+              navigate(`/products/detail/${id}`);
+            }}
+          >
+            {title}
+          </p>
           <div className=''>
             <button
               className='btn btn-sm rounded-r-none'
@@ -59,7 +74,7 @@ const CartItemCard = ({ id, img, title, count, price }: CartItemCardProps) => {
             >
               -
             </button>
-            <span className='inline-block px-3'>{itemCounts}</span>
+            <span className='inline-block px-3'>{updateQuantity}</span>
             <button
               className='btn btn-sm rounded-l-none'
               onClick={handleCount.plus}
@@ -75,7 +90,7 @@ const CartItemCard = ({ id, img, title, count, price }: CartItemCardProps) => {
           >
             x
           </button>
-          <p>{(price * itemCounts).toLocaleString()}원</p>
+          <p>{(price * updateQuantity).toLocaleString()}원</p>
         </div>
       </div>
     </div>
