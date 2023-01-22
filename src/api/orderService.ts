@@ -1,13 +1,11 @@
 import { authAxios } from './authAxios';
 
 export const postOrders = async (orderInfo : {  
-  email: string;
-  nickName: string;
-  phoneNumber: string;
+  name: string;
+  phone: string;
   address: string;
   request: string;
-  orderItems : object;
-  totalPrice : number;
+  orderProductFormList : object[];
 }) => {
   try {
     const result = await authAxios.post('/api/orders', orderInfo)
@@ -21,8 +19,11 @@ export const postOrders = async (orderInfo : {
 
 export const getUserOrderLIst = async () => {
   
-  const result = await authAxios.get('/api/orders/customer')
-  return result.data.content
+  const result = await authAxios.get('/assets/data/userOrderList.json')
+  console.log(result.data.items)
+  return result.data.items
+  // const result = await authAxios.get('/api/orders/customer')
+  // return result.data.content
 }
 
 export const getSellerOrderLIst = async () => {
