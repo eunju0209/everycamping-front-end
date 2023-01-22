@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
+  getSellerInfo,
+  getUserInfo,
   postSellerLogin,
   postUserLogin,
-  useGetSellerInfo,
-  useGetUserInfo,
 } from '../../api/userService';
 import { useUserInfo } from '../../store/UserInfoProvider';
 import KakaoLogin from './socialLogin/KakaoLogin';
@@ -21,7 +21,7 @@ const LoginComp = () => {
   });
   const [isSeller, setIsSeller] = useState(false);
   const navigate = useNavigate();
-  // const { userInfo, setUserInfo } = useUserInfo();
+  const { userInfo, setUserInfo } = useUserInfo();
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
@@ -39,37 +39,27 @@ const LoginComp = () => {
 
     try {
       if (isSeller) {
-        await postSellerLogin(loginInfo).then(() => navigate('/'));
-        // useGetSellerInfo(storedToken.Token, {
-        //   onSuccess: (data) => {
-        //     console.log(data);
-        //     // setUserInfo({
-        //     //   ...data,
-        //     //   type: 'seller',
-        //     //   isLogin: true,
-        //     // });
-        //   },
-        //   onError: () => {
-        //     alert('로그인에 실패 했습니다.');
-        // },
-        // });
+        await postSellerLogin(loginInfo).then(async () => {
+          const data = await getSellerInfo();
+          setUserInfo({
+            email: data.email,
+            nickName: data.nickName,
+            phoneNumber: data.phoneNumber,
+            type: 'seller',
+          });
+        });
       } else {
-        await postUserLogin(loginInfo).then(() => navigate('/'));
-        // useGetUserInfo(storedToken.Token, {
-        //   onSuccess: (data) => {
-        //     console.log(data);
-        //     // setUserInfo({
-        //     //   ...data,
-        //     //   type: 'user',
-        //     //   isLogin: true,
-        //     // });
-        //   },
-        //   onError: (err) => {
-        //     alert('로그인에 실패 했습니다.');
-        //   },
-        // });
+        await postUserLogin(loginInfo).then(async () => {
+          const data = await getUserInfo();
+          setUserInfo({
+            email: data.email,
+            nickName: data.nickName,
+            phoneNumber: data.phoneNumber,
+            type: 'user',
+          });
+        });
       }
-
+      navigate('/');
       setLoginInfo({
         email: '',
         password: '',
@@ -78,8 +68,9 @@ const LoginComp = () => {
     } catch (error: any) {
       console.error(error);
       if (error.response.data.message === '존재하지 않는 회원입니다.') {
-        alert('존재하지 않는 회원입니다.');
+        return alert('존재하지 않는 회원입니다.');
       }
+      alert('로그인에 실패 했습니다. ');
     }
   };
   return (

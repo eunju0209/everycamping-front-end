@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { postUserSocialLogin, useGetUserInfo } from '../../../api/userService';
+import { getUserInfo, postUserSocialLogin } from '../../../api/userService';
 import { useUserInfo } from '../../../store/UserInfoProvider';
 
 const KaKaoLoginCallback = () => {
@@ -29,22 +29,17 @@ const KaKaoLoginCallback = () => {
           url: '/v2/user/me',
         });
 
-        await postUserSocialLogin(kakaoRequest.kakao_account.email);
-
-        // useGetUserInfo(storedToken.Token, {
-        //   onSuccess: (data) => {
-        //     console.log(data);
-        //     // setUserInfo({
-        //     //   ...data,
-        //     //   type: 'user',
-        //     //   isLogin: true,
-        //     // });
-        //     navigate('/');
-        //   },
-        //   onError: (err) => {
-        //     alert('로그인에 실패 했습니다.');
-        //   },
-        // });
+        await postUserSocialLogin(kakaoRequest.kakao_account.email).then(
+          async () => {
+            const data = await getUserInfo();
+            setUserInfo({
+              email: data.email,
+              nickName: data.nickName,
+              phoneNumber: data.phoneNumber,
+              type: 'user',
+            });
+          }
+        );
       } catch (err) {
         console.log(err);
         navigate('/join', {
