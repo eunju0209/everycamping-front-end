@@ -7,7 +7,7 @@ export default function HeaderButtons() {
   return (
     <div className='flex items-center'>
       <div className='group dropdown dropdown-end relative'>
-        <label tabIndex={0} className='btn btn-primary m-1 mr-3'>
+        <label tabIndex={0} className='btn btn-primary rounded-full m-1 mr-3'>
           <FaUser />
         </label>
         <ul
