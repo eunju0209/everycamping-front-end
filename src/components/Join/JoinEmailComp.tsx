@@ -84,7 +84,7 @@ const JoinEmailComp = () => {
         await postEmailCheck(joinInfo.email);
       } catch (err) {
         console.log(err);
-        // if (err) return alert('이미 사용중인 이메일 입니다.');
+        if (err) return alert('이미 사용중인 이메일 입니다.');
         return;
       }
 
