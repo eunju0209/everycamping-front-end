@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { patchOrderCancel, patchOrderConfirm } from '../../api/orderService';
 import { UserOrderListType } from '../../pages/User/UserOrderList';
+import UserOrderDetailCard from './UserOrderDetailCard';
 
 type UserOrderListCardProps = {
   list: UserOrderListType;
@@ -24,6 +25,7 @@ const UserOrderListCard = ({
 }: UserOrderListCardProps) => {
   const navigate = useNavigate();
   const [itemStatus, setItemStatus] = useState('');
+  const [popDetail, setPopDetail] = useState(false);
 
   useEffect(() => {
     switchStatus();
@@ -63,18 +65,24 @@ const UserOrderListCard = ({
         setItemStatus('주문 취소');
         break;
       case 'SETTLEMENT':
-        setItemStatus('');
+        setItemStatus('구매 확정');
         break;
     }
   };
-  //(COMPLETE|CONFIRM|CANCEL|SETTLEMENT)
+  const popUpDetail = () => {
+    setPopDetail(true);
+  };
+
   return (
     <div className='flex rounded bg-white mt-3 p-2'>
       <div className='flex align-center h-40 p-2'>
         <img src={imageUriSnapshot} className='rounded' />
       </div>
       <div className='flex justify-between w-full p-2'>
-        <div className='flex flex-col justify-between p-1'>
+        <div
+          className='flex flex-col justify-between p-1 cursor-pointer'
+          onClick={popUpDetail}
+        >
           <ul>
             <li className='text-xl'>제품명 : {productNameSnapshot}</li>
             <ul className='text-sm'>
@@ -107,10 +115,28 @@ const UserOrderListCard = ({
           </button>
           <button className='btn btn-primary btn-sm my-1' onClick={orderCancel}>
             {/* 추후 수정 */}
-            {status === 'CONFIRM' ? '환불요청' : '주문취소'}
+            {status !== 'COMPLETE' ? '환불요청' : '주문취소'}
           </button>
         </div>
       </div>
+      <UserOrderDetailCard
+        popDetail={popDetail}
+        setPopDetail={setPopDetail}
+        itemStatus={itemStatus}
+        orderDetail={{
+          productId,
+          orderProductId,
+          imageUriSnapshot,
+          productNameSnapshot,
+          quantity,
+          amount,
+          userName,
+          phone,
+          address,
+          status,
+          createdAt,
+        }}
+      />
     </div>
   );
 };
