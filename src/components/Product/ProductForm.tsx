@@ -44,8 +44,6 @@ export default function ProductForm() {
         return { ...product, onSale: !product.onSale };
       }
       if (name === 'tags') {
-        console.log(value);
-
         return { ...product, tags: value.split(',') };
       }
       return { ...product, [name]: value };
