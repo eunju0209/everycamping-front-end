@@ -23,6 +23,8 @@ import SellerOrderList from './pages/SellerOrderList';
 import PasswordEdit from './pages/User/PasswordEdit';
 import SellerProducts from './pages/SellerProducts';
 import UpdateProduct from './pages/UpdateProduct';
+import UserReviewList from './pages/User/UserReviewList';
+import UpdateReview from './pages/UpdateReview';
 
 const router = createBrowserRouter([
   {
@@ -44,12 +46,14 @@ const router = createBrowserRouter([
       { path: 'cart', element: <Cart /> },
       { path: 'order', element: <OrderForm /> },
       { path: 'mypage/user/orders', element: <UserOrderList /> },
+      { path: 'mypage/user/reviews', element: <UserReviewList /> },
       { path: 'mypage/seller/orders', element: <SellerOrderList /> },
       { path: 'mypage/products', element: <SellerProducts /> },
       { path: 'kakaoLoginCallback', element: <KaKaoLoginCallback /> },
       { path: 'sellerConfirm', element: <SellerConfirm /> },
       { path: 'userInfo', element: <UserInfo /> },
       { path: 'PasswordEdit', element: <PasswordEdit /> },
+      { path: 'reviews/update/:reviewId', element: <UpdateReview /> },
     ],
   },
 ]);

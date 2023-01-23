@@ -1,14 +1,24 @@
+import { useQuery } from '@tanstack/react-query';
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { addNewReview } from '../../api/reviewService';
+import { useNavigate } from 'react-router-dom';
+import { getReviewDetail, updateReview } from '../../api/reviewService';
 
-export type NewReviewType = {
-  score: number;
-  text: string;
+type ReviewUpdateFormProps = {
+  reviewId: string;
 };
 
-export default function ReviewForm() {
+export default function ReviewUpdateForm({ reviewId }: ReviewUpdateFormProps) {
+  const navigate = useNavigate();
+  // const { data: reviewDetail } = useQuery(['reviewDetail', reviewId], () =>
+  //   getReviewDetail(reviewId)
+  // );
+  const reviewDetail = {
+    score: 1,
+    text: '텐트',
+  };
+  const { score, text } = reviewDetail;
   const [image, setImage] = useState<File>();
-  const [review, setReview] = useState({ score: 0, text: '' });
+  const [updatedreview, setUpdateReview] = useState({ score, text });
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -19,12 +29,13 @@ export default function ReviewForm() {
       setImage((files as FileList)[0]);
       return;
     }
-    setReview((review) => ({ ...review, [name]: value }));
+    setUpdateReview((review) => ({ ...review, [name]: value }));
   };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    image && addNewReview(review, image);
+    updateReview(reviewId, updatedreview, image) //
+      .then(() => navigate(-1));
   };
 
   return (
@@ -34,7 +45,6 @@ export default function ReviewForm() {
         name='image'
         className='file-input w-full max-w-xs bg-white'
         accept='image/*'
-        required
         onChange={handleChange}
       />
       <label className='input-group w-full max-w-xs'>
@@ -42,7 +52,7 @@ export default function ReviewForm() {
         <input
           type='number'
           name='score'
-          value={review.score ?? ''}
+          value={updatedreview.score ?? ''}
           min='0'
           max='5'
           step={0.5}
@@ -54,14 +64,14 @@ export default function ReviewForm() {
       </label>
       <textarea
         name='text'
-        value={review.text ?? ''}
+        value={updatedreview.text ?? ''}
         className='textarea w-full max-w-xs bg-white text-base'
         placeholder='내용'
         required
         onChange={handleChange}
       ></textarea>
       <button type='submit' className='btn btn-wide btn-primary mt-3'>
-        등록하기
+        수정하기
       </button>
     </form>
   );
