@@ -3,7 +3,7 @@ import CartItemCard from '../components/CartItemCard';
 import { queryGetCartItems } from '../store/ReactQuery';
 
 export type cartContentType = {
-  imagePath: string;
+  imageUri: string;
   isQuantityChanged: boolean;
   name: string;
   onSale: boolean;
@@ -40,7 +40,7 @@ export default function Cart() {
               <CartItemCard
                 key={items.productId}
                 id={items.productId}
-                img={items.imagePath}
+                img={items.imageUri}
                 title={items.name}
                 count={items.quantity}
                 price={items.price}
