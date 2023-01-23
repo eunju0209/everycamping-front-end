@@ -1,4 +1,3 @@
-import { Stomp } from '@stomp/stompjs';
 import axios from 'axios';
 import SockJs from 'sockjs-client'
 import StompJs from 'stompjs'
@@ -7,10 +6,6 @@ import { authAxios } from './authAxios';
 
 const sock = new SockJs('/api/websocket');
 const stomp = StompJs.over(sock);
-// const stomp = Stomp.over(sock);
-// const stomp = StompJs.over(new WebSocket('ws://ec2-43-200-2-48.ap-northeast-2.compute.amazonaws.com/websocket')
-      //  );
-
 
 
 export const getRoomId = async () => {
@@ -19,25 +14,32 @@ export const getRoomId = async () => {
 }
 
 export const stompConnect = (roomId: string, setMessages: React.Dispatch<React.SetStateAction<string[]>>) => {
-  console.log(stomp)
-  stomp.connect({
-    //  login: '',
-    // passcode: '',
-   }
-      // getCookie('accessToken')
-      , (frame) => {
-        
-        console.log('Connected : ' + frame);
-        stompSubscribe(roomId, setMessages);
-      }, 
-      (error: any) => {
-        console.error(error)
-        console.log('a')
-      }
-  );
+  console.log('stomp:',stomp)
+  try {
+    // stomp.debug = () => {}
+    
+    stomp.connect({
+      //  login: '',
+      // passcode: '',
+      Authorization : getCookie('accessToken')
+    }
+    , (frame) => {
+      
+      console.log('Connected : ' + frame);
+      stompSubscribe(roomId, setMessages);
+    }, 
+    (error: any) => {
+      console.error(error)
+      console.log('a')
+    }
+    );
+  } catch (error) {
+    console.error(error)
+  }
 };
 
-const stompSubscribe = (roomId : string, setMessages : React.Dispatch<React.SetStateAction<string[]>>) => {
+const stompSubscribe = (roomId: string, setMessages: React.Dispatch<React.SetStateAction<string[]>>) => {
+  // stomp.debug = () => {}
     stomp.subscribe(
         `/topic/questions/${roomId}`,
         (data: { body: string; }) => {
@@ -49,6 +51,7 @@ const stompSubscribe = (roomId : string, setMessages : React.Dispatch<React.SetS
 }
 
 export const stompDisConnect = () => {
+  // stomp.debug = () => {}
     try {
         stomp.disconnect(() => {
   console.log("채팅이 종료 되었습니다.");
@@ -57,7 +60,9 @@ export const stompDisConnect = () => {
     }
 };
 
-export const sendMessage = (roomId : string, message : string) => {
+export const sendMessage = (roomId: string, message: string) => {
+  // stomp.debug = () => {}
+    
     const data = {
         content: message
     };
