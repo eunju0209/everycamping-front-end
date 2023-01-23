@@ -20,14 +20,18 @@ export async function getReviewDetail(reviewId: string): Promise<ReviewType> {
   return res.data;
 }
 
-export async function addNewReview(review: NewReviewType, image: File) {
+export async function addNewReview(
+  productId: string,
+  review: NewReviewType,
+  image: File
+) {
   const formData = new FormData();
   const blob = new Blob([JSON.stringify(review)], {
     type: 'application/json',
   });
   formData.append('form', blob);
   formData.append('image', image);
-  return authAxios.post('/api/reviews', formData, {
+  return authAxios.post(`/api/reviews/${productId}`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },

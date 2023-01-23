@@ -29,7 +29,8 @@ export default function ProductList({
     data: products,
   } = useQuery<ProductType[]>(
     ['products', seller, keyword, category, filter],
-    () => getProducts(category, filter, keyword, seller)
+    () => getProducts(category, filter, keyword, seller),
+    { staleTime: 1000 * 60 }
   );
 
   if (isLoading) return <p>Loading...</p>;

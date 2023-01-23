@@ -50,7 +50,7 @@ export default function ReviewList({ productId, customerId }: ReviewListProps) {
         ) : (
           <button
             className='absolute right-10 top-1 btn btn-sm btn-primary'
-            onClick={() => navigate('/review/new')}
+            onClick={() => navigate('/review/new', { state: productId })}
           >
             리뷰작성
           </button>
