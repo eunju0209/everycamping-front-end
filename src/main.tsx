@@ -24,6 +24,7 @@ import PasswordEdit from './pages/User/PasswordEdit';
 import SellerProducts from './pages/SellerProducts';
 import UpdateProduct from './pages/UpdateProduct';
 import UserReviewList from './pages/User/UserReviewList';
+import UpdateReview from './pages/UpdateReview';
 
 const router = createBrowserRouter([
   {
@@ -52,6 +53,7 @@ const router = createBrowserRouter([
       { path: 'sellerConfirm', element: <SellerConfirm /> },
       { path: 'userInfo', element: <UserInfo /> },
       { path: 'PasswordEdit', element: <PasswordEdit /> },
+      { path: 'reviews/update/:reviewId', element: <UpdateReview /> },
     ],
   },
 ]);

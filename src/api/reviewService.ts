@@ -15,6 +15,11 @@ export async function getReviews(
   return res.data;
 }
 
+export async function getReviewDetail(reviewId: string): Promise<ReviewType> {
+  const res = await axios.get(`/api/reviews/${reviewId}`);
+  return res.data;
+}
+
 export async function addNewReview(review: NewReviewType, image: File) {
   const formData = new FormData();
   const blob = new Blob([JSON.stringify(review)], {
