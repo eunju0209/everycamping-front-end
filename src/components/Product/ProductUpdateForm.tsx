@@ -40,7 +40,7 @@ export default function ProductUpdateForm({
         onSale: sellerProduct.onSale,
         tags: sellerProduct.tags,
       });
-  }, []);
+  }, [sellerProduct]);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>

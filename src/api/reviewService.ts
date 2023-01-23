@@ -50,7 +50,7 @@ export async function updateReview(
   formData.append('form', blob);
   image && formData.append('image', image);
 
-  return authAxios.post(`/api/reviews/${reviewId}`, formData, {
+  return authAxios.put(`/api/reviews/${reviewId}`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },

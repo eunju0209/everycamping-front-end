@@ -123,7 +123,6 @@ export default function ProductForm() {
         className='file-input w-full max-w-xs bg-white'
         accept='image/*'
         onChange={handleChange}
-        required
       />
       <textarea
         name='description'
