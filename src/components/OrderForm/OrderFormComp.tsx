@@ -4,6 +4,7 @@ import { postOrders } from '../../api/orderService';
 import { cartContentType } from '../../pages/Cart';
 import AddressSearch from './AddressSearch';
 import OrderFormItemCard from './OrderFormItemCard';
+import { useUserInfo } from '../../store/UserInfoProvider';
 
 export type OrderInfo = {
   name: string;
@@ -18,6 +19,8 @@ const OrderFormComp = () => {
   const { totalPrice, orderItems } = location.state;
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const orderDetailRef = useRef<HTMLDivElement>(null);
+  const { userInfo, setUserInfo } = useUserInfo();
+  const [isUser, setIsUser] = useState(false);
   const [orderInfo, setOrderInfo] = useState<OrderInfo>({
     name: '',
     phone: '',
@@ -37,6 +40,10 @@ const OrderFormComp = () => {
     const {
       target: { name, value },
     } = event;
+
+    if (name === 'user') {
+      setIsUser((prev) => !prev);
+    }
 
     setOrderInfo((prev) => ({
       ...prev,
@@ -74,6 +81,16 @@ const OrderFormComp = () => {
     <>
       <div className='flex flex-col mt-10'>
         <div className='form-control'>
+          <label className='label cursor-pointer justify-start'>
+            <input
+              type='checkbox'
+              className='checkbox mr-1'
+              name='user'
+              checked={isUser}
+              onChange={(e) => onChange(e)}
+            />
+            <span>주문자와 일치</span>
+          </label>
           <label className='input-group'>
             <span className='justify-center min-w-74px whitespace-nowrap'>
               수령인
@@ -84,7 +101,7 @@ const OrderFormComp = () => {
               name='nickName'
               placeholder='이름'
               onChange={(e) => onChange(e)}
-              value={orderInfo.name}
+              value={isUser ? userInfo.nickName : orderInfo.name}
               required
               autoComplete='off'
             />
@@ -101,7 +118,7 @@ const OrderFormComp = () => {
             name='phoneNumber'
             type='tel'
             placeholder='연락처'
-            value={orderInfo.phone}
+            value={isUser ? userInfo.nickName : orderInfo.phone}
             required
             autoComplete='off'
             pattern='[0,1]{3}-[0-9]{4}-[0-9]{4}'

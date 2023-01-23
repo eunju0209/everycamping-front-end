@@ -1,0 +1,42 @@
+{
+  "orderProductList": [
+{
+            "id": 1,
+            "productId": 1,
+            "productNameSnapshot": "tent1",
+            "stockPriceSnapshot": 1111,
+            "amount": 5555,
+            "imageUriSnapshot": "imageUri",
+            "quantity": 5,
+            "status": "COMPLETE",
+            "sellerId": 1,
+            "sellerNickName": "판매꾼",
+            "sellerEmail": "zero@base.com",
+            "sellerPhone": "010-1111-2222"
+        },
+        {
+            "id": 2,
+            "productId": 2,
+            "productNameSnapshot": "tent2",
+            "stockPriceSnapshot": 555,
+            "amount": 1665,
+            "imageUriSnapshot": "imageUri",
+            "quantity": 3,
+            "status": "COMPLETE",
+            "sellerId": 1,
+            "sellerNickName": "판매꾼",
+            "sellerEmail": "zero@base.com",
+            "sellerPhone": "010-1111-2222"
+        }
+  ],
+  "orderId": 1,
+    "representProductName": "tent1",
+    "orderProductCount": 3,
+    "totalAmount": 9440,
+    "name": "김세종",
+    "address": "대구 남구",
+    "phone": "01086352083",
+    "request": "빠른 배송 바랍니다.",
+		"customerId": 3,
+    "createdAt": "2023-01-23 03:53:12"
+}

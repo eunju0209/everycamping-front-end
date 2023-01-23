@@ -3,22 +3,18 @@ import { getSellerOrderLIst } from '../api/orderService';
 import SellerOrderCard from '../components/OrderList/SellerOrderCard';
 
 export type SellerOrderListType = {
-  productId: number;
-  customerId: number;
   orderProductId: number;
-  imageUriSnapshot: string;
+  productId: number;
   productNameSnapshot: string;
+  stockPriceSnapshot: number;
   quantity: number; //주문수량
   amount: number; // 총 금액(구매자가 지불한 금액)
-  userName: string;
-  phone: string;
-  address: string;
-  status: string;
   createdAt: string;
+  status: string;
 };
 
 const SellerOrderList = () => {
-  const [orderList, setOrderList] = useState([]);
+  const [orderList, setOrderList] = useState<SellerOrderListType[]>([]);
 
   useEffect(() => {
     (async () => {

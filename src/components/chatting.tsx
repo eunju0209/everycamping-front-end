@@ -24,7 +24,6 @@ const Chat = () => {
           chatRef.current.style.display = 'flex';
 
           await getRoomId().then((roomId) => {
-            console.log(roomId);
             stompConnect(roomId, setMassage);
             setRoomId(roomId);
           });
@@ -46,6 +45,8 @@ const Chat = () => {
   const messageSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     sendMessage(roomId, newMessage);
+    console.log(message);
+    console.log(newMessage);
     // setMassage((prev) => [...prev, newMessage]);
     setNewMessage('');
   };

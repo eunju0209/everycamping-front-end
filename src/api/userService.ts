@@ -38,7 +38,8 @@ export const postUserLogin = async (loginInfo: loginInfoType) => {
 }
 
 export const postUserSocialLogin = async (email: string) => {
-    const result = await axios.post(`/api/customers/signin`, { email })
+    const result = await axios.post(`/api/customers/signin/kakao`)
+    // const result = await axios.post(`/api/customers/signin/kakao`, { email })
 
  // storedToken.Token = result.data.accessToken;
   setCookie('accessToken', result.data.accessToken, {
