@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getReviewDetail, updateReview } from '../../api/reviewService';
 
@@ -9,16 +9,22 @@ type ReviewUpdateFormProps = {
 
 export default function ReviewUpdateForm({ reviewId }: ReviewUpdateFormProps) {
   const navigate = useNavigate();
-  // const { data: reviewDetail } = useQuery(['reviewDetail', reviewId], () =>
-  //   getReviewDetail(reviewId)
-  // );
-  const reviewDetail = {
-    score: 1,
-    text: '텐트',
-  };
-  const { score, text } = reviewDetail;
+  const { data: reviewDetail } = useQuery(['reviewDetail', reviewId], () =>
+    getReviewDetail(reviewId)
+  );
   const [image, setImage] = useState<File>();
-  const [updatedreview, setUpdateReview] = useState({ score, text });
+  const [updatedreview, setUpdateReview] = useState({
+    score: 0,
+    text: '',
+  });
+
+  useEffect(() => {
+    reviewDetail &&
+      setUpdateReview({
+        score: reviewDetail.score,
+        text: reviewDetail.text,
+      });
+  }, [reviewDetail]);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

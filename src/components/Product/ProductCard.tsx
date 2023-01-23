@@ -32,14 +32,14 @@ export default function ProductCard({ product, seller }: ProductCardProps) {
         {seller && (
           <div>
             <button
-              className='btn btn-sm'
+              className='btn btn-sm mr-2'
               onClick={() => removeProduct.mutate(id)}
             >
               삭제하기
             </button>
             <button
               className='btn btn-sm'
-              onClick={() => navigate(`products/update/${id}`)}
+              onClick={() => navigate(`/products/update/${id}`)}
             >
               수정하기
             </button>

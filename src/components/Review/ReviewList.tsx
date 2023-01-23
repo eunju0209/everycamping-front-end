@@ -20,27 +20,10 @@ type ReviewListProps = {
 
 export default function ReviewList({ productId, customerId }: ReviewListProps) {
   const navigate = useNavigate();
-  // const { data: reviews } = useQuery(['reviews', productId, customerId], () =>
-  //   getReviews(productId, customerId)
-  // );
-  const reviews = [
-    {
-      id: '1',
-      customerName: 'bori',
-      score: 1,
-      text: '좋아요',
-      imageUri: '',
-      createdAt: '2023-02-02',
-    },
-    {
-      id: '2',
-      customerName: 'bori2',
-      score: 2,
-      text: '좋아요2',
-      imageUri: '',
-      createdAt: '2023-02-02',
-    },
-  ];
+  const { data: reviews } = useQuery(['reviews', productId, customerId], () =>
+    getReviews(productId, customerId)
+  );
+
   return (
     <div>
       <div className='relative mb-5'>
@@ -50,7 +33,7 @@ export default function ReviewList({ productId, customerId }: ReviewListProps) {
         ) : (
           <button
             className='absolute right-10 top-1 btn btn-sm btn-primary'
-            onClick={() => navigate('/review/new', { state: productId })}
+            onClick={() => navigate('/review/new', { state: { productId } })}
           >
             리뷰작성
           </button>
