@@ -1,3 +1,4 @@
+import { deleteReview } from '../../api/reviewService';
 import { formatAgo } from '../../util/timeago';
 import Rating from './Rating';
 import { ReviewType } from './ReviewList';
@@ -22,7 +23,9 @@ export default function ReviewCard({ review }: ReviewCardProps) {
           <span className='text-sm'>{customerName}</span>
         </div>
         <div>
-          <button className='btn btn-sm mr-2'>삭제하기</button>
+          <button className='btn btn-sm mr-2' onClick={() => deleteReview(id)}>
+            삭제하기
+          </button>
           <button className='btn btn-sm'>수정하기</button>
         </div>
       </div>

@@ -28,3 +28,26 @@ export async function addNewReview(review: NewReviewType, image: File) {
     },
   });
 }
+
+export async function updateReview(
+  reviewId: string,
+  review: NewReviewType,
+  image?: File
+) {
+  const formData = new FormData();
+  const blob = new Blob([JSON.stringify(review)], {
+    type: 'application/json',
+  });
+  formData.append('form', blob);
+  image && formData.append('image', image);
+
+  return authAxios.post(`/api/reviews/${reviewId}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+}
+
+export async function deleteReview(reviewId: string) {
+  return authAxios.delete(`/api/reviews/${reviewId}`);
+}
