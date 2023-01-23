@@ -15,12 +15,11 @@ const KaKaoLoginCallback = () => {
           'code'
         );
         const client_id = import.meta.env.VITE_KAKAO_LOGIN_RESTAPI_KEY;
-
         const token = await axios.post(
-          `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${client_id}&redirect_uri=http://localhost:5173/kakaoLoginCallback&code=${code}`,
+          `https://kauth.kakao.com/oauth/authorize?client_id=${client_id}&redirect_uri=http://localhost:5173/kakaoLoginCallback&code=${code}`,
           {
             headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
+              'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
             },
           }
         );
@@ -29,25 +28,25 @@ const KaKaoLoginCallback = () => {
           url: '/v2/user/me',
         });
 
-        await postUserSocialLogin(kakaoRequest.kakao_account.email).then(
-          async () => {
-            const data = await getUserInfo();
-            setUserInfo({
-              email: data.email,
-              nickName: data.nickName,
-              phoneNumber: data.phoneNumber,
-              type: 'user',
-            });
-          }
-        );
+        // await postUserSocialLogin(kakaoRequest.kakao_account.email).then(
+        //   async () => {
+        //     const data = await getUserInfo();
+        //     setUserInfo({
+        //       email: data.email,
+        //       nickName: data.nickName,
+        //       phoneNumber: data.phoneNumber,
+        //       type: 'user',
+        //     });
+        //   }
+        // );
       } catch (err) {
         console.log(err);
-        navigate('/join', {
-          state: {
-            email: kakaoRequest.kakao_account.email,
-            type: 'social',
-          },
-        });
+        // navigate('/join', {
+        //   state: {
+        //     email: kakaoRequest.kakao_account.email,
+        //     type: 'social',
+        //   },
+        // });
       }
     })();
   }, []);

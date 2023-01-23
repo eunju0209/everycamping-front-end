@@ -57,9 +57,9 @@ const JoinEmailComp = () => {
     if (joinInfo.password.length < 6 || joinInfo.password !== passwordConfirm)
       return;
 
-    if (code === '') {
-      return alert('이메일 인증이 완료되지 않았습니다.');
-    }
+    // if (code === '') {
+    //   return alert('이메일 인증이 완료되지 않았습니다.');
+    // }
     try {
       if (isSeller) {
         await postSellerJoin(joinInfo).then(() => navigate('/login'));
@@ -134,7 +134,7 @@ const JoinEmailComp = () => {
             인증하기
           </button>
         </div>
-        <div className='flex relative mt-2 w-full hidden' ref={codeDivRef}>
+        {/* <div className='flex relative mt-2 w-full hidden' ref={codeDivRef}>
           <input
             className='p-2 input w-full max-w-xs bg-white focus:outline-none'
             name='code'
@@ -152,7 +152,7 @@ const JoinEmailComp = () => {
           >
             인증완료
           </button>
-        </div>
+        </div> */}
         <div className='flex relative mt-2 w-full'>
           <input
             className='p-2 input w-full max-w-xs bg-white focus:outline-none'
