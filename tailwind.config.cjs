@@ -18,7 +18,8 @@ module.exports = {
       },
       maxWidth: {
         '310px': '310px',
-        'cartDiv' : '800px'
+        'cartDiv': '800px',
+        'orderList' : '600px',
       },
       minWidth: {
         '74px': '74px',
@@ -26,7 +27,10 @@ module.exports = {
       }
     },
   },
-  plugins: [require('daisyui')],
+  plugins: [
+    require('daisyui'),
+    require('tailwind-scrollbar-hide')
+  ],
   daisyui: {
     themes: ['garden'],
   },
