@@ -37,8 +37,8 @@ export const postUserLogin = async (loginInfo: loginInfoType) => {
   console.log('login 성공')
 }
 
-export const postUserSocialLogin = async (email: string) => {
-    const result = await axios.post(`/api/customers/signin/kakao`)
+export const postUserSocialLogin = async () => {
+    const result = await axios.get(`/api/customers/signin/social/kakao`)
     // const result = await axios.post(`/api/customers/signin/kakao`, { email })
 
  // storedToken.Token = result.data.accessToken;
@@ -92,7 +92,7 @@ export const getUserInfo = async () => {
 }
 
 export const putUserInfo = async (newUserInfo : NewUserInfoType) => {
-    const result = await authAxios.put(`/api/customers/info`,{newUserInfo})
+    const result = await authAxios.put(`/api/customers/info`,newUserInfo)
     console.log(result)
     return result
 }
