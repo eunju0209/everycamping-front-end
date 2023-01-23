@@ -26,6 +26,9 @@ export default function HeaderButtons() {
           <li>
             <Link to='/userInfo'>회원정보</Link>
           </li>
+          <li>
+            <Link to='/mypage/user/reviews'>리뷰목록</Link>
+          </li>
         </ul>
       </div>
       <button

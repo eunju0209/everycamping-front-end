@@ -4,6 +4,7 @@ import { ReviewType } from './ReviewList';
 
 type ReviewCardProps = {
   review: ReviewType;
+  customerId?: string;
 };
 
 export default function ReviewCard({ review }: ReviewCardProps) {
@@ -16,9 +17,13 @@ export default function ReviewCard({ review }: ReviewCardProps) {
       <div className='p-2'>
         <Rating score={score} id={id} />
         <p className='text-sm my-2 truncate'>{text}</p>
-        <div className='flex justify-between items-center text-gray-500'>
+        <div className='flex justify-between items-center text-gray-500 mb-2'>
           <span className='text-sm'>{formatAgo(createdAt, 'ko')}</span>
           <span className='text-sm'>{customerName}</span>
+        </div>
+        <div>
+          <button className='btn btn-sm mr-2'>삭제하기</button>
+          <button className='btn btn-sm'>수정하기</button>
         </div>
       </div>
     </li>
