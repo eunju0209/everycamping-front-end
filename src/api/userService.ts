@@ -3,7 +3,7 @@ import { JoinEmailCompType } from '../components/Join/JoinEmailComp';
 import { loginInfoType } from '../components/Login/LoginComp';
 import { NewUserInfoType } from '../pages/User/UserInfo';
 import { storedToken } from '../store/accessToken';
-import { getCookie, setCookie } from '../store/cookie';
+import { getCookie, removeCookie, setCookie } from '../store/cookie';
 import { authAxios } from './authAxios';
 
 // axios.defaults.withCredentials = true;
@@ -34,12 +34,13 @@ export const postUserLogin = async (loginInfo: loginInfoType) => {
   setCookie('refreshToken', result.data.refreshToken, {
     path:'/'
   });
+  setCookie('LoginType', 'user');
   console.log('login 성공')
 }
 
-export const postUserSocialLogin = async (email: string) => {
-    const result = await axios.get(`/api/customers/signin/social/kakao`)
-    // const result = await axios.post(`/api/customers/signin/kakao`, { email })
+export const postUserSocialLogin = async (email: string, nickName: string) => {
+    // const result = await axios.get(`/api/customers/signin/social/kakao`)
+    const result = await axios.post(`/api/customers/signin/social/kakao`, { email, nickName })
 
  // storedToken.Token = result.data.accessToken;
   setCookie('accessToken', result.data.accessToken, {
@@ -48,6 +49,7 @@ export const postUserSocialLogin = async (email: string) => {
   setCookie('refreshToken', result.data.refreshToken, {
     path:'/'
   });
+  setCookie('LoginType', 'user');
   console.log('social login 성공')
 }
 
@@ -64,10 +66,13 @@ export const getUserNewToken = async () => {
     setCookie('refreshToken', result.data.refreshToken, {
       path:'/'
     });
+    setCookie('LoginType', 'user');
   } catch (error) {
     console.log('토큰 재발급 실패')
-    console.error('newToken error : ', error)
     // location.assign('http://localhost:5173/login')
+    removeCookie('LoginType');
+    removeCookie('accessToken');
+    removeCookie('refreshToken');
   }
 }
 export const getUserLogOut = async () => {
@@ -116,8 +121,13 @@ export const postSellerLogin = async (loginInfo : loginInfoType) => {
   const result = await axios.post(`/api/sellers/signin`, loginInfo)
 
   // storedToken.Token = result.data.accessToken;
-  setCookie('accessToken', result.data.accessToken);
-  setCookie('refreshToken', result.data.refreshToken);
+  setCookie('accessToken', result.data.accessToken,{
+      path:'/'
+    });
+  setCookie('refreshToken', result.data.refreshToken,{
+      path:'/'
+    });
+  setCookie('LoginType', 'seller');
   
   // console.log(storedToken.Token)
 }
@@ -130,15 +140,20 @@ export const getSellerNewToken = async () => {
     })
 
   // storedToken.Token = result.data.accessToken;
-  setCookie('accessToken', result.data.accessToken);
-  setCookie('refreshToken', result.data.refreshToken);
+  setCookie('accessToken', result.data.accessToken,{
+      path:'/'
+    });
+    setCookie('refreshToken', result.data.refreshToken,{
+      path:'/'
+    });
+    setCookie('LoginType', 'seller');
 
   } catch (error) {
     console.log(error)
   }
 }
 export const getSellerLogOut = async () => {
-    const result = await authAxios.post(`/api/sellers/signout`)
+    const result = await authAxios.get(`/api/sellers/signout`)
     console.log(result)
     return result
 }
@@ -167,4 +182,44 @@ export const patchSellerPassword = async (newPasswordEdit:string, oldPassword:st
     console.log(result)
     return result
 
+}
+
+
+// admin
+
+export const postAdminLogin = async (loginInfo: loginInfoType) => {
+  const result = await axios.post(`/api/admins/signin`, loginInfo);
+
+  // storedToken.Token = result.data.accessToken;
+  setCookie('accessToken', result.data.accessToken, {
+    path:'/'
+  });
+  setCookie('refreshToken', result.data.refreshToken, {
+    path:'/'
+  });
+  setCookie('LoginType', 'admin');
+
+  console.log('login 성공')
+}
+export const getAdminNewToken = async () => {
+  try { 
+    const result = await axios.post(`/api/admins/reissue`,{
+      accessToken : getCookie('accessToken'),
+      refreshToken : getCookie('refreshToken')
+    })
+    // storedToken.Token = result.data.accessToken;
+    setCookie('accessToken', result.data.accessToken, {
+      path:'/'
+    });
+    setCookie('refreshToken', result.data.refreshToken, {
+      path:'/'
+    });
+    setCookie('LoginType', 'admin');
+  } catch (error) {
+    console.log('토큰 재발급 실패')
+    location.assign('http://localhost:5173/login')
+    removeCookie('LoginType');
+    removeCookie('accessToken');
+    removeCookie('refreshToken');
+  }
 }
