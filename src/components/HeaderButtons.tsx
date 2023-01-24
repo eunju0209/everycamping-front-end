@@ -2,19 +2,28 @@ import { FaUser, FaShoppingCart } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { getSellerLogOut, getUserLogOut } from '../api/userService';
 import { getCookie, removeCookie } from '../store/cookie';
+import { useUserInfo } from '../store/UserInfoProvider';
 
 export default function HeaderButtons() {
   const navigate = useNavigate();
+  const { setUserInfo } = useUserInfo();
 
   const logout = async () => {
     if (getCookie('LoginType') === 'seller') {
-      await getSellerLogOut().then(() => {
-        removeCookie('LoginType');
-        removeCookie('accessToken');
-        removeCookie('refreshToken');
-      });
+      await getSellerLogOut();
     } else if (getCookie('LoginType') === 'user') {
+      await getUserLogOut();
     }
+    removeCookie('LoginType');
+    removeCookie('accessToken');
+    removeCookie('refreshToken');
+    setUserInfo({
+      email: '',
+      nickName: '',
+      phoneNumber: '',
+      customerId: 0,
+      type: 'none',
+    });
   };
 
   return (
