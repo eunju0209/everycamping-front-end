@@ -22,7 +22,7 @@ const LoginComp = () => {
   });
   const [isSeller, setIsSeller] = useState(false);
   const navigate = useNavigate();
-  const { userInfo, setUserInfo } = useUserInfo();
+  const { setUserInfo } = useUserInfo();
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {

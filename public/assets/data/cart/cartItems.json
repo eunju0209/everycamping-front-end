@@ -1,0 +1,22 @@
+{
+  "content": [
+    {
+      "imageUri": "string",
+      "isQuantityChanged": false,
+      "name": "string111",
+      "onSale": true,
+      "price": 0,
+      "productId": 0,
+      "quantity": 0
+    },
+        {
+      "imageUri": "string",
+      "isQuantityChanged": false,
+      "name": "string222",
+      "onSale": true,
+      "price": 0,
+      "productId": 1,
+      "quantity": 0
+    }
+  ]
+}

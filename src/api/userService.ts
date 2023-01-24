@@ -6,7 +6,7 @@ import { storedToken } from '../store/accessToken';
 import { getCookie, setCookie } from '../store/cookie';
 import { authAxios } from './authAxios';
 
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 
 //common
 export const postEmailCheck = async (email: string) => {
@@ -37,7 +37,7 @@ export const postUserLogin = async (loginInfo: loginInfoType) => {
   console.log('login 성공')
 }
 
-export const postUserSocialLogin = async () => {
+export const postUserSocialLogin = async (email: string) => {
     const result = await axios.get(`/api/customers/signin/social/kakao`)
     // const result = await axios.post(`/api/customers/signin/kakao`, { email })
 

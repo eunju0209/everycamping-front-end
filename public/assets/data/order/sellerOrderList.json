@@ -22,7 +22,7 @@
         },
         {
             "orderProductId": 1,
-            "productId": 1,
+            "productId": 3,
             "productNameSnapshot": "tent1",
             "stockPriceSnapshot": 1111,
             "quantity": 5,
