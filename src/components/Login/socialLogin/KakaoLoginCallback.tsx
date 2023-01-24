@@ -7,7 +7,14 @@ import { useUserInfo } from '../../../store/UserInfoProvider';
 const KaKaoLoginCallback = () => {
   const navigate = useNavigate();
   const { userInfo, setUserInfo } = useUserInfo();
-  let kakaoRequest: { kakao_account: { email: string } };
+  let kakaoRequest: {
+    kakao_account: {
+      email: string;
+      profile: {
+        nickname: string;
+      };
+    };
+  };
 
   useEffect(() => {
     (async () => {
@@ -30,26 +37,31 @@ const KaKaoLoginCallback = () => {
         kakaoRequest = await window.Kakao.API.request({
           url: '/v2/user/me',
         });
-        await postUserSocialLogin(kakaoRequest.kakao_account.email).then(
-          async () => {
-            const data = await getUserInfo();
-            setUserInfo({
-              email: data.email,
-              nickName: data.nickName,
-              phoneNumber: data.phoneNumber,
-              customerId: data.customerId,
-              type: 'user',
-            });
-          }
-        );
+
+        console.log(kakaoRequest);
+
+        await postUserSocialLogin(
+          kakaoRequest.kakao_account.email,
+          kakaoRequest.kakao_account.profile.nickname
+        ).then(async () => {
+          // const data = await getUserInfo();
+          // setUserInfo({
+          //   email: data.email,
+          //   nickName: data.nickName,
+          //   phoneNumber: data.phoneNumber,
+          //   customerId: data.customerId,
+          //   type: 'user',
+          // });
+          navigate('/');
+        });
       } catch (err) {
         console.log(err);
-        navigate('/join', {
-          state: {
-            email: kakaoRequest.kakao_account.email,
-            type: 'social',
-          },
-        });
+        // navigate('/join', {
+        //   state: {
+        //     email: kakaoRequest.kakao_account.email,
+        //     type: 'social',
+        //   },
+        // });
       }
     })();
   }, []);

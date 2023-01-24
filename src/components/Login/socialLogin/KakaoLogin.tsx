@@ -1,5 +1,3 @@
-import { postUserSocialLogin } from '../../../api/userService';
-
 const KakaoLogin = () => {
   const REDIRECT_URI = 'http://localhost:5173/kakaoLoginCallback';
 
@@ -8,7 +6,8 @@ const KakaoLogin = () => {
       redirectUri: REDIRECT_URI,
       prompts: 'login',
     });
-    // await postUserSocialLogin();
+
+    // window.location.href = '/api/customers/signin/social/kakao';
   };
 
   return (
