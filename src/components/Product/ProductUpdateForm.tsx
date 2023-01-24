@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   getSellerProductDetail,
@@ -14,31 +14,33 @@ export default function ProductUpdateForm({
   productId,
 }: ProductUpdateFormProps) {
   const navigate = useNavigate();
-  // const { data: sellerProduct } = useQuery(['sellerProduct', productId], () =>
-  //   getSellerProductDetail(productId)
-  // );
-  const sellerProduct = {
-    category: 'tent',
-    name: '텐트',
-    price: 10000,
-    stock: 10,
-    description: '러ㅣㅏㅇㄴㅁ러ㅣ러ㅣㄴ아ㅓ',
-    onSale: true,
-    tags: ['텐트', '캠핑'],
-  };
-  const { category, name, price, stock, description, onSale, tags } =
-    sellerProduct;
+  const { data: sellerProduct } = useQuery(['sellerProduct', productId], () =>
+    getSellerProductDetail(productId)
+  );
   const [image, setImage] = useState<File>();
   const [detailImage, setDetailImage] = useState<File>();
   const [updatedProduct, setUpdatedProduct] = useState({
-    category,
-    name,
-    price,
-    stock,
-    description,
-    onSale,
-    tags,
+    category: '',
+    name: '',
+    price: 0,
+    stock: 0,
+    description: '',
+    onSale: true,
+    tags: [''],
   });
+
+  useEffect(() => {
+    sellerProduct &&
+      setUpdatedProduct({
+        category: sellerProduct.category,
+        name: sellerProduct.name,
+        price: sellerProduct.price,
+        stock: sellerProduct.stock,
+        description: sellerProduct.description,
+        onSale: sellerProduct.onSale,
+        tags: sellerProduct.tags,
+      });
+  }, [sellerProduct]);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>

@@ -1,5 +1,5 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { addNewReview } from '../../api/reviewService';
 
 export type NewReviewType = {
@@ -14,6 +14,7 @@ type RouteState = {
 };
 
 export default function ReviewForm() {
+  const navigate = useNavigate();
   const {
     state: { productId },
   } = useLocation() as RouteState;
@@ -34,7 +35,9 @@ export default function ReviewForm() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    image && addNewReview(productId, review, image);
+    image &&
+      addNewReview(productId, review, image) //
+        .then(() => navigate(-1));
   };
 
   return (

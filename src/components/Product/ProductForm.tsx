@@ -44,8 +44,6 @@ export default function ProductForm() {
         return { ...product, onSale: !product.onSale };
       }
       if (name === 'tags') {
-        console.log(value);
-
         return { ...product, tags: value.split(',') };
       }
       return { ...product, [name]: value };
@@ -125,7 +123,6 @@ export default function ProductForm() {
         className='file-input w-full max-w-xs bg-white'
         accept='image/*'
         onChange={handleChange}
-        required
       />
       <textarea
         name='description'
