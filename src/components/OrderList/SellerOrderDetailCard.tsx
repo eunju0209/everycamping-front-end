@@ -38,16 +38,18 @@ const SellerOrderDetail = ({
   const [orderDetail, setOrderDetail] = useState<OrderDetailType>();
 
   useEffect(() => {
-    (async () => {
-      try {
-        const result = await getSellerOrderDetail(id);
-        setOrderDetail(result);
-      } catch (error) {
-        console.log(error);
-        alert('오류가 생겼습니다.');
-      }
-    })();
-  }, []);
+    if (popDetail) {
+      (async () => {
+        try {
+          const result = await getSellerOrderDetail(id);
+          setOrderDetail(result);
+        } catch (error) {
+          console.log(error);
+          alert('오류가 생겼습니다.');
+        }
+      })();
+    }
+  }, [popDetail]);
 
   const popUpDetail = () => {
     setPopDetail(false);
