@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   getSellerInfo,
   getUserInfo,
+  postAdminLogin,
   postSellerLogin,
   postUserLogin,
 } from '../../api/userService';
@@ -39,6 +40,21 @@ const LoginComp = () => {
     event.preventDefault();
 
     try {
+      if (loginInfo.email === 'admin@admin') {
+        await postAdminLogin(loginInfo).then(async () => {
+          // const data = await getUserInfo();
+          // setUserInfo({
+          //   email: data.email,
+          //   nickName: data.nickName,
+          //   phoneNumber: data.phoneNumber,
+          //   customerId: data.customerId,
+          //   type: 'admin',
+          // });
+        });
+        navigate('/');
+        return;
+      }
+
       if (isSeller) {
         await postSellerLogin(loginInfo).then(async () => {
           const data = await getSellerInfo();
@@ -49,7 +65,6 @@ const LoginComp = () => {
             customerId: data.customerId,
             type: 'seller',
           });
-          setCookie('LoginType', 'seller');
         });
       } else {
         await postUserLogin(loginInfo).then(async () => {
@@ -61,7 +76,6 @@ const LoginComp = () => {
             customerId: data.customerId,
             type: 'user',
           });
-          setCookie('LoginType', 'user');
         });
       }
       navigate('/');
@@ -72,8 +86,8 @@ const LoginComp = () => {
       setIsSeller(false);
     } catch (error: any) {
       console.error(error);
-      if (error.response.data.message === '존재하지 않는 회원입니다.') {
-        return alert('존재하지 않는 회원입니다.');
+      if (error.response.status === 404) {
+        return alert('일치하는 회원이 없습니다.');
       }
       alert('로그인에 실패 했습니다. ');
     }
