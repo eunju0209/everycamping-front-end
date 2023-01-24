@@ -1,8 +1,21 @@
 import { FaUser, FaShoppingCart } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
+import { getSellerLogOut, getUserLogOut } from '../api/userService';
+import { getCookie, removeCookie } from '../store/cookie';
 
 export default function HeaderButtons() {
   const navigate = useNavigate();
+
+  const logout = async () => {
+    if (getCookie('LoginType') === 'seller') {
+      await getSellerLogOut().then(() => {
+        removeCookie('LoginType');
+        removeCookie('accessToken');
+        removeCookie('refreshToken');
+      });
+    } else if (getCookie('LoginType') === 'user') {
+    }
+  };
 
   return (
     <div className='flex items-center'>
@@ -37,12 +50,18 @@ export default function HeaderButtons() {
       >
         <FaShoppingCart />
       </button>
-      <button
-        onClick={() => navigate('/login')}
-        className='btn btn-primary btn-sm'
-      >
-        Login
-      </button>
+      {getCookie('LoginType') ? (
+        <button
+          onClick={() => navigate('/login')}
+          className='btn btn-primary btn-sm'
+        >
+          Login
+        </button>
+      ) : (
+        <button onClick={logout} className='btn btn-primary btn-sm'>
+          Logout
+        </button>
+      )}
     </div>
   );
 }
