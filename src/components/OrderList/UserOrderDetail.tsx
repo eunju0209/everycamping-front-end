@@ -54,7 +54,6 @@ const UserOrderDetail = ({
           setOrderDetail(result);
         } catch (error) {
           console.log(error);
-          alert('오류가 생겼습니다.');
         }
       })();
     }
@@ -70,8 +69,8 @@ const UserOrderDetail = ({
         popDetail ? 'visible opacity-100 pointer-events-auto' : ''
       } `}
     >
-      <div className='modal-box scrollbar-hide'>
-        <h3 className='flex justify-center font-bold text-lg'>
+      <div className='modal-box scrollbar-hide p-4 border-8'>
+        <h3 className='flex justify-center font-bold text-lg select-none'>
           주문 상세 정보
         </h3>
         <div>
@@ -79,26 +78,34 @@ const UserOrderDetail = ({
             <UserOrderDetailCard key={items.id} itemsDetail={items} />
           ))}
         </div>
-        <div>
+        <div className='divider'></div>
+        <div className='mt-4'>
           <ul>
-            <li>{orderDetail?.createdAt}</li>
-            <li>{orderDetail?.orderId}</li>
-            <li>
-              {orderDetail
-                ? orderDetail.orderProductCount > 1
-                  ? `${orderDetail.representProductName} 외 ${
-                      orderDetail.orderProductCount - 1
-                    }건`
-                  : orderDetail.representProductName
-                : ''}
-            </li>
-            <li>{orderDetail?.totalAmount}</li>
-            <ul>
-              <h4 className='font-bold text-lg'>수령인 정보</h4>
-              <li>{orderDetail?.name}</li>
-              <li>{orderDetail?.address}</li>
-              <li>{orderDetail?.phone}</li>
-              <li>{orderDetail?.request}</li>
+            <ul className='flex justify-between'>
+              <li>주문번호 : {orderDetail?.orderId}</li>
+              <li>{orderDetail?.createdAt}</li>
+            </ul>
+            <ul className='flex justify-between'>
+              <li>
+                {orderDetail
+                  ? orderDetail.orderProductCount > 1
+                    ? `${orderDetail.representProductName} 외 ${
+                        orderDetail.orderProductCount - 1
+                      }건`
+                    : orderDetail.representProductName
+                  : ''}
+              </li>
+              <li>{orderDetail?.totalAmount.toLocaleString()}원</li>
+            </ul>
+            <div className='divider'></div>
+            <ul className='mt-4'>
+              <h4 className='flex justify-center font-bold text-lg'>
+                -수령인 정보-
+              </h4>
+              <li>이름 : {orderDetail?.name}</li>
+              <li>연락처 : {orderDetail?.phone}</li>
+              <li>주소 : {orderDetail?.address}</li>
+              <li>요청사항 : {orderDetail?.request}</li>
             </ul>
           </ul>
         </div>

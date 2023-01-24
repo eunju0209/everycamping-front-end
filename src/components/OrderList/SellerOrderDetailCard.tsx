@@ -60,7 +60,7 @@ const SellerOrderDetail = ({
         popDetail ? 'visible opacity-100 pointer-events-auto' : ''
       } `}
     >
-      <div className='modal-box'>
+      <div className='modal-box p-4 border-8'>
         <h3 className='flex justify-center font-bold text-lg'>
           주문 상세 정보
         </h3>

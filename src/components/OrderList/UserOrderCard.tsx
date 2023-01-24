@@ -23,8 +23,8 @@ const UserOrderListCard = ({
       >
         <div className='flex justify-between w-full p-1'>
           <ul>
-            <li className='text-sm'>주문번호 : {id}</li>
-            <li className='text-sm'>주문날짜 : {createdAt}</li>
+            <li className='text-xs'>주문날짜 : {createdAt}</li>
+            <li className='text-xs'>주문번호 : {id}</li>
             <li className='text-xl'>
               {orderProductCount > 1
                 ? `${representProductName} 외 ${orderProductCount - 1}건`
