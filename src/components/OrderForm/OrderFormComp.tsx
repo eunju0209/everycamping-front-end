@@ -5,6 +5,8 @@ import { cartContentType } from '../../pages/Cart';
 import AddressSearch from './AddressSearch';
 import OrderFormItemCard from './OrderFormItemCard';
 import { useUserInfo } from '../../store/UserInfoProvider';
+import { getCookie } from '../../store/cookie';
+import { getUserInfo } from '../../api/userService';
 
 export type OrderInfo = {
   name: string;
@@ -40,15 +42,16 @@ const OrderFormComp = () => {
     const {
       target: { name, value },
     } = event;
-
     if (name === 'user') {
       setIsUser((prev) => !prev);
     }
+    console.log(name, value);
 
     setOrderInfo((prev) => ({
       ...prev,
       [name]: value,
     }));
+    console.log(orderInfo.name);
   };
 
   const handleResizeHeight = () => {
@@ -58,12 +61,55 @@ const OrderFormComp = () => {
         textareaRef.current.scrollHeight + 'px';
     }
   };
+  useEffect(() => {
+    (async () => {
+      if (userInfo.email === '') {
+        if (getCookie('LoginType') === 'seller') {
+          const data = await getUserInfo();
+          setUserInfo({
+            email: data.email,
+            nickName: data.nickName,
+            phoneNumber: data.phoneNumber,
+            customerId: data.customerId,
+            type: 'seller',
+          });
+        } else if (getCookie('LoginType') === 'user') {
+          const data = await getUserInfo();
+          setUserInfo({
+            email: data.email,
+            nickName: data.nickName,
+            phoneNumber: data.phoneNumber,
+            customerId: data.customerId,
+            type: 'user',
+          });
+        }
+      }
+    })();
+    const result = orderItems.reduce((acc: object[], cur: cartContentType) => {
+      return [
+        ...acc,
+        {
+          productId: cur.productId,
+          quantity: cur.quantity,
+        },
+      ];
+    }, []);
+    setOrderProductFormList(result);
+  }, []);
 
-  const formSubmit = async () => {
-    console.log(orderInfo, orderItems, totalPrice);
+  const formSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    console.log(orderInfo, orderItems, orderProductFormList);
+    e.preventDefault();
     try {
+      if (orderInfo.address === '') {
+        alert('주소를 입력하세요');
+        return;
+      }
       await postOrders({
-        ...orderInfo,
+        name: isUser ? userInfo.nickName : orderInfo.name,
+        phone: isUser ? userInfo.phoneNumber : orderInfo.phone,
+        address: orderInfo.address,
+        request: orderInfo.request,
         orderProductFormList,
       }).then(() => {
         alert('주문이 완료 되었습니다.');
@@ -77,8 +123,9 @@ const OrderFormComp = () => {
         return alert('주문한 상품의 재고가 부족 합니다.');
     }
   };
+
   return (
-    <>
+    <form onSubmit={(e) => formSubmit(e)}>
       <div className='flex flex-col mt-10'>
         <div className='form-control'>
           <label className='label cursor-pointer justify-start'>
@@ -98,7 +145,7 @@ const OrderFormComp = () => {
             <input
               className='input input-bordered w-full text-lg bg-white focus:outline-none'
               type='text'
-              name='nickName'
+              name='name'
               placeholder='이름'
               onChange={(e) => onChange(e)}
               value={isUser ? userInfo.nickName : orderInfo.name}
@@ -115,10 +162,10 @@ const OrderFormComp = () => {
           </span>
           <input
             className='input input-bordered w-full text-lg bg-white focus:outline-none'
-            name='phoneNumber'
+            name='phone'
             type='tel'
             placeholder='연락처'
-            value={isUser ? userInfo.nickName : orderInfo.phone}
+            value={isUser ? userInfo.phoneNumber : orderInfo.phone}
             required
             autoComplete='off'
             pattern='[0,1]{3}-[0-9]{4}-[0-9]{4}'
@@ -138,13 +185,6 @@ const OrderFormComp = () => {
               ref={orderDetailRef}
             >
               {orderItems.map((item: cartContentType, idx: number) => {
-                setOrderProductFormList((prev) => [
-                  ...prev,
-                  {
-                    productId: item.productId,
-                    quantity: item.quantity,
-                  },
-                ]);
                 return idx !== orderItems.length - 1 ? (
                   <OrderFormItemCard
                     key={item.productId}
@@ -211,15 +251,11 @@ const OrderFormComp = () => {
         </table>
       </div>
       <div className='flex justify-center mt-10'>
-        <button
-          className='w-24 p-2 btn btn-primary'
-          type='button'
-          onClick={formSubmit}
-        >
+        <button className='w-24 p-2 btn btn-primary' type='submit'>
           결제하기
         </button>
       </div>
-    </>
+    </form>
   );
 };
 
