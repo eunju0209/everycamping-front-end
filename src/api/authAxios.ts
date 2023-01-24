@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { storedToken } from '../store/accessToken';
 import { getCookie } from '../store/cookie';
-import { getUserNewToken } from './userService';
+import { getAdminNewToken, getSellerNewToken, getUserNewToken } from './userService';
 
 // axios.defaults.withCredentials = true;
 
@@ -31,17 +31,20 @@ authAxios.interceptors.response.use(
     const errorAPI = error.config
     const refreshToken = getCookie('refreshToken')
 
-    console.log('1:', errorAPI.retry)
     
     if (error.response.status === 403 && errorAPI.retry === undefined && refreshToken) {
       errorAPI.retry = true
 
-      console.log('2:', errorAPI.retry)
+      if (getCookie('LoginType') === 'user') {
+        await getUserNewToken()
+      } else if (getCookie('LoginType') === 'seller') {
+        await getSellerNewToken()
+      } else if (getCookie('LoginType') === 'admin') {
+        await getAdminNewToken()
+      }
       
-      await getUserNewToken()
 
-      // return await authAxios(errorAPI)
-      // await getSellerNewToken()
+    //   // return await authAxios(errorAPI)
     }
     return Promise.reject(error);
   }
