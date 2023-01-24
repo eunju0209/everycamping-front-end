@@ -6,6 +6,7 @@ import {
   postSellerLogin,
   postUserLogin,
 } from '../../api/userService';
+import { setCookie } from '../../store/cookie';
 import { useUserInfo } from '../../store/UserInfoProvider';
 import KakaoLogin from './socialLogin/KakaoLogin';
 
@@ -21,7 +22,7 @@ const LoginComp = () => {
   });
   const [isSeller, setIsSeller] = useState(false);
   const navigate = useNavigate();
-  const { userInfo, setUserInfo } = useUserInfo();
+  const { setUserInfo } = useUserInfo();
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
@@ -45,8 +46,10 @@ const LoginComp = () => {
             email: data.email,
             nickName: data.nickName,
             phoneNumber: data.phoneNumber,
+            customerId: data.customerId,
             type: 'seller',
           });
+          setCookie('LoginType', 'seller');
         });
       } else {
         await postUserLogin(loginInfo).then(async () => {
@@ -55,8 +58,10 @@ const LoginComp = () => {
             email: data.email,
             nickName: data.nickName,
             phoneNumber: data.phoneNumber,
+            customerId: data.customerId,
             type: 'user',
           });
+          setCookie('LoginType', 'user');
         });
       }
       navigate('/');

@@ -62,7 +62,6 @@ export const stompDisConnect = () => {
 
 export const sendMessage = (roomId: string, message: string) => {
   // stomp.debug = () => {}
-    
     const data = {
         content: message
     };

@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { putSellerInfo, putUserInfo } from '../../api/userService';
+import { getUserInfo, putSellerInfo, putUserInfo } from '../../api/userService';
 import UserInfoComp from '../../components/UserInfo/UserInfoComp';
 import UserInfoEditComp from '../../components/UserInfo/UserInfoEditComp';
+import { getCookie } from '../../store/cookie';
 import { useUserInfo } from '../../store/UserInfoProvider';
 
 export type NewUserInfoType = {
@@ -22,6 +23,27 @@ const UserInfo = () => {
   });
 
   useEffect(() => {
+    (async () => {
+      if (getCookie('LoginType') === 'seller') {
+        const data = await getUserInfo();
+        setUserInfo({
+          email: data.email,
+          nickName: data.nickName,
+          phoneNumber: data.phoneNumber,
+          customerId: data.customerId,
+          type: 'seller',
+        });
+      } else if (getCookie('LoginType') === 'user') {
+        const data = await getUserInfo();
+        setUserInfo({
+          email: data.email,
+          nickName: data.nickName,
+          phoneNumber: data.phoneNumber,
+          customerId: data.customerId,
+          type: 'user',
+        });
+      }
+    })();
     setNewUserInfo(userInfo);
   }, []);
 

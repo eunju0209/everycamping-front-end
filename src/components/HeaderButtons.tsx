@@ -1,16 +1,41 @@
 import { useEffect, useState } from 'react';
 import { FaUser, FaShoppingCart } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
+import { getSellerLogOut, getUserLogOut } from '../api/userService';
+import { getCookie, removeCookie } from '../store/cookie';
+
+
 import { useUserInfo } from '../store/UserInfoProvider';
 
 export default function HeaderButtons() {
   const navigate = useNavigate();
-  const { userInfo } = useUserInfo();
+  const { userInfo, setUserInfo } = useUserInfo();
   const [user, setUser] = useState(false);
+
+  const logout = async () => {
+    if (getCookie('LoginType') === 'seller') {
+      await getSellerLogOut();
+    } else if (getCookie('LoginType') === 'user') {
+      await getUserLogOut();
+    }
+    removeCookie('LoginType');
+    removeCookie('accessToken');
+    removeCookie('refreshToken');
+    setUserInfo({
+      email: '',
+      nickName: '',
+      phoneNumber: '',
+      customerId: 0,
+      type: 'none',
+    });
+  };
+
+
 
   useEffect(() => {
     userInfo.type === 'none' ? setUser(false) : setUser(true);
   }, [userInfo]);
+
 
   return (
     <div className='flex items-center'>
@@ -61,12 +86,18 @@ export default function HeaderButtons() {
       >
         <FaShoppingCart />
       </button>
-      <button
-        onClick={() => navigate('/login')}
-        className='btn btn-primary btn-sm'
-      >
-        Login
-      </button>
+      {getCookie('LoginType') ? (
+        <button
+          onClick={() => navigate('/login')}
+          className='btn btn-primary btn-sm'
+        >
+          Login
+        </button>
+      ) : (
+        <button onClick={logout} className='btn btn-primary btn-sm'>
+          Logout
+        </button>
+      )}
     </div>
   );
 }

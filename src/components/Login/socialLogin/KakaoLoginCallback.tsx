@@ -8,18 +8,21 @@ const KaKaoLoginCallback = () => {
   const navigate = useNavigate();
   const { userInfo, setUserInfo } = useUserInfo();
   let kakaoRequest: { kakao_account: { email: string } };
+
   useEffect(() => {
     (async () => {
       try {
-        const code = new URL(document.location.toString()).searchParams.get(
-          'code'
-        );
-        const client_id = import.meta.env.VITE_KAKAO_LOGIN_RESTAPI_KEY;
+        const AUTHORIZE_CODE = new URL(
+          document.location.toString()
+        ).searchParams.get('code');
+        const REST_API_KEY = import.meta.env.VITE_KAKAO_LOGIN_RESTAPI_KEY;
+        const REDIRECT_URI = 'http://localhost:5173/kakaoLoginCallback';
+
         const token = await axios.post(
-          `https://kauth.kakao.com/oauth/authorize?client_id=${client_id}&redirect_uri=http://localhost:5173/kakaoLoginCallback&code=${code}`,
+          `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&code=${AUTHORIZE_CODE}`,
           {
             headers: {
-              'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+              'Content-Type': 'application/x-www-form-urlencoded',
             },
           }
         );
@@ -27,26 +30,26 @@ const KaKaoLoginCallback = () => {
         kakaoRequest = await window.Kakao.API.request({
           url: '/v2/user/me',
         });
-
-        // await postUserSocialLogin(kakaoRequest.kakao_account.email).then(
-        //   async () => {
-        //     const data = await getUserInfo();
-        //     setUserInfo({
-        //       email: data.email,
-        //       nickName: data.nickName,
-        //       phoneNumber: data.phoneNumber,
-        //       type: 'user',
-        //     });
-        //   }
-        // );
+        await postUserSocialLogin(kakaoRequest.kakao_account.email).then(
+          async () => {
+            const data = await getUserInfo();
+            setUserInfo({
+              email: data.email,
+              nickName: data.nickName,
+              phoneNumber: data.phoneNumber,
+              customerId: data.customerId,
+              type: 'user',
+            });
+          }
+        );
       } catch (err) {
         console.log(err);
-        // navigate('/join', {
-        //   state: {
-        //     email: kakaoRequest.kakao_account.email,
-        //     type: 'social',
-        //   },
-        // });
+        navigate('/join', {
+          state: {
+            email: kakaoRequest.kakao_account.email,
+            type: 'social',
+          },
+        });
       }
     })();
   }, []);

@@ -4,6 +4,7 @@ export type UserInfo = {
   email: string;
   nickName: string;
   phoneNumber: string;
+  customerId: number;
   type: 'none' | 'user' | 'seller' | 'admin';
 };
 
@@ -23,6 +24,7 @@ const UserInfoProvider = (props: UserInfoProviderProps) => {
     email: '',
     nickName: '',
     phoneNumber: '',
+    customerId: 0,
     type: 'none',
   });
 

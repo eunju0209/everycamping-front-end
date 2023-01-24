@@ -32,19 +32,19 @@ const CartItemCard = ({ id, img, title, count, price }: CartItemCardProps) => {
     setUpdateQuantity(count);
   }, []);
 
-  useEffect(() => {
-    mutate({ id, updateQuantity: updateQuantity });
-  }, [updateQuantity]);
+  // useEffect(() => {
+  //   mutate({ id, updateQuantity: updateQuantity });
+  // }, [updateQuantity]);
 
   const handleCount = {
     minus: () => {
       if (updateQuantity <= 1) return;
       setUpdateQuantity((prev) => (prev -= 1));
-      // mutate({ id, updateQuantity: updateQuantity - 1 });
+      mutate({ id, updateQuantity: updateQuantity - 1 });
     },
     plus: () => {
       setUpdateQuantity((prev) => (prev += 1));
-      // mutate({ id, updateQuantity: updateQuantity + 1 });
+      mutate({ id, updateQuantity: updateQuantity + 1 });
     },
   };
 

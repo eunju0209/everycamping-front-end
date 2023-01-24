@@ -3,7 +3,7 @@ import { storedToken } from '../store/accessToken';
 import { getCookie } from '../store/cookie';
 import { getUserNewToken } from './userService';
 
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 
 export const authAxios = axios.create();
 
