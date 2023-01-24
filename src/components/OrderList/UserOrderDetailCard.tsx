@@ -34,7 +34,7 @@ const UserOrderDetailCard = ({
       if (status !== 'COMPLETE') {
         return alert('구매 확정 대상이 아닙니다.');
       }
-      await patchOrderConfirm(productId).then(() =>
+      await patchOrderConfirm(id).then(() =>
         alert('구매 확정이 완료 되었습니다.')
       );
     } catch (error) {
@@ -46,9 +46,7 @@ const UserOrderDetailCard = ({
       if (status === 'CANCEL') {
         return alert('취소 대상이 아닙니다.');
       }
-      await patchOrderCancel(productId).then(() =>
-        alert('주문이 취소 되었습니다.')
-      );
+      await patchOrderCancel(id).then(() => alert('주문이 취소 되었습니다.'));
     } catch (error) {
       console.error(error);
     }
