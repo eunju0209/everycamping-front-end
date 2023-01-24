@@ -61,6 +61,7 @@ const AddressSearch = ({ setOrderInfo }: AddressSearchPops) => {
         <button
           className='absolute left-full w-24 ml-2 p-2 btn btn-primary'
           onClick={handle.clickButton}
+          type='button'
         >
           주소검색
         </button>
