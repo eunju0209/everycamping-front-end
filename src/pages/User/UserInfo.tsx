@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getUserInfo, putSellerInfo, putUserInfo } from '../../api/userService';
+import {
+  getSellerInfo,
+  getUserInfo,
+  putSellerInfo,
+  putUserInfo,
+} from '../../api/userService';
 import UserInfoComp from '../../components/UserInfo/UserInfoComp';
 import UserInfoEditComp from '../../components/UserInfo/UserInfoEditComp';
 import { getCookie } from '../../store/cookie';
@@ -25,7 +30,7 @@ const UserInfo = () => {
   useEffect(() => {
     (async () => {
       if (getCookie('LoginType') === 'seller') {
-        const data = await getUserInfo();
+        const data = await getSellerInfo();
         setUserInfo({
           email: data.email,
           nickName: data.nickName,
