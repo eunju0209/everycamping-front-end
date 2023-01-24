@@ -45,9 +45,6 @@ const SellerOrderListCard = ({
   };
   return (
     <div className='flex rounded bg-white mt-3 p-2'>
-      {/* <div className='flex align-center h-40 p-2'>
-        <img src={imageUriSnapshot} className='rounded' />
-      </div> */}
       <div
         className='flex justify-between w-full p-2 cursor-pointer'
         onClick={popUpDetail}
