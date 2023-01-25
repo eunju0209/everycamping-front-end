@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { FaUser, FaShoppingCart } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
-import { getSellerLogOut, getUserLogOut } from '../api/userService';
+import {
+  getAdminLogOut,
+  getSellerLogOut,
+  getUserLogOut,
+} from '../api/userService';
 import { getCookie, removeCookie } from '../store/cookie';
 import { useUserInfo } from '../store/UserInfoProvider';
 
@@ -19,6 +23,8 @@ export default function HeaderButtons() {
       await getSellerLogOut();
     } else if (getCookie('LoginType') === 'user') {
       await getUserLogOut();
+    } else if (getCookie('LoginType') === 'admin') {
+      await getAdminLogOut();
     }
     removeCookie('LoginType');
     removeCookie('accessToken');
