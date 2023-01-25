@@ -34,7 +34,7 @@ const SellerOrderList = () => {
         <h1 className='flex justify-center text-4xl'>주문내역</h1>
         <div className='mt-7'>
           {orderList.map((list: SellerOrderListType) => {
-            return <SellerOrderCard key={list.productId} list={list} />;
+            return <SellerOrderCard key={list.orderProductId} list={list} />;
           })}
         </div>
       </div>

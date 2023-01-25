@@ -1,4 +1,12 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import { getUserInfo } from '../api/userService';
+import { getCookie } from './cookie';
 
 export type UserInfo = {
   email: string;
@@ -27,7 +35,31 @@ const UserInfoProvider = (props: UserInfoProviderProps) => {
     customerId: 0,
     type: 'none',
   });
-
+  useEffect(() => {
+    (async () => {
+      if (userInfo.email === '') {
+        if (getCookie('LoginType') === 'seller') {
+          const data = await getUserInfo();
+          setUserInfo({
+            email: data.email,
+            nickName: data.nickName,
+            phoneNumber: data.phoneNumber,
+            customerId: data.customerId,
+            type: 'seller',
+          });
+        } else if (getCookie('LoginType') === 'user') {
+          const data = await getUserInfo();
+          setUserInfo({
+            email: data.email,
+            nickName: data.nickName,
+            phoneNumber: data.phoneNumber,
+            customerId: data.customerId,
+            type: 'user',
+          });
+        }
+      }
+    })();
+  }, []);
   return (
     <UserInfoContext.Provider value={{ userInfo, setUserInfo }}>
       {props.children}

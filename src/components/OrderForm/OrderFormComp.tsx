@@ -5,8 +5,6 @@ import { cartContentType } from '../../pages/Cart';
 import AddressSearch from './AddressSearch';
 import OrderFormItemCard from './OrderFormItemCard';
 import { useUserInfo } from '../../store/UserInfoProvider';
-import { getCookie } from '../../store/cookie';
-import { getUserInfo } from '../../api/userService';
 
 export type OrderInfo = {
   name: string;
@@ -21,7 +19,7 @@ const OrderFormComp = () => {
   const { totalPrice, orderItems } = location.state;
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const orderDetailRef = useRef<HTMLDivElement>(null);
-  const { userInfo, setUserInfo } = useUserInfo();
+  const { userInfo } = useUserInfo();
   const [isUser, setIsUser] = useState(false);
   const [orderInfo, setOrderInfo] = useState<OrderInfo>({
     name: '',
@@ -62,29 +60,6 @@ const OrderFormComp = () => {
     }
   };
   useEffect(() => {
-    (async () => {
-      if (userInfo.email === '') {
-        if (getCookie('LoginType') === 'seller') {
-          const data = await getUserInfo();
-          setUserInfo({
-            email: data.email,
-            nickName: data.nickName,
-            phoneNumber: data.phoneNumber,
-            customerId: data.customerId,
-            type: 'seller',
-          });
-        } else if (getCookie('LoginType') === 'user') {
-          const data = await getUserInfo();
-          setUserInfo({
-            email: data.email,
-            nickName: data.nickName,
-            phoneNumber: data.phoneNumber,
-            customerId: data.customerId,
-            type: 'user',
-          });
-        }
-      }
-    })();
     const result = orderItems.reduce((acc: object[], cur: cartContentType) => {
       return [
         ...acc,

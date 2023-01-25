@@ -17,8 +17,8 @@ export const stompConnect = (roomId: string, setMessages: React.Dispatch<React.S
   console.log('stomp:',stomp)
   try {
     // stomp.debug = () => {}
-    
-    stomp.connect({
+    stomp.connect(
+    {
       //  login: '',
       // passcode: '',
       Authorization : getCookie('accessToken')
