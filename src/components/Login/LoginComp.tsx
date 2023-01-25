@@ -62,7 +62,7 @@ const LoginComp = () => {
             email: data.email,
             nickName: data.nickName,
             phoneNumber: data.phoneNumber,
-            customerId: data.customerId,
+            customerId: data.id,
             type: 'seller',
           });
         });
@@ -73,7 +73,7 @@ const LoginComp = () => {
             email: data.email,
             nickName: data.nickName,
             phoneNumber: data.phoneNumber,
-            customerId: data.customerId,
+            customerId: data.id,
             type: 'user',
           });
         });

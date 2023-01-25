@@ -5,11 +5,11 @@ import { authAxios } from './authAxios';
 
 export async function getReviews(
   productId?: string,
-  customerId?: string
+  customerId?: number
 ): Promise<ReviewType[]> {
   const res = await axios.get(
     `/api/reviews/${
-      customerId ? `customers/${customerId}` : `products/${productId}`
+      productId ? `products/${productId}` : `customers/${customerId}`
     }`
   );
   return res.data;

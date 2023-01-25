@@ -6,7 +6,7 @@ import { ReviewType } from './ReviewList';
 
 type ReviewCardProps = {
   review: ReviewType;
-  customerId?: string;
+  customerId?: number;
 };
 
 export default function ReviewCard({ review, customerId }: ReviewCardProps) {

@@ -15,7 +15,7 @@ export type ReviewType = {
 
 type ReviewListProps = {
   productId?: string;
-  customerId?: string;
+  customerId?: number;
 };
 
 export default function ReviewList({ productId, customerId }: ReviewListProps) {
