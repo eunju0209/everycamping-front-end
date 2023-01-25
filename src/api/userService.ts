@@ -98,7 +98,6 @@ export const getUserInfo = async () => {
 
 export const putUserInfo = async (newUserInfo : NewUserInfoType) => {
     const result = await authAxios.put(`/api/customers/info`,newUserInfo)
-    console.log(result)
     return result
 }
 export const patchUserPassword = async (newPassword:string , oldPassword:string) => {
@@ -106,7 +105,6 @@ export const patchUserPassword = async (newPassword:string , oldPassword:string)
       newPassword,
       oldPassword
     })
-    console.log(result)
     return result
 }
 
@@ -221,5 +219,15 @@ export const getAdminNewToken = async () => {
     removeCookie('LoginType');
     removeCookie('accessToken');
     removeCookie('refreshToken');
+  }
+}
+export const getAdminLogOut = async () => {
+  try {
+    const result = await authAxios.get(`/api/admins/signout`)
+    console.log(result)
+    return result
+
+  } catch(error) {
+    console.error(error)
   }
 }
