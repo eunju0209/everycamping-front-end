@@ -116,7 +116,7 @@ const UserOrderDetailCard = ({
             className='btn btn-primary btn-sm mx-2'
             onClick={() =>
               navigate('/review/new', {
-                state: productId,
+                state: { productId },
               })
             }
             disabled={itemStatus === '주문 취소' ? true : false}
