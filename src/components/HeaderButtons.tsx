@@ -74,6 +74,13 @@ export default function HeaderButtons() {
               </li>
             </>
           )}
+          {getCookie('LoginType') === 'admin' && (
+            <>
+              <li>
+                <Link to='/sellerConfirm'>판매자승인</Link>
+              </li>
+            </>
+          )}
         </ul>
       </div>
       <button
