@@ -11,7 +11,7 @@ export default function HeaderButtons() {
   const [user, setUser] = useState(false);
 
   useEffect(() => {
-    userInfo.type === 'none' ? setUser(false) : setUser(true);
+    getCookie('LoginType') ? setUser(true) : setUser(false);
   }, [userInfo]);
 
   const logout = async () => {
@@ -45,7 +45,7 @@ export default function HeaderButtons() {
           tabIndex={0}
           className='absolute right-0 menu p-2 shadow bg-base-100 rounded-box w-52 z-10 invisible group-hover:visible'
         >
-          {userInfo.type === 'user' && (
+          {getCookie('LoginType') === 'user' && (
             <>
               <li>
                 <Link to='/mypage/user/orders'>주문내역</Link>
@@ -58,7 +58,7 @@ export default function HeaderButtons() {
               </li>
             </>
           )}
-          {userInfo.type === 'seller' && (
+          {getCookie('LoginType') === 'seller' && (
             <>
               <li>
                 <Link to='/mypage/seller/orders'>주문내역</Link>
