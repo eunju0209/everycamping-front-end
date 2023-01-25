@@ -42,9 +42,7 @@ authAxios.interceptors.response.use(
       } else if (getCookie('LoginType') === 'admin') {
         await getAdminNewToken()
       }
-      
-
-    //   // return await authAxios(errorAPI)
+    return await authAxios(errorAPI)
     }
     return Promise.reject(error);
   }
