@@ -1,9 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { storedToken } from '../store/accessToken';
 import { getCookie } from '../store/cookie';
 import { getAdminNewToken, getSellerNewToken, getUserNewToken } from './userService';
-
-// axios.defaults.withCredentials = true;
 
 export const authAxios = axios.create();
 
@@ -11,7 +8,8 @@ authAxios.interceptors.request.use(
   function (config: AxiosRequestConfig) {
     if (config.headers) {
       config.headers = {
-        Authorization : getCookie('accessToken')
+        Authorization: getCookie('accessToken'),
+        'Content-Type': 'application/json'
       }
     }
     return config;
@@ -31,18 +29,17 @@ authAxios.interceptors.response.use(
     const errorAPI = error.config
     const refreshToken = getCookie('refreshToken')
 
-    
     if (error.response.status === 403 && errorAPI.retry === undefined && refreshToken) {
-      errorAPI.retry = true
 
       if (getCookie('LoginType') === 'user') {
-        await getUserNewToken()
+        await getUserNewToken().then(async () => await authAxios.request(errorAPI))
+
       } else if (getCookie('LoginType') === 'seller') {
-        await getSellerNewToken()
+        await getSellerNewToken().then(async () => await authAxios.request(errorAPI))
+        
       } else if (getCookie('LoginType') === 'admin') {
-        await getAdminNewToken()
+        await getAdminNewToken().then(async () => await authAxios.request(errorAPI))
       }
-    return await authAxios(errorAPI)
     }
     return Promise.reject(error);
   }
