@@ -49,24 +49,11 @@ export default function Cart() {
           </div>
           <div className='flex justify-end mt-6'>
             <div className='grid grid-cols-2 text-lg'>
-              <span className='flex justify-end mr-3'>합계 : </span>
+              <span className='flex justify-end mr-3 text-xl'>
+                총 결제금액 :
+              </span>
               <span className='flex justify-end'>
                 {totalPrice.toLocaleString()}원
-              </span>
-
-              <span className='flex justify-end mr-3'>배송비 : </span>
-              <span className='flex justify-end'>
-                {totalPrice > 70000 ? '0' : '3,000'}원
-              </span>
-              <div className='divider col-start-1 col-end-3'></div>
-              <span className='flex justify-end mr-3 text-xl'>
-                총 결제금액 :{' '}
-              </span>
-              <span className='flex justify-end'>
-                {totalPrice > 70000
-                  ? totalPrice.toLocaleString()
-                  : (totalPrice + 3000).toLocaleString()}
-                원
               </span>
             </div>
           </div>
