@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { getUserInfo } from '../api/userService';
+import { getSellerInfo, getUserInfo } from '../api/userService';
 import { getCookie } from './cookie';
 
 export type UserInfo = {
@@ -39,12 +39,12 @@ const UserInfoProvider = (props: UserInfoProviderProps) => {
     (async () => {
       if (userInfo.email === '') {
         if (getCookie('LoginType') === 'seller') {
-          const data = await getUserInfo();
+          const data = await getSellerInfo();
           setUserInfo({
             email: data.email,
             nickName: data.nickName,
             phoneNumber: data.phoneNumber,
-            customerId: data.customerId,
+            customerId: data.id,
             type: 'seller',
           });
         } else if (getCookie('LoginType') === 'user') {
@@ -53,8 +53,16 @@ const UserInfoProvider = (props: UserInfoProviderProps) => {
             email: data.email,
             nickName: data.nickName,
             phoneNumber: data.phoneNumber,
-            customerId: data.customerId,
+            customerId: data.id,
             type: 'user',
+          });
+        } else if (getCookie('LoginType') === 'admin') {
+          setUserInfo({
+            email: 'admin',
+            nickName: 'admin',
+            phoneNumber: '',
+            customerId: 0,
+            type: 'admin',
           });
         }
       }
