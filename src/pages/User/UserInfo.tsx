@@ -4,6 +4,9 @@ import { putSellerInfo, putUserInfo } from '../../api/userService';
 import UserInfoComp from '../../components/UserInfo/UserInfoComp';
 import UserInfoEditComp from '../../components/UserInfo/UserInfoEditComp';
 import { useUserInfo } from '../../store/UserInfoProvider';
+import { toastSuccess } from '../../util/reactToast';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export type NewUserInfoType = {
   email: string;
@@ -30,9 +33,13 @@ const UserInfo = () => {
     if (!isEdit) return;
     try {
       if (userInfo.type === 'user') {
-        await putUserInfo(newUserInfo);
+        await putUserInfo(newUserInfo).then(() => {
+          toastSuccess('수정 성공');
+        });
       } else if (userInfo.type === 'seller') {
-        await putSellerInfo(newUserInfo);
+        await putSellerInfo(newUserInfo).then(() => {
+          toastSuccess('수정 성공');
+        });
       }
       setUserInfo((prev) => ({ ...prev, ...newUserInfo }));
     } catch (error) {
@@ -74,6 +81,7 @@ const UserInfo = () => {
           </button>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

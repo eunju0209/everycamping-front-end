@@ -44,7 +44,6 @@ const SellerOrderDetail = ({
           const result = await getSellerOrderDetail(id);
           setOrderDetail(result);
         } catch (error) {
-          console.log(error);
           alert('오류가 생겼습니다.');
         }
       })();

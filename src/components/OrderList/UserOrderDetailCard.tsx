@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { patchOrderCancel, patchOrderConfirm } from '../../api/orderService';
+import { toastSuccess, toastWarn } from '../../util/reactToast';
 import { OrderItemsType } from './UserOrderDetail';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 type UserOrderDetailCardProps = {
   itemsDetail: OrderItemsType;
@@ -32,10 +35,10 @@ const UserOrderDetailCard = ({
   const orderConfirm = async () => {
     try {
       if (status !== 'COMPLETE') {
-        return alert('구매 확정 대상이 아닙니다.');
+        return toastWarn('구매 확정 대상이 아닙니다.');
       }
       await patchOrderConfirm(id).then(() => {
-        alert('구매 확정이 완료 되었습니다.');
+        toastSuccess('구매 확정이 완료 되었습니다.');
         setItemStatus('구매 확정');
       });
     } catch (error) {
@@ -46,10 +49,10 @@ const UserOrderDetailCard = ({
   const orderCancel = async () => {
     try {
       if (status === 'CANCEL') {
-        return alert('취소 대상이 아닙니다.');
+        return toastWarn('취소 대상이 아닙니다.');
       }
       await patchOrderCancel(id).then(() => {
-        alert('주문이 취소 되었습니다.');
+        toastSuccess('주문이 취소 되었습니다.');
         setItemStatus('주문 취소');
       });
     } catch (error) {
@@ -132,6 +135,7 @@ const UserOrderDetailCard = ({
           </button>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

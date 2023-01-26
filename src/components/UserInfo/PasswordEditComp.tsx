@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { patchSellerPassword, patchUserPassword } from '../../api/userService';
 import { useUserInfo } from '../../store/UserInfoProvider';
+import { toastSuccess } from '../../util/reactToast';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PasswordEditComp = () => {
   const [newPasswordEdit, setNewPasswordEdit] = useState('');
@@ -27,13 +30,15 @@ const PasswordEditComp = () => {
   const eidited = async (event: React.MouseEvent<HTMLButtonElement>) => {
     try {
       if (userInfo.type === 'user') {
-        await patchUserPassword(newPasswordEdit, oldPassword).then(() =>
-          navgate('/userinfo')
-        );
+        await patchUserPassword(newPasswordEdit, oldPassword).then(() => {
+          toastSuccess('비밀번호 변경 완료');
+          navgate('/userinfo');
+        });
       } else if (userInfo.type === 'seller') {
-        await patchSellerPassword(newPasswordEdit, oldPassword).then(() =>
-          navgate('/userinfo')
-        );
+        await patchSellerPassword(newPasswordEdit, oldPassword).then(() => {
+          toastSuccess('비밀번호 변경 완료');
+          navgate('/userinfo');
+        });
       }
     } catch (error) {
       console.error(error);
@@ -106,6 +111,7 @@ const PasswordEditComp = () => {
           수정완료
         </button>
       </div>
+      <ToastContainer />
     </div>
   );
 };

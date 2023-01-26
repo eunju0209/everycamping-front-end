@@ -56,6 +56,14 @@ const UserInfoProvider = (props: UserInfoProviderProps) => {
             customerId: data.id,
             type: 'user',
           });
+        } else if (getCookie('LoginType') === 'admin') {
+          setUserInfo({
+            email: 'admin',
+            nickName: 'admin',
+            phoneNumber: '',
+            customerId: 0,
+            type: 'admin',
+          });
         }
       }
     })();

@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   getSellerInfo,
   getUserInfo,
@@ -7,8 +9,8 @@ import {
   postSellerLogin,
   postUserLogin,
 } from '../../api/userService';
-import { setCookie } from '../../store/cookie';
 import { useUserInfo } from '../../store/UserInfoProvider';
+import { toastError } from '../../util/reactToast';
 import KakaoLogin from './socialLogin/KakaoLogin';
 
 export type loginInfoType = {
@@ -42,14 +44,13 @@ const LoginComp = () => {
     try {
       if (loginInfo.email === 'admin@admin') {
         await postAdminLogin(loginInfo).then(async () => {
-          // const data = await getUserInfo();
-          // setUserInfo({
-          //   email: data.email,
-          //   nickName: data.nickName,
-          //   phoneNumber: data.phoneNumber,
-          //   customerId: data.customerId,
-          //   type: 'admin',
-          // });
+          setUserInfo({
+            email: 'admin',
+            nickName: '',
+            phoneNumber: '',
+            customerId: 0,
+            type: 'admin',
+          });
         });
         navigate('/');
         return;
@@ -87,7 +88,7 @@ const LoginComp = () => {
     } catch (error: any) {
       console.error(error);
       if (error.response.status === 404) {
-        return alert('일치하는 회원이 없습니다.');
+        return toastError('일치하는 회원이 없습니다.');
       }
       alert('로그인에 실패 했습니다. ');
     }
@@ -133,6 +134,7 @@ const LoginComp = () => {
         />
       </form>
       <KakaoLogin />
+      <ToastContainer />
     </>
   );
 };

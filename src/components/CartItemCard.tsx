@@ -18,23 +18,17 @@ const CartItemCard = ({ id, img, title, count, price }: CartItemCardProps) => {
   const { mutate } = useMutation(patchCartItems, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['@CartItem'] });
-      console.log('업데이트 성공');
     },
   });
   const deleteMutate = useMutation(deleteCartItems, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['@CartItem'] });
-      console.log('삭제 성공');
     },
   });
 
   useEffect(() => {
     setUpdateQuantity(count);
   }, []);
-
-  // useEffect(() => {
-  //   mutate({ id, updateQuantity: updateQuantity });
-  // }, [updateQuantity]);
 
   const handleCount = {
     minus: () => {
