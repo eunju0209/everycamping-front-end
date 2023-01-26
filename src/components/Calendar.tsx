@@ -25,7 +25,7 @@ const CalendarApp = ({ type, setSearchDate }: CalendarAppType) => {
         setSearchDate((prev) => {
           return {
             ...prev,
-            [type]: format(data, 'yy-MM-dd'),
+            [type]: format(data, 'yyyy-MM-dd'),
           };
         });
       }}
