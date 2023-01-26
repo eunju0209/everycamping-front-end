@@ -6,7 +6,7 @@ import { useUserInfo } from '../../../store/UserInfoProvider';
 
 const KaKaoLoginCallback = () => {
   const navigate = useNavigate();
-  const { userInfo, setUserInfo } = useUserInfo();
+  const { setUserInfo } = useUserInfo();
   let kakaoRequest: {
     kakao_account: {
       email: string;
@@ -38,30 +38,25 @@ const KaKaoLoginCallback = () => {
           url: '/v2/user/me',
         });
 
-        console.log(kakaoRequest);
-
         await postUserSocialLogin(
           kakaoRequest.kakao_account.email,
           kakaoRequest.kakao_account.profile.nickname
         ).then(async () => {
-          // const data = await getUserInfo();
-          // setUserInfo({
-          //   email: data.email,
-          //   nickName: data.nickName,
-          //   phoneNumber: data.phoneNumber,
-          //   customerId: data.customerId,
-          //   type: 'user',
-          // });
+          const data = await getUserInfo();
+
+          setUserInfo({
+            email: data.email,
+            nickName: data.nickName,
+            phoneNumber: data.phoneNumber,
+            customerId: data.id,
+            type: 'user',
+          });
+
           navigate('/');
         });
       } catch (err) {
         console.log(err);
-        // navigate('/join', {
-        //   state: {
-        //     email: kakaoRequest.kakao_account.email,
-        //     type: 'social',
-        //   },
-        // });
+        alert('로그인을 실패 했습니다.');
       }
     })();
   }, []);
