@@ -19,8 +19,8 @@ export default function UserOrderList() {
     sort: 'DESC',
   });
   const [searchDate, setSearchDate] = useState({
-    startDate: format(new Date(), 'yy-MM-dd'),
-    endDate: format(new Date(), 'yy-MM-dd'),
+    startDate: format(new Date(), 'yyyy-MM-dd'),
+    endDate: format(new Date(), 'yyyy-MM-dd'),
   });
 
   useEffect(() => {
