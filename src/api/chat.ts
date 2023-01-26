@@ -2,7 +2,6 @@ import axios from 'axios';
 import SockJs from 'sockjs-client'
 import StompJs from 'stompjs'
 import { getCookie } from '../store/cookie';
-import { authAxios } from './authAxios';
 
 const sock = new SockJs('/api/websocket');
 const stomp = StompJs.over(sock);

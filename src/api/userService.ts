@@ -2,11 +2,8 @@ import axios from 'axios';
 import { JoinEmailCompType } from '../components/Join/JoinEmailComp';
 import { loginInfoType } from '../components/Login/LoginComp';
 import { NewUserInfoType } from '../pages/User/UserInfo';
-import { storedToken } from '../store/accessToken';
 import { getCookie, removeCookie, setCookie } from '../store/cookie';
 import { authAxios } from './authAxios';
-
-// axios.defaults.withCredentials = true;
 
 //common
 export const postEmailCheck = async (email: string) => {
@@ -27,7 +24,6 @@ export const postUserJoin = async (joinInfo : JoinEmailCompType) => {
 export const postUserLogin = async (loginInfo: loginInfoType) => {
   const result = await axios.post(`/api/customers/signin`, loginInfo);
 
-  // storedToken.Token = result.data.accessToken;
   setCookie('accessToken', result.data.accessToken, {
     path:'/'
   });
@@ -39,10 +35,8 @@ export const postUserLogin = async (loginInfo: loginInfoType) => {
 }
 
 export const postUserSocialLogin = async (email: string, nickName: string) => {
-    // const result = await axios.get(`/api/customers/signin/social/kakao`)
     const result = await axios.post(`/api/customers/signin/social/kakao`, { email, nickName })
 
- // storedToken.Token = result.data.accessToken;
   setCookie('accessToken', result.data.accessToken, {
     path:'/'
   });
@@ -59,7 +53,6 @@ export const getUserNewToken = async () => {
       accessToken : getCookie('accessToken'),
       refreshToken : getCookie('refreshToken')
     })
-    // storedToken.Token = result.data.accessToken;
     setCookie('accessToken', result.data.accessToken, {
       path:'/'
     });
@@ -69,21 +62,16 @@ export const getUserNewToken = async () => {
     setCookie('LoginType', 'user');
   } catch (error) {
     console.log('토큰 재발급 실패')
-    // location.assign('http://localhost:5173/login')
+    location.assign('http://localhost:5173/login')
     removeCookie('LoginType');
     removeCookie('accessToken');
     removeCookie('refreshToken');
   }
 }
 export const getUserLogOut = async () => {
-  try {
     const result = await authAxios.get(`/api/customers/signout`)
-    console.log(result)
     return result
 
-  } catch(error) {
-    console.error(error)
-  }
 }
 export const getUserInfo = async () => {
   try {
@@ -118,7 +106,6 @@ export const postSellerJoin = async (joinInfo : JoinEmailCompType) => {
 export const postSellerLogin = async (loginInfo : loginInfoType) => {
   const result = await axios.post(`/api/sellers/signin`, loginInfo)
 
-  // storedToken.Token = result.data.accessToken;
   setCookie('accessToken', result.data.accessToken,{
       path:'/'
     });
@@ -126,8 +113,8 @@ export const postSellerLogin = async (loginInfo : loginInfoType) => {
       path:'/'
     });
   setCookie('LoginType', 'seller');
-  
-  // console.log(storedToken.Token)
+
+    console.log('Seller login 성공')
 }
 
 export const getSellerNewToken = async () => {
@@ -137,7 +124,6 @@ export const getSellerNewToken = async () => {
       refreshToken : getCookie('refreshToken')
     })
 
-  // storedToken.Token = result.data.accessToken;
   setCookie('accessToken', result.data.accessToken,{
       path:'/'
     });
@@ -147,12 +133,15 @@ export const getSellerNewToken = async () => {
     setCookie('LoginType', 'seller');
 
   } catch (error) {
-    console.log(error)
+    console.log('토큰 재발급 실패')
+    location.assign('http://localhost:5173/login')
+    removeCookie('LoginType');
+    removeCookie('accessToken');
+    removeCookie('refreshToken');
   }
 }
 export const getSellerLogOut = async () => {
     const result = await authAxios.get(`/api/sellers/signout`)
-    console.log(result)
     return result
 }
 export const getSellerInfo = async () => {
@@ -167,28 +156,22 @@ export const getSellerInfo = async () => {
 
 export const putSellerInfo = async (newSellerInfo:NewUserInfoType) => {
     const result = await authAxios.put(`/api/sellers/info`,{newSellerInfo})
-    console.log(result)
     return result
 }
 
 export const patchSellerPassword = async (newPasswordEdit:string, oldPassword:string) => {
-
     const result = await authAxios.patch(`/api/sellers/password`, {
       newPasswordEdit,
       oldPassword
     })
-    console.log(result)
     return result
-
 }
-
 
 // admin
 
 export const postAdminLogin = async (loginInfo: loginInfoType) => {
   const result = await axios.post(`/api/admins/signin`, loginInfo);
 
-  // storedToken.Token = result.data.accessToken;
   setCookie('accessToken', result.data.accessToken, {
     path:'/'
   });
@@ -197,7 +180,7 @@ export const postAdminLogin = async (loginInfo: loginInfoType) => {
   });
   setCookie('LoginType', 'admin');
 
-  console.log('login 성공')
+  console.log('Admin login 성공')
 }
 export const getAdminNewToken = async () => {
   try { 
@@ -205,7 +188,6 @@ export const getAdminNewToken = async () => {
       accessToken : getCookie('accessToken'),
       refreshToken : getCookie('refreshToken')
     })
-    // storedToken.Token = result.data.accessToken;
     setCookie('accessToken', result.data.accessToken, {
       path:'/'
     });
@@ -221,13 +203,8 @@ export const getAdminNewToken = async () => {
     removeCookie('refreshToken');
   }
 }
-export const getAdminLogOut = async () => {
-  try {
-    const result = await authAxios.get(`/api/admins/signout`)
-    console.log(result)
-    return result
 
-  } catch(error) {
-    console.error(error)
-  }
+export const getAdminLogOut = async () => {
+    const result = await authAxios.get(`/api/admins/signout`)
+    return result
 }
