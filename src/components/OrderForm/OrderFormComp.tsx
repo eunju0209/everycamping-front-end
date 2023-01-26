@@ -5,6 +5,9 @@ import { cartContentType } from '../../pages/Cart';
 import AddressSearch from './AddressSearch';
 import OrderFormItemCard from './OrderFormItemCard';
 import { useUserInfo } from '../../store/UserInfoProvider';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { toastError, toastSuccess, toastWarn } from '../../util/reactToast';
 
 export type OrderInfo = {
   name: string;
@@ -30,7 +33,6 @@ const OrderFormComp = () => {
   const [orderProductFormList, setOrderProductFormList] = useState<object[]>(
     []
   );
-  const deliveryPrice = 3000;
 
   const onChange = (
     event:
@@ -43,13 +45,10 @@ const OrderFormComp = () => {
     if (name === 'user') {
       setIsUser((prev) => !prev);
     }
-    console.log(name, value);
-
     setOrderInfo((prev) => ({
       ...prev,
       [name]: value,
     }));
-    console.log(orderInfo.name);
   };
 
   const handleResizeHeight = () => {
@@ -59,6 +58,7 @@ const OrderFormComp = () => {
         textareaRef.current.scrollHeight + 'px';
     }
   };
+
   useEffect(() => {
     const result = orderItems.reduce((acc: object[], cur: cartContentType) => {
       return [
@@ -77,8 +77,7 @@ const OrderFormComp = () => {
     e.preventDefault();
     try {
       if (orderInfo.address === '') {
-        alert('주소를 입력하세요');
-        return;
+        return toastWarn('주소를 입력하세요');
       }
       await postOrders({
         name: isUser ? userInfo.nickName : orderInfo.name,
@@ -87,15 +86,15 @@ const OrderFormComp = () => {
         request: orderInfo.request,
         orderProductFormList,
       }).then(() => {
-        alert('주문이 완료 되었습니다.');
+        toastSuccess('주문이 완료 되었습니다.');
         navigate('/mypage/user/orders');
       });
     } catch (error) {
       console.error(error);
       if (error === 'PRODUCT_NOT_ON_SALE')
-        return alert('판매가 종료된 상품이 있습니다.');
+        return toastError('판매가 종료된 상품이 있습니다.');
       if (error === 'PRODUCT_NOT_ENOUGH_STOCK')
-        return alert('주문한 상품의 재고가 부족 합니다.');
+        return toastError('주문한 상품의 재고가 부족 합니다.');
     }
   };
 
@@ -204,23 +203,8 @@ const OrderFormComp = () => {
         <table className='table w-full'>
           <tbody>
             <tr>
-              <th>금액</th>
-              <td className='text-right'>{totalPrice.toLocaleString()}원</td>
-            </tr>
-            <tr>
-              <th>배송비</th>
-              <td className='text-right'>
-                {totalPrice > 70000 ? '0' : deliveryPrice.toLocaleString()}원
-              </td>
-            </tr>
-            <tr>
               <th>총 금액</th>
-              <td className='text-right'>
-                {totalPrice > 70000
-                  ? totalPrice.toLocaleString()
-                  : (totalPrice + deliveryPrice).toLocaleString()}
-                원
-              </td>
+              <td className='text-right'>{totalPrice.toLocaleString()}원</td>
             </tr>
           </tbody>
         </table>
@@ -230,6 +214,7 @@ const OrderFormComp = () => {
           결제하기
         </button>
       </div>
+      <ToastContainer />
     </form>
   );
 };

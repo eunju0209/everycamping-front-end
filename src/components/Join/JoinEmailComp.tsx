@@ -1,5 +1,7 @@
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   postEmailCheck,
   postEmailCheckReturn,
@@ -7,6 +9,7 @@ import {
   postUserJoin,
 } from '../../api/userService';
 import { EMAIL_STYLE } from '../../constant/emailStyle';
+import { toastError } from '../../util/reactToast';
 
 import Modal from '../Modal/Modal';
 
@@ -58,7 +61,7 @@ const JoinEmailComp = () => {
       return;
 
     if (code === '') {
-      return alert('이메일 인증이 완료되지 않았습니다.');
+      return toastError('이메일 인증이 완료되지 않았습니다.');
     }
     try {
       if (isSeller) {
@@ -67,10 +70,6 @@ const JoinEmailComp = () => {
         await postUserJoin(joinInfo).then(() => navigate('/login'));
       }
     } catch (error: any) {
-      console.error(error);
-      if (error.response.data.message === '사용중인 이메일입니다.') {
-        return alert('사용중인 이메일 입니다.');
-      }
       alert('회원 가입에 실패 했습니다.');
     }
   };
@@ -80,29 +79,28 @@ const JoinEmailComp = () => {
 
     if (name === 'email') {
       if (!joinInfo.email.match(EMAIL_STYLE)) {
-        return alert('이메일 형식에 맞지 않습니다.');
+        return toastError('이메일 형식에 맞지 않습니다!');
       }
 
       try {
-        await postEmailCheck(joinInfo.email);
-      } catch (err) {
-        console.log(err);
-        if (err) return alert('이미 사용중인 이메일 입니다.');
+        await postEmailCheck(joinInfo.email).then(() => {
+          setToggleEmailModal(true);
+          (codeDivRef.current as HTMLDivElement).style.display = 'flex';
+        });
+      } catch (error: any) {
+        if (error.response.data.message === '사용중인 이메일입니다.') {
+          return toastError('사용중인 이메일 입니다.');
+        }
+        alert('이메일 인증에 실패 했습니다.');
         return;
       }
-
-      //result에 맞게 조건 수정
-
-      setToggleEmailModal(true);
-      (codeDivRef.current as HTMLDivElement).style.display = 'flex';
     }
+
     if (name === 'code') {
       try {
         await postEmailCheckReturn(joinInfo.email, code);
       } catch (err) {
-        console.error(err);
-        alert('잘못된 코드 입니다.');
-        return;
+        return toastError('잘못된 코드 입니다.');
       }
 
       setToggleCodeModal(true);
@@ -242,29 +240,12 @@ const JoinEmailComp = () => {
         toggleModal={toggleEmailModal}
         setToggleModal={setToggleEmailModal}
       >
-        이메일로 코드가 전송 되었습니다.
+        인증 코드가 발송 되었습니다.
       </Modal>
       <Modal toggleModal={toggleCodeModal} setToggleModal={setToggleCodeModal}>
         이메일 인증이 완료 되었습니다.
       </Modal>
-      {/* <div className='alert alert-error shadow-lg whitespace-nowrap'>
-        <div>
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            className='stroke-current flex-shrink-0 h-6 w-6'
-            fill='none'
-            viewBox='0 0 24 24'
-          >
-            <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth='2'
-              d='M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z'
-            />
-          </svg>
-          <span>이메일 형식에 맞지 않습니다.</span>
-        </div>
-      </div> */}
+      <ToastContainer />
     </div>
   );
 };
