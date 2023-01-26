@@ -2,9 +2,9 @@ import { authAxios } from './authAxios';
 
 export const getCartItems = async () => {
     const result = await authAxios.get(`/api/carts`)
-    // const result = await authAxios.get(`/assets/data/cart/cartItems.json`)
     return result.data.content;
 };
+
 export const patchCartItems = async ({
   id,
   updateQuantity,

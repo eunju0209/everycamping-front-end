@@ -7,14 +7,8 @@ export const postOrders = async (orderInfo : {
   request: string;
   orderProductFormList : object[];
 }) => {
-  try {
     const result = await authAxios.post('/api/orders', orderInfo)
-    console.log(result)
     return result
-
-  } catch (error) {
-    console.error(error)
-  }
 }
 
 export const getUserOrderLIst = async (sort?: { type: string; sort: string }, searchDate?: {
