@@ -6,8 +6,6 @@ const KakaoLogin = () => {
       redirectUri: REDIRECT_URI,
       prompts: 'login',
     });
-
-    // window.location.href = '/api/customers/signin/social/kakao';
   };
 
   return (
