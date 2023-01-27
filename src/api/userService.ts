@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { JoinEmailCompType } from '../components/Join/JoinEmailComp';
 import { loginInfoType } from '../components/Login/LoginComp';
-import { NewUserInfoType } from '../pages/User/UserInfo';
 import { getCookie, removeCookie, setCookie } from '../store/cookie';
+import { UserInfoType } from '../store/UserInfoProvider';
 import { authAxios } from './authAxios';
 
 //common
@@ -62,7 +62,7 @@ export const getUserNewToken = async () => {
     setCookie('LoginType', 'user');
   } catch (error) {
     console.log('토큰 재발급 실패')
-    location.assign('http://localhost:5173/login')
+    // location.assign('http://localhost:5173/login')
     removeCookie('LoginType');
     removeCookie('accessToken');
     removeCookie('refreshToken');
@@ -84,7 +84,7 @@ export const getUserInfo = async () => {
   }
 }
 
-export const putUserInfo = async (newUserInfo : NewUserInfoType) => {
+export const putUserInfo = async (newUserInfo : UserInfoType) => {
     const result = await authAxios.put(`/api/customers/info`,newUserInfo)
     return result
 }
@@ -134,7 +134,7 @@ export const getSellerNewToken = async () => {
 
   } catch (error) {
     console.log('토큰 재발급 실패')
-    location.assign('http://localhost:5173/login')
+    // location.assign('http://localhost:5173/login')
     removeCookie('LoginType');
     removeCookie('accessToken');
     removeCookie('refreshToken');
@@ -154,8 +154,8 @@ export const getSellerInfo = async () => {
   }
 }
 
-export const putSellerInfo = async (newSellerInfo:NewUserInfoType) => {
-    const result = await authAxios.put(`/api/sellers/info`,{newSellerInfo})
+export const putSellerInfo = async (newSellerInfo : UserInfoType) => {
+    const result = await authAxios.put(`/api/sellers/info`,newSellerInfo)
     return result
 }
 
@@ -197,7 +197,7 @@ export const getAdminNewToken = async () => {
     setCookie('LoginType', 'admin');
   } catch (error) {
     console.log('토큰 재발급 실패')
-    location.assign('http://localhost:5173/login')
+    // location.assign('http://localhost:5173/login')
     removeCookie('LoginType');
     removeCookie('accessToken');
     removeCookie('refreshToken');
