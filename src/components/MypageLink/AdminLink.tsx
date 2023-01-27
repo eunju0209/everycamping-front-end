@@ -5,6 +5,7 @@ export default function AdminLink() {
     <>
       <li>
         <Link to='/sellerConfirm'>판매자승인</Link>
+        <Link to='/mypage/admin/chatList'>1:1 문의</Link>
       </li>
     </>
   );
