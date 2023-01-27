@@ -1,4 +1,4 @@
-import Chatting from '../components/Chatting';
+import Chatting from '../components/Chat';
 import ProductList from '../components/Product/ProductList';
 import Slider from '../components/Slider';
 
