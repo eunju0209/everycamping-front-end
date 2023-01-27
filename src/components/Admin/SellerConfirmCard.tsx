@@ -2,15 +2,15 @@ import { putAdminSellerList } from '../../api/adminService';
 
 type SellerConfirmCardProps = {
   seller: {
-    ID: string;
-    Name: string;
-    PhoneNumber: string;
+    id: string;
+    name: string;
+    phone: string;
     sellerConfirm: boolean;
   };
 };
 
 const SellerConfirmCard = ({
-  seller: { ID, Name, PhoneNumber, sellerConfirm },
+  seller: { id, name, phone, sellerConfirm },
 }: SellerConfirmCardProps) => {
   const onConfirm = async () => {
     try {
@@ -23,9 +23,9 @@ const SellerConfirmCard = ({
   return (
     <>
       <tr className='hover text-center'>
-        <td>{ID}</td>
-        <td>{Name}</td>
-        <td>{PhoneNumber}</td>
+        <td>{id}</td>
+        <td>{name}</td>
+        <td>{phone}</td>
         <td className='flex justify-center'>
           <button className='btn btn-primary px-8' onClick={onConfirm}>
             승인

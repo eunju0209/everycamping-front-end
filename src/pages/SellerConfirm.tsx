@@ -2,8 +2,15 @@ import { useEffect, useState } from 'react';
 import { getAdminSellerList } from '../api/adminService';
 import SellerConfirmCard from '../components/Admin/SellerConfirmCard';
 
+type SellerConfirmType = {
+  id: string;
+  name: string;
+  phone: string;
+  sellerConfirm: boolean;
+};
+
 const SellerConfirm = () => {
-  const [sellerList, setSellerList] = useState([]);
+  const [sellerList, setSellerList] = useState<SellerConfirmType[]>([]);
 
   useEffect(() => {
     (async () => {
