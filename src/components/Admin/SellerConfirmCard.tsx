@@ -1,38 +1,36 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { putAdminSellerList } from '../../api/adminService';
+import { AdminSellerCardType } from '../../pages/SellerConfirm';
 
 type SellerConfirmCardProps = {
-  seller: {
-    ID: string;
-    Name: string;
-    PhoneNumber: string;
-    sellerConfirm: boolean;
-  };
+  seller: AdminSellerCardType;
 };
 
 const SellerConfirmCard = ({
-  seller: { ID, Name, PhoneNumber, sellerConfirm },
+  seller: { id, email, nickName, phone, registeredAt },
 }: SellerConfirmCardProps) => {
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation(putAdminSellerList, {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['@AdminSellerList'] });
+    },
+  });
   const onConfirm = async () => {
-    try {
-      await putAdminSellerList();
-    } catch (error) {
-      console.error(error);
-    }
+    mutate(id);
   };
 
   return (
-    <>
-      <tr className='hover text-center'>
-        <td>{ID}</td>
-        <td>{Name}</td>
-        <td>{PhoneNumber}</td>
-        <td className='flex justify-center'>
-          <button className='btn btn-primary px-8' onClick={onConfirm}>
-            승인
-          </button>
-        </td>
-      </tr>
-    </>
+    <tr className='hover text-center'>
+      <td>{registeredAt}</td>
+      <td>{email}</td>
+      <td>{nickName}</td>
+      <td>{phone}</td>
+      <td className='flex justify-center'>
+        <button className='btn btn-primary px-8' onClick={onConfirm}>
+          승인
+        </button>
+      </td>
+    </tr>
   );
 };
 
