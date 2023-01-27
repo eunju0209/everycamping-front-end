@@ -1,3 +1,4 @@
+import { CalculationDetailType } from '../components/Calculation/CalculationDetailTable';
 import { CalculationType } from '../components/Calculation/CalculationTable';
 import { authAxios } from './authAxios';
 
@@ -7,8 +8,8 @@ export async function getCalculations(): Promise<CalculationType[]> {
 }
 
 export async function getCalculationDetail(
-  settlementId: number
-): Promise<CalculationType> {
+  settlementId: string
+): Promise<CalculationDetailType[]> {
   const res = await authAxios.get(`/api/settlements/${settlementId}`);
-  return res.data;
+  return res.data.content;
 }
