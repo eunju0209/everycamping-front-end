@@ -1,21 +1,28 @@
-import { useEffect, useState } from 'react';
-import { getAdminSellerList } from '../api/adminService';
 import SellerConfirmCard from '../components/Admin/SellerConfirmCard';
+import { queryGetAdminSellerList } from '../store/ReactQuery';
+
+export type AdminSellerCardType = {
+  id: number;
+  email: string;
+  nickName: string;
+  phone: string;
+  registeredAt: string;
+};
 
 const SellerConfirm = () => {
-  const [sellerList, setSellerList] = useState([]);
+  const result: AdminSellerCardType[] = queryGetAdminSellerList();
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const result = await getAdminSellerList();
-        setSellerList(result);
-      } catch (error) {
-        console.error(error);
-        alert('오류가 발생 했습니다.');
-      }
-    })();
-  }, []);
+  const getAdminSellerListFunc = () => {
+    if (result) {
+      return (
+        <tbody>
+          {result.map((items: AdminSellerCardType) => (
+            <SellerConfirmCard key={items.id} seller={items} />
+          ))}
+        </tbody>
+      );
+    }
+  };
 
   return (
     <div className='max-w-screen-xl mx-auto'>
@@ -27,17 +34,14 @@ const SellerConfirm = () => {
           <table className='table w-full'>
             <thead>
               <tr className='text-center'>
+                <th>Date</th>
                 <th>ID</th>
                 <th>Name</th>
                 <th>PhoneNumber</th>
                 <th>Confirm</th>
               </tr>
             </thead>
-            <tbody>
-              {sellerList.map((seller) => (
-                <SellerConfirmCard key={seller.id} seller={seller} />
-              ))}
-            </tbody>
+            {getAdminSellerListFunc()}
           </table>
         </div>
       </div>
