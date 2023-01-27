@@ -8,7 +8,7 @@ import {
 import { getSellerInfo, getUserInfo } from '../api/userService';
 import { getCookie } from './cookie';
 
-export type UserInfo = {
+export type UserInfoType = {
   email: string;
   nickName: string;
   phoneNumber: string;
@@ -17,8 +17,8 @@ export type UserInfo = {
 };
 
 export type UserInfoContextType = {
-  userInfo: UserInfo;
-  setUserInfo: React.Dispatch<React.SetStateAction<UserInfo>>;
+  userInfo: UserInfoType;
+  setUserInfo: React.Dispatch<React.SetStateAction<UserInfoType>>;
 };
 
 type UserInfoProviderProps = {
@@ -28,7 +28,7 @@ type UserInfoProviderProps = {
 const UserInfoContext = createContext<UserInfoContextType | null>(null);
 
 const UserInfoProvider = (props: UserInfoProviderProps) => {
-  const [userInfo, setUserInfo] = useState<UserInfo>({
+  const [userInfo, setUserInfo] = useState<UserInfoType>({
     email: '',
     nickName: '',
     phoneNumber: '',

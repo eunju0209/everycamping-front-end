@@ -6,9 +6,16 @@ import {
   stompConnect,
   stompDisConnect,
 } from '../api/chat';
+import { getCookie } from '../store/cookie';
+import { userTypeConvert } from '../util/userTypeConvert';
 
-const Chat = () => {
-  const [message, setMassage] = useState<string[]>([]);
+export type messageDataType = {
+  content: string;
+  userType: string;
+};
+
+const Chatting = () => {
+  const [message, setMassage] = useState<messageDataType[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [roomId, setRoomId] = useState<string>('');
   const messageBoxRef = useRef<HTMLDivElement>(null);
@@ -44,10 +51,7 @@ const Chat = () => {
 
   const messageSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    sendMessage(roomId, newMessage);
-    console.log(message);
-    console.log(newMessage);
-    // setMassage((prev) => [...prev, newMessage]);
+    sendMessage(roomId, newMessage, userTypeConvert(getCookie('LoginType')));
     setNewMessage('');
   };
 
@@ -68,10 +72,13 @@ const Chat = () => {
         ref={chatRef}
       >
         <div className='px-3 py-5 h-600px overflow-auto' ref={messageBoxRef}>
-          {/* <ChatLeft /> */}
-          {message.map((message, idx) => (
-            <ChatRight key={idx} message={message} />
-          ))}
+          {message.map((message, idx) =>
+            message.userType === userTypeConvert(getCookie('LoginType')) ? (
+              <ChatRight key={idx} message={message.content} />
+            ) : (
+              <ChatLeft key={idx} message={message.content} />
+            )
+          )}
         </div>
         <form className='form-control' onSubmit={messageSubmit}>
           <label className='input-group'>
@@ -98,7 +105,7 @@ const Chat = () => {
   );
 };
 
-export default Chat;
+export default Chatting;
 
 const ChatLeft = ({ message }: { message: string }) => {
   return (

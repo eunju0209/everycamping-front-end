@@ -1,31 +1,67 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { putSellerInfo, putUserInfo } from '../../api/userService';
+import {
+  getSellerInfo,
+  getUserInfo,
+  putSellerInfo,
+  putUserInfo,
+} from '../../api/userService';
 import UserInfoComp from '../../components/UserInfo/UserInfoComp';
 import UserInfoEditComp from '../../components/UserInfo/UserInfoEditComp';
-import { useUserInfo } from '../../store/UserInfoProvider';
+import { UserInfoType, useUserInfo } from '../../store/UserInfoProvider';
 import { toastSuccess } from '../../util/reactToast';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-export type NewUserInfoType = {
-  email: string;
-  nickName: string;
-  phoneNumber: string;
-};
+import { getCookie } from '../../store/cookie';
 
 const UserInfo = () => {
   const navigate = useNavigate();
   const [isEdit, setIsEdit] = useState(false);
   const { userInfo, setUserInfo } = useUserInfo();
-  const [newUserInfo, setNewUserInfo] = useState({
+  const [newUserInfo, setNewUserInfo] = useState<UserInfoType>({
     email: '',
     nickName: '',
     phoneNumber: '',
+    customerId: 0,
+    type: 'none',
   });
 
   useEffect(() => {
-    setNewUserInfo(userInfo);
+    (async () => {
+      if (getCookie('LoginType') === 'seller') {
+        const data = await getSellerInfo();
+        setUserInfo({
+          email: data.email,
+          nickName: data.nickName,
+          phoneNumber: data.phoneNumber,
+          customerId: data.id,
+          type: 'seller',
+        });
+        setNewUserInfo({
+          email: data.email,
+          nickName: data.nickName,
+          phoneNumber: data.phoneNumber,
+          customerId: data.id,
+          type: 'seller',
+        });
+      } else if (getCookie('LoginType') === 'user') {
+        const data = await getUserInfo();
+        setUserInfo({
+          email: data.email,
+          nickName: data.nickName,
+          phoneNumber: data.phoneNumber,
+          customerId: data.id,
+          type: 'user',
+        });
+        setNewUserInfo({
+          email: data.email,
+          nickName: data.nickName,
+          phoneNumber: data.phoneNumber,
+          customerId: data.id,
+          type: 'user',
+        });
+      }
+    })();
   }, []);
 
   const eidited = async (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -33,15 +69,18 @@ const UserInfo = () => {
     if (!isEdit) return;
     try {
       if (userInfo.type === 'user') {
+        console.log(newUserInfo);
         await putUserInfo(newUserInfo).then(() => {
           toastSuccess('수정 성공');
+          setUserInfo(newUserInfo);
         });
       } else if (userInfo.type === 'seller') {
+        console.log('put :', newUserInfo);
         await putSellerInfo(newUserInfo).then(() => {
           toastSuccess('수정 성공');
+          setUserInfo(newUserInfo);
         });
       }
-      setUserInfo((prev) => ({ ...prev, ...newUserInfo }));
     } catch (error) {
       console.error(error);
     }
@@ -59,7 +98,7 @@ const UserInfo = () => {
           setNewUserInfo={setNewUserInfo}
         />
       ) : (
-        <UserInfoComp userInfo={userInfo} />
+        <UserInfoComp userInfo={newUserInfo} />
       )}
       <div className='flex justify-center'>
         <div className='flex justify-center mt-10'>
