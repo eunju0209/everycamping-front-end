@@ -5,12 +5,14 @@ import { getAdminNewToken, getSellerNewToken, getUserNewToken } from './userServ
 export const authAxios = axios.create();
 
 authAxios.interceptors.request.use(
-  function (config: AxiosRequestConfig) {
+   function (config) {
     if (config.headers) {
-      config.headers = {
-        Authorization: getCookie('accessToken'),
-        'Content-Type': 'application/json'
-      }
+      config.headers.Authorization = getCookie('accessToken')
+      // config.headers['Content-Type'] = 'application/json'
+      //   = {
+      //   Authorization: getCookie('accessToken'),
+      //   'Content-Type': 'application/json'
+      // }
     }
     return config;
   },
