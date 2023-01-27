@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { addNewProduct } from '../../api/productsService';
+import useProducts from '../../hooks/useProducts';
 
 export type NewProductType = {
   category: string;
@@ -25,6 +25,7 @@ export default function ProductForm() {
     onSale: true,
     tags: [''],
   });
+  const { addProductMutation } = useProducts();
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -52,11 +53,12 @@ export default function ProductForm() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-
     image &&
       detailImage &&
-      addNewProduct(product, image, detailImage) //
-        .then(() => navigate(-1));
+      addProductMutation.mutate(
+        { product, image, detailImage },
+        { onSuccess: () => navigate(-1) }
+      );
   };
 
   return (

@@ -1,10 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  getSellerProductDetail,
-  updateProduct,
-} from '../../api/productsService';
+import { getSellerProductDetail } from '../../api/productsService';
+import useProducts from '../../hooks/useProducts';
 
 type ProductUpdateFormProps = {
   productId: string;
@@ -14,8 +12,10 @@ export default function ProductUpdateForm({
   productId,
 }: ProductUpdateFormProps) {
   const navigate = useNavigate();
-  const { data: sellerProduct } = useQuery(['sellerProduct', productId], () =>
-    getSellerProductDetail(productId)
+  const { data: sellerProduct } = useQuery(
+    ['sellerProduct', productId],
+    () => getSellerProductDetail(productId),
+    { staleTime: 1000 * 60 * 5 }
   );
   const [image, setImage] = useState<File>();
   const [detailImage, setDetailImage] = useState<File>();
@@ -28,6 +28,7 @@ export default function ProductUpdateForm({
     onSale: true,
     tags: [''],
   });
+  const { updateProductMutation } = useProducts();
 
   useEffect(() => {
     sellerProduct &&
@@ -70,9 +71,10 @@ export default function ProductUpdateForm({
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-
-    updateProduct(productId, updatedProduct, image, detailImage) //
-      .then(() => navigate(-1));
+    updateProductMutation.mutate(
+      { productId, updatedProduct, image, detailImage },
+      { onSuccess: () => navigate(-1) }
+    );
   };
 
   return (
