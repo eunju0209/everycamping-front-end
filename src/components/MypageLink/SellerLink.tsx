@@ -15,6 +15,9 @@ export default function SellerLink() {
       <li>
         <Link to='/userInfo'>회원정보</Link>
       </li>
+      <li>
+        <Link to='/mypage/seller/calculation'>정산</Link>
+      </li>
     </>
   );
 }
