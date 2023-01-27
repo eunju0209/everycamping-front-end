@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { addNewReview } from '../../api/reviewService';
+import useReviews from '../../hooks/useReviews';
 
 export type NewReviewType = {
   score: number;
@@ -20,6 +21,7 @@ export default function ReviewForm() {
   } = useLocation() as RouteState;
   const [image, setImage] = useState<File>();
   const [review, setReview] = useState({ score: 0, text: '' });
+  const { addReviewMutation } = useReviews();
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -36,8 +38,10 @@ export default function ReviewForm() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     image &&
-      addNewReview(productId, review, image) //
-        .then(() => navigate(-1));
+      addReviewMutation.mutate(
+        { productId, review, image },
+        { onSuccess: () => navigate(-1) }
+      );
   };
 
   return (

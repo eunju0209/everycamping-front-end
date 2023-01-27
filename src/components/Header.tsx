@@ -12,6 +12,9 @@ export default function Header() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    if (text.trim().length === 0) {
+      return;
+    }
     navigate(`/products/${text}`);
   };
 

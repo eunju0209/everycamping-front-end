@@ -20,8 +20,10 @@ type ReviewListProps = {
 
 export default function ReviewList({ productId, customerId }: ReviewListProps) {
   const navigate = useNavigate();
-  const { data: reviews } = useQuery(['reviews', productId, customerId], () =>
-    getReviews(productId, customerId)
+  const { data: reviews } = useQuery(
+    ['reviews', productId, customerId],
+    () => getReviews(productId, customerId),
+    { staleTime: 1000 * 60 * 5 }
   );
 
   return (

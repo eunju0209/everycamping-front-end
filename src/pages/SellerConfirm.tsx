@@ -9,6 +9,13 @@ export type AdminSellerCardType = {
   registeredAt: string;
 };
 
+type SellerConfirmType = {
+  id: string;
+  name: string;
+  phone: string;
+  sellerConfirm: boolean;
+};
+
 const SellerConfirm = () => {
   const result: AdminSellerCardType[] = queryGetAdminSellerList();
 

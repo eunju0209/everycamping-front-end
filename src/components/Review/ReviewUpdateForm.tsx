@@ -9,8 +9,10 @@ type ReviewUpdateFormProps = {
 
 export default function ReviewUpdateForm({ reviewId }: ReviewUpdateFormProps) {
   const navigate = useNavigate();
-  const { data: reviewDetail } = useQuery(['reviewDetail', reviewId], () =>
-    getReviewDetail(reviewId)
+  const { data: reviewDetail } = useQuery(
+    ['reviewDetail', reviewId],
+    () => getReviewDetail(reviewId),
+    { staleTime: 1000 * 60 * 5 }
   );
   const [image, setImage] = useState<File>();
   const [updatedreview, setUpdateReview] = useState({
