@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { deleteProduct } from '../../api/productsService';
+import useProducts from '../../hooks/useProducts';
 import { ProductType } from './ProductList';
 
 type ProductCardProps = {
@@ -11,13 +12,8 @@ type ProductCardProps = {
 export default function ProductCard({ product, seller }: ProductCardProps) {
   const navigate = useNavigate();
   const { id, name, price, imageUri } = product;
+  const { deleteProductMutaion } = useProducts();
 
-  const queryClient = useQueryClient();
-  const removeProduct = useMutation((id: string) => deleteProduct(id), {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['products']);
-    },
-  });
   return (
     <li className='card bg-base-100 shadow-xl'>
       <figure
@@ -33,7 +29,7 @@ export default function ProductCard({ product, seller }: ProductCardProps) {
           <div>
             <button
               className='btn btn-sm mr-2'
-              onClick={() => removeProduct.mutate(id)}
+              onClick={() => deleteProductMutaion.mutate({ id })}
             >
               삭제하기
             </button>

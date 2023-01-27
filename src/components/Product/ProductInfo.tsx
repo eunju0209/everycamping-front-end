@@ -19,8 +19,10 @@ type ProductInfoProps = {
 
 export default function ProductInfo({ productId }: ProductInfoProps) {
   const navigate = useNavigate();
-  const { data: product } = useQuery(['productDetail', productId], () =>
-    getProductDetail(productId)
+  const { data: product } = useQuery(
+    ['productDetail', productId],
+    () => getProductDetail(productId),
+    { staleTime: 1000 * 60 * 5 }
   );
   const [quantity, setQuantity] = useState(1);
 
