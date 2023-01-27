@@ -1,13 +1,9 @@
-type newUserInfo = {
-  email: string;
-  nickName: string;
-  phoneNumber: string;
-};
+import { UserInfoType } from '../../store/UserInfoProvider';
 
 type UserInfoEditCompProps = {
-  userInfo: newUserInfo;
-  newUserInfo: newUserInfo;
-  setNewUserInfo: React.Dispatch<React.SetStateAction<newUserInfo>>;
+  userInfo: UserInfoType;
+  newUserInfo: UserInfoType;
+  setNewUserInfo: React.Dispatch<React.SetStateAction<UserInfoType>>;
 };
 
 const UserInfoEditComp = ({
