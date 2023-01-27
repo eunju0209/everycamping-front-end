@@ -1,4 +1,4 @@
-import CalculationModal from './CalculationModal';
+import { useNavigate } from 'react-router-dom';
 import { CalculationType } from './CalculationTable';
 
 type CalculationItemProps = {
@@ -6,16 +6,19 @@ type CalculationItemProps = {
 };
 
 export default function CalculationItem({ calculation }: CalculationItemProps) {
+  const navigate = useNavigate();
   const { id, amount, targetDate } = calculation;
   return (
     <tr>
-      <th>{targetDate}</th>
+      <td>{targetDate}</td>
       <td>{amount.toLocaleString()}원</td>
       <td>
-        <label htmlFor='my-modal123' className='btn btn-sm btn-primary'>
+        <button
+          className='btn btn-sm btn-primary'
+          onClick={() => navigate(`/mypage/seller/calculation/${id}`)}
+        >
           상세보기
-        </label>
-        <CalculationModal />
+        </button>
       </td>
     </tr>
   );

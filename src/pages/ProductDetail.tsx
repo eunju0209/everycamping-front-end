@@ -1,4 +1,4 @@
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import ProductInfo from '../components/Product/ProductInfo';
 import ReviewList from '../components/Review/ReviewList';
 
