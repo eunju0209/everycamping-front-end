@@ -12,8 +12,10 @@ export default function ProductUpdateForm({
   productId,
 }: ProductUpdateFormProps) {
   const navigate = useNavigate();
-  const { data: sellerProduct } = useQuery(['sellerProduct', productId], () =>
-    getSellerProductDetail(productId)
+  const { data: sellerProduct } = useQuery(
+    ['sellerProduct', productId],
+    () => getSellerProductDetail(productId),
+    { staleTime: 1000 * 60 * 5 }
   );
   const [image, setImage] = useState<File>();
   const [detailImage, setDetailImage] = useState<File>();

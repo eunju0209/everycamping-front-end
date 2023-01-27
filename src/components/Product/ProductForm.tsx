@@ -25,7 +25,7 @@ export default function ProductForm() {
     onSale: true,
     tags: [''],
   });
-  const { addProductMutaion } = useProducts();
+  const { addProductMutation } = useProducts();
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -55,7 +55,7 @@ export default function ProductForm() {
     e.preventDefault();
     image &&
       detailImage &&
-      addProductMutaion.mutate(
+      addProductMutation.mutate(
         { product, image, detailImage },
         { onSuccess: () => navigate(-1) }
       );

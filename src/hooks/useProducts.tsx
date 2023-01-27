@@ -9,7 +9,7 @@ import { NewProductType } from '../components/Product/ProductForm';
 export default function useProducts() {
   const queryClient = useQueryClient();
 
-  const addProductMutaion = useMutation(
+  const addProductMutation = useMutation(
     ({
       product,
       image,
@@ -45,7 +45,7 @@ export default function useProducts() {
     }
   );
 
-  const deleteProductMutaion = useMutation(
+  const deleteProductMutation = useMutation(
     ({ id }: { id: string }) => deleteProduct(id),
     {
       onSuccess: () => {
@@ -54,5 +54,5 @@ export default function useProducts() {
     }
   );
 
-  return { addProductMutaion, updateProductMutation, deleteProductMutaion };
+  return { addProductMutation, updateProductMutation, deleteProductMutation };
 }

@@ -1,6 +1,4 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { deleteProduct } from '../../api/productsService';
 import useProducts from '../../hooks/useProducts';
 import { ProductType } from './ProductList';
 
@@ -12,7 +10,7 @@ type ProductCardProps = {
 export default function ProductCard({ product, seller }: ProductCardProps) {
   const navigate = useNavigate();
   const { id, name, price, imageUri } = product;
-  const { deleteProductMutaion } = useProducts();
+  const { deleteProductMutation } = useProducts();
 
   return (
     <li className='card bg-base-100 shadow-xl'>
@@ -29,7 +27,7 @@ export default function ProductCard({ product, seller }: ProductCardProps) {
           <div>
             <button
               className='btn btn-sm mr-2'
-              onClick={() => deleteProductMutaion.mutate({ id })}
+              onClick={() => deleteProductMutation.mutate({ id })}
             >
               삭제하기
             </button>
