@@ -1,6 +1,7 @@
 import Chatting from '../components/Chatting';
 import ProductList from '../components/Product/ProductList';
 import Slider from '../components/Slider';
+import { getCookie } from '../store/cookie';
 
 export default function Home() {
   return (
@@ -11,7 +12,7 @@ export default function Home() {
         <ProductList filter='recency' />
         <h1 className='text-3xl font-semibold mb-4 mt-14 text-center'>BEST</h1>
         <ProductList filter='popul' />
-        <Chatting />
+        {getCookie('LoginType') ? <Chatting /> : ''}
       </div>
     </>
   );
