@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import { getCookie } from '../store/cookie';
 import { getAdminNewToken, getSellerNewToken, getUserNewToken } from './userService';
 
