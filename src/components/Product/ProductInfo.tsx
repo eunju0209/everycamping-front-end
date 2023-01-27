@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { addCart } from '../../api/cartService';
 import { getProductDetail } from '../../api/productsService';
+import { getCookie } from '../../store/cookie';
 
 export type ProductDetailType = {
   name: string;
@@ -53,13 +54,15 @@ export default function ProductInfo({ productId }: ProductInfoProps) {
               +
             </button>
           </div>
-          <label
-            htmlFor='my-modal'
-            className='btn btn-primary'
-            onClick={() => addCart(productId, quantity)}
-          >
-            장바구니 추가
-          </label>
+          {getCookie('LoginType') === 'user' && (
+            <label
+              htmlFor='my-modal'
+              className='btn btn-primary'
+              onClick={() => addCart(productId, quantity)}
+            >
+              장바구니 추가
+            </label>
+          )}
           <input type='checkbox' id='my-modal' className='modal-toggle' />
           <div className='modal'>
             <div className='modal-box'>

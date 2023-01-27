@@ -59,12 +59,14 @@ export default function HeaderButtons() {
           {getCookie('LoginType') === 'admin' && <AdminLink />}
         </ul>
       </div>
-      <button
-        onClick={() => navigate('/cart')}
-        className='text-3xl mr-4 text-primary'
-      >
-        <FaShoppingCart />
-      </button>
+      {getCookie('LoginType') === 'user' && (
+        <button
+          onClick={() => navigate('/cart')}
+          className='text-3xl mr-4 text-primary'
+        >
+          <FaShoppingCart />
+        </button>
+      )}
       {getCookie('LoginType') ? (
         <button onClick={logout} className='btn btn-primary btn-sm'>
           Logout
