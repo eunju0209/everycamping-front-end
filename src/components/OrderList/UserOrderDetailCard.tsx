@@ -34,9 +34,6 @@ const UserOrderDetailCard = ({
 
   const orderConfirm = async () => {
     try {
-      if (status !== 'COMPLETE') {
-        return toastWarn('구매 확정 대상이 아닙니다.');
-      }
       await patchOrderConfirm(id).then(() => {
         toastSuccess('구매 확정이 완료 되었습니다.');
         setItemStatus('구매 확정');
@@ -80,6 +77,16 @@ const UserOrderDetailCard = ({
     navigate(`/products/detail/${productId}`);
   };
 
+  const writeReview = () => {
+    if (itemStatus !== '구매 확정') {
+      alert('구매 확정 후 리뷰 작성이 가능 합니다.');
+      return;
+    }
+    navigate('/review/new', {
+      state: { productId },
+    });
+  };
+
   return (
     <div>
       <div
@@ -111,17 +118,19 @@ const UserOrderDetailCard = ({
           <button
             className='btn btn-primary btn-sm'
             onClick={orderConfirm}
-            disabled={itemStatus === '주문 취소' ? true : false}
+            disabled={
+              itemStatus === '주문 취소'
+                ? true
+                : itemStatus === '구매 확정'
+                ? true
+                : false
+            }
           >
             구매확정
           </button>
           <button
             className='btn btn-primary btn-sm mx-2'
-            onClick={() =>
-              navigate('/review/new', {
-                state: { productId },
-              })
-            }
+            onClick={writeReview}
             disabled={itemStatus === '주문 취소' ? true : false}
           >
             리뷰작성
@@ -129,9 +138,13 @@ const UserOrderDetailCard = ({
           <button
             className='btn btn-primary btn-sm'
             onClick={orderCancel}
-            disabled={itemStatus !== '주문 완료' ? true : false}
+            disabled={itemStatus === '주문 취소' ? true : false}
           >
-            {status !== 'COMPLETE' ? '환불요청' : '주문취소'}
+            {itemStatus === '주문 취소'
+              ? '주문 취소'
+              : itemStatus === '주문 완료'
+              ? '주문 취소'
+              : '환불 요청'}
           </button>
         </div>
       </div>
