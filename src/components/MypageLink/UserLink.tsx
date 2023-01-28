@@ -12,6 +12,9 @@ export default function UserLink() {
       <li>
         <Link to='/userInfo'>회원정보</Link>
       </li>
+      <li>
+        <Link to='/mypage/chatList'>1:1 문의</Link>
+      </li>
     </>
   );
 }

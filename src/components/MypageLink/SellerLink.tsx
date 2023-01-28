@@ -18,6 +18,9 @@ export default function SellerLink() {
       <li>
         <Link to='/mypage/seller/calculation'>정산</Link>
       </li>
+      <li>
+        <Link to='/mypage/chatList'>1:1 문의</Link>
+      </li>
     </>
   );
 }

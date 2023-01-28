@@ -5,9 +5,9 @@ import {
   sendMessage,
   stompConnect,
   stompDisConnect,
-} from '../api/chat';
-import { getCookie } from '../store/cookie';
-import { userTypeConvert } from '../util/userTypeConvert';
+} from '../../api/chat';
+import { getCookie } from '../../store/cookie';
+import { userTypeConvert } from '../../util/userTypeConvert';
 
 export type messageDataType = {
   content: string;

@@ -1,4 +1,4 @@
-import Chatting from '../components/Chatting';
+import Chatting from '../components/Chatting/Chatting';
 import ProductList from '../components/Product/ProductList';
 import Slider from '../components/Slider';
 import { getCookie } from '../store/cookie';

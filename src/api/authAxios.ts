@@ -13,10 +13,6 @@ authAxios.interceptors.request.use(
     if (config.headers) {
       config.headers.Authorization = getCookie('accessToken')
       // config.headers['Content-Type'] = 'application/json'
-      //   = {
-      //   Authorization: getCookie('accessToken'),
-      //   'Content-Type': 'application/json'
-      // }
     }
     return config;
   },

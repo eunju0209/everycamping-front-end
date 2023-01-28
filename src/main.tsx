@@ -27,7 +27,7 @@ import UserReviewList from './pages/User/UserReviewList';
 import UpdateReview from './pages/UpdateReview';
 import SellerCalculation from './pages/SellerCalculation';
 import CalculationDetail from './pages/CalculationDetail';
-import AdminChatList from './pages/AdminChatList';
+import ChatList from './pages/ChatList';
 
 const router = createBrowserRouter([
   {
@@ -59,7 +59,7 @@ const router = createBrowserRouter([
       { path: 'reviews/update/:reviewId', element: <UpdateReview /> },
       { path: 'mypage/seller/calculation', element: <SellerCalculation /> },
       { path: 'mypage/seller/calculation/:id', element: <CalculationDetail /> },
-      { path: 'mypage/admin/chatList', element: <AdminChatList /> },
+      { path: 'mypage/chatList', element: <ChatList /> },
     ],
   },
 ]);
