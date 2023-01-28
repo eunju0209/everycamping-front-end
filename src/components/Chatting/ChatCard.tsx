@@ -1,7 +1,11 @@
 import { useState } from 'react';
-import AdminChatCardChatting from './AdminChatCardChatting';
+import ChatCardChatting from './ChatCardChatting';
 
-const AdminChatCard = () => {
+type ChatCardType = {
+  title: string;
+};
+
+const ChatCard = ({ title }: ChatCardType) => {
   const [popDetail, setPopDetail] = useState(false);
   const popUpDetail = () => {
     setPopDetail(true);
@@ -12,16 +16,11 @@ const AdminChatCard = () => {
         className='flex justify-between w-full p-2 cursor-pointer'
         onClick={popUpDetail}
       >
-        <div className='flex flex-col justify-between w-full p-1'>
-          채팅 리스트 1
-        </div>
+        <div className='flex flex-col justify-between w-full p-1'>{title}</div>
       </div>
-      <AdminChatCardChatting
-        popDetail={popDetail}
-        setPopDetail={setPopDetail}
-      />
+      <ChatCardChatting popDetail={popDetail} setPopDetail={setPopDetail} />
     </div>
   );
 };
 
-export default AdminChatCard;
+export default ChatCard;
