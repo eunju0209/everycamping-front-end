@@ -63,7 +63,7 @@ const SellerOrderDetail = ({
         <h3 className='flex justify-center font-bold text-lg'>
           주문 상세 정보
         </h3>
-        <div className='flex align-center h-40 p-2'>
+        <div className='flex justify-center align-center h-40 p-2'>
           <img src={orderDetail?.imageUriSnapshot} className='rounded' />
         </div>
         <div className='flex justify-between w-full p-2'>

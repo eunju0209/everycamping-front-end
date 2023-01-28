@@ -1,11 +1,9 @@
 import { Stomp } from '@stomp/stompjs';
 import axios from 'axios';
 import SockJs from 'sockjs-client'
-import { messageDataType } from '../components/Chatting';
+import { messageDataType } from '../components/Chatting/Chatting';
 import { getCookie } from '../store/cookie';
 
-// const sock = new SockJs('/api/websocket');
-// const stomp = StompJs.over(sock);
 const stomp = Stomp.over(() => new SockJs('/api/websocket'));
 
 export const getRoomId = async () => {

@@ -29,9 +29,6 @@ export default function HeaderButtons() {
     } else if (getCookie('LoginType') === 'admin') {
       await getAdminLogOut();
     }
-    removeCookie('LoginType');
-    removeCookie('accessToken');
-    removeCookie('refreshToken');
     setUserInfo({
       email: '',
       nickName: '',

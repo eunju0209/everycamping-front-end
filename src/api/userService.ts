@@ -62,16 +62,17 @@ export const getUserNewToken = async () => {
     setCookie('LoginType', 'user');
   } catch (error) {
     console.log('토큰 재발급 실패')
-    // location.assign('http://localhost:5173/login')
+    location.assign('http://localhost:5173/login')
     removeCookie('LoginType');
     removeCookie('accessToken');
     removeCookie('refreshToken');
   }
 }
 export const getUserLogOut = async () => {
-    const result = await authAxios.get(`/api/customers/signout`)
-    return result
-
+  await authAxios.get(`/api/customers/signout`)
+  removeCookie('LoginType');
+  removeCookie('accessToken');
+  removeCookie('refreshToken');
 }
 export const getUserInfo = async () => {
   try {
@@ -134,15 +135,17 @@ export const getSellerNewToken = async () => {
 
   } catch (error) {
     console.log('토큰 재발급 실패')
-    // location.assign('http://localhost:5173/login')
+    location.assign('http://localhost:5173/login')
     removeCookie('LoginType');
     removeCookie('accessToken');
     removeCookie('refreshToken');
   }
 }
 export const getSellerLogOut = async () => {
-    const result = await authAxios.get(`/api/sellers/signout`)
-    return result
+  await authAxios.get(`/api/sellers/signout`)
+    removeCookie('LoginType');
+    removeCookie('accessToken');
+    removeCookie('refreshToken');
 }
 export const getSellerInfo = async () => {
   try {
@@ -197,7 +200,7 @@ export const getAdminNewToken = async () => {
     setCookie('LoginType', 'admin');
   } catch (error) {
     console.log('토큰 재발급 실패')
-    // location.assign('http://localhost:5173/login')
+    location.assign('http://localhost:5173/login')
     removeCookie('LoginType');
     removeCookie('accessToken');
     removeCookie('refreshToken');
@@ -205,6 +208,8 @@ export const getAdminNewToken = async () => {
 }
 
 export const getAdminLogOut = async () => {
-    const result = await authAxios.get(`/api/admins/signout`)
-    return result
+  await authAxios.get(`/api/admins/signout`)
+  removeCookie('LoginType');
+  removeCookie('accessToken');
+  removeCookie('refreshToken');
 }
