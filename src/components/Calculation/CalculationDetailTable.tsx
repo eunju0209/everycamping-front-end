@@ -21,35 +21,11 @@ export type CalculationDetailType = {
 export default function CalculationDetailTable({
   id,
 }: CalculationDetailTableProps) {
-  // const { data: calculationDetails } = useQuery(
-  //   ['calculationDetails', id],
-  //   () => getCalculationDetail(id)
-  // );
-
-  const calculationDetails = [
-    {
-      productId: 8,
-      productNameSnapshot: '123',
-      quantity: 4,
-      amount: 333333,
-      customerId: 2,
-      customerEmail: 'ksj2083@naver.com',
-      customerNickName: '네종',
-      orderedAt: '2023-01-27 18:36:15',
-      confirmedAt: '2023-01-25 14:30:35',
-    },
-    {
-      productId: 8,
-      productNameSnapshot: '123',
-      quantity: 4,
-      amount: 222222,
-      customerId: 2,
-      customerEmail: 'ksj2083@naver.com',
-      customerNickName: '네종',
-      orderedAt: '2023-01-27 18:36:11',
-      confirmedAt: '2023-01-25 14:30:35',
-    },
-  ];
+  const { data: calculationDetails } = useQuery(
+    ['calculationDetails', id],
+    () => getCalculationDetail(id),
+    { staleTime: 1000 * 60 * 5 }
+  );
 
   return (
     <div className='overflow-x-auto'>
