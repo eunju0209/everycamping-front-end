@@ -8,12 +8,13 @@ export async function getProducts(
   category?: string,
   filter?: string,
   keyword?: string,
-  seller?: boolean
+  seller?: boolean,
+  tag?: string
 ): Promise<ProductType[]> {
   if (seller) {
     return getSellerItems();
   }
-  return keyword ? search(keyword) : getItems(category, filter);
+  return keyword || tag ? search(keyword, tag) : getItems(category, filter);
 }
 
 export async function getProductDetail(id: string): Promise<ProductDetailType> {
@@ -73,8 +74,10 @@ export async function deleteProduct(productId: string) {
   return authAxios.delete(`/api/manage/products/${productId}`);
 }
 
-async function search(keyword: string): Promise<ProductType[]> {
-  const res = await axios.get(`/api/products?name=${keyword}`);
+async function search(keyword?: string, tag?: string): Promise<ProductType[]> {
+  const res = await axios.get(
+    `/api/products?${keyword ? `name=${keyword}` : `tags=${tag}`}`
+  );
   return res.data.content;
 }
 

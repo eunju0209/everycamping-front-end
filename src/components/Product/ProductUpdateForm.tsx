@@ -73,7 +73,7 @@ export default function ProductUpdateForm({
     e.preventDefault();
     updateProductMutation.mutate(
       { productId, updatedProduct, image, detailImage },
-      { onSuccess: () => navigate(-1) }
+      { onSuccess: () => navigate('/mypage/products') }
     );
   };
 
