@@ -11,6 +11,7 @@ export type ProductDetailType = {
   detailImageUri: string;
   tags: string[];
   avgScore: number;
+  description: string;
 };
 
 type ProductInfoProps = {
@@ -27,64 +28,84 @@ export default function ProductInfo({ productId }: ProductInfoProps) {
   const [quantity, setQuantity] = useState(1);
 
   return (
-    <div className='border-b-2 border-base-200 pb-10 mb-10'>
-      <div className='flex items-center max-w-5xl mx-auto'>
-        <div className='basis-3/6 mr-10'>
-          <img src={product?.detailImageUri} alt={product?.name} />
-        </div>
-        <div>
-          <h2 className='text-3xl mb-3 text-primary font-semibold'>
-            {product?.name}
-          </h2>
-          <p className='text-xl mb-3'>{product?.price.toLocaleString()}원</p>
-          <div className='btn-group mb-8 block'>
-            <button
-              className='btn btn-sm btn-active'
-              onClick={() =>
-                setQuantity((prev) => (prev - 1 < 1 ? 1 : prev - 1))
-              }
-            >
-              -
-            </button>
-            <button className='btn btn-sm no-animation btn-ghost cursor-auto bg-white hover:bg-white'>
-              {quantity}
-            </button>
-            <button
-              className='btn btn-sm btn-active'
-              onClick={() => setQuantity((prev) => prev + 1)}
-            >
-              +
-            </button>
+    <>
+      <div className='border-b-2 border-base-200 pb-10 mb-10'>
+        <div className='flex items-center max-w-5xl mx-auto'>
+          <div className='w-3/6 mr-10'>
+            <img src={product?.detailImageUri} alt={product?.name} />
           </div>
-          {getCookie('LoginType') === 'user' && (
-            <label
-              htmlFor='my-modal'
-              className='btn btn-primary'
-              onClick={() => addCart(productId, quantity)}
-            >
-              장바구니 추가
-            </label>
-          )}
-          <input type='checkbox' id='my-modal' className='modal-toggle' />
-          <div className='modal'>
-            <div className='modal-box'>
-              <h3 className='font-bold text-lg'>장바구니에 추가되었습니다.</h3>
-              <div className='modal-action'>
+          <div className='w-3/6'>
+            <ul className='flex items-center gap-2 mb-2'>
+              {product?.tags.map((tag, idx) => (
+                <li
+                  key={idx}
+                  className='badge badge-primary cursor-pointer'
+                  onClick={() => navigate(`/products/tag/${tag}`)}
+                >
+                  #{tag}
+                </li>
+              ))}
+            </ul>
+            <h2 className='text-3xl mb-3 text-primary font-semibold break-all'>
+              {product?.name}
+            </h2>
+            <p className='text-xl mb-3'>{product?.price.toLocaleString()}원</p>
+            {getCookie('LoginType') === 'user' && (
+              <>
+                <div className='btn-group mb-8 block'>
+                  <button
+                    className='btn btn-sm btn-active'
+                    onClick={() =>
+                      setQuantity((prev) => (prev - 1 < 1 ? 1 : prev - 1))
+                    }
+                  >
+                    -
+                  </button>
+                  <button className='btn btn-sm no-animation btn-ghost cursor-auto bg-white hover:bg-white'>
+                    {quantity}
+                  </button>
+                  <button
+                    className='btn btn-sm btn-active'
+                    onClick={() => setQuantity((prev) => prev + 1)}
+                  >
+                    +
+                  </button>
+                </div>
                 <label
                   htmlFor='my-modal'
                   className='btn btn-primary'
-                  onClick={() => navigate('/cart')}
+                  onClick={() => addCart(productId, quantity)}
                 >
-                  장바구니 바로가기
+                  장바구니 추가
                 </label>
-                <label htmlFor='my-modal' className='btn'>
-                  확인
-                </label>
+              </>
+            )}
+            <input type='checkbox' id='my-modal' className='modal-toggle' />
+            <div className='modal'>
+              <div className='modal-box'>
+                <h3 className='font-bold text-lg'>
+                  장바구니에 추가되었습니다.
+                </h3>
+                <div className='modal-action'>
+                  <label
+                    htmlFor='my-modal'
+                    className='btn btn-primary'
+                    onClick={() => navigate('/cart')}
+                  >
+                    장바구니 바로가기
+                  </label>
+                  <label htmlFor='my-modal' className='btn'>
+                    확인
+                  </label>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <p className='text-lg text-center font-semibold mt-10'>
+          {product?.description}
+        </p>
       </div>
-    </div>
+    </>
   );
 }

@@ -57,7 +57,7 @@ export default function ProductForm() {
       detailImage &&
       addProductMutation.mutate(
         { product, image, detailImage },
-        { onSuccess: () => navigate(-1) }
+        { onSuccess: () => navigate('/mypage/products') }
       );
   };
 

@@ -15,6 +15,7 @@ type ProductsProps = {
   filter?: string;
   keyword?: string;
   seller?: boolean;
+  tag?: string;
 };
 
 export default function ProductList({
@@ -22,14 +23,15 @@ export default function ProductList({
   filter,
   keyword,
   seller,
+  tag,
 }: ProductsProps) {
   const {
     isLoading,
     error,
     data: products,
   } = useQuery<ProductType[]>(
-    ['products', seller, keyword, category, filter],
-    () => getProducts(category, filter, keyword, seller),
+    ['products', seller, keyword, category, filter, tag],
+    () => getProducts(category, filter, keyword, seller, tag),
     { staleTime: 1000 * 60 }
   );
 
