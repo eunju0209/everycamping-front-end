@@ -3,6 +3,7 @@ import axios from 'axios';
 import { ProductDetailType } from '../components/Product/ProductInfo';
 import { NewProductType } from '../components/Product/ProductForm';
 import { authAxios } from './authAxios';
+const PROXY = window.location.hostname === 'localhost' ? '/api' : '/proxy';
 
 export async function getProducts(
   category?: string,
@@ -86,7 +87,7 @@ async function getItems(
   filter?: string
 ): Promise<ProductType[]> {
   const res = await axios.get(
-    `/api/products${
+    `${PROXY}/products${
       category ? `?category=${category}` : `?size=4&sort=${filter},desc`
     }`
   );
