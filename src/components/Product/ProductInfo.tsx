@@ -1,9 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import { addCart } from '../../api/cartService';
 import { getProductDetail } from '../../api/productsService';
 import { getCookie } from '../../store/cookie';
+import { toastError } from '../../util/reactToast';
+import AddCartModal from './AddCartModal';
 
 export type ProductDetailType = {
   name: string;
@@ -12,6 +15,7 @@ export type ProductDetailType = {
   tags: string[];
   avgScore: number;
   description: string;
+  stock: number;
 };
 
 type ProductInfoProps = {
@@ -26,6 +30,17 @@ export default function ProductInfo({ productId }: ProductInfoProps) {
     { staleTime: 1000 * 60 * 5 }
   );
   const [quantity, setQuantity] = useState(1);
+  const [isAddCart, setIsAddCart] = useState(false);
+
+  const handleAddCart = () => {
+    if (quantity > product?.stock!) {
+      setIsAddCart(false);
+      toastError(`재고가 부족합니다. 재고량: ${product?.stock}`);
+      return;
+    }
+    setIsAddCart(true);
+    addCart(productId, quantity);
+  };
 
   return (
     <>
@@ -74,38 +89,20 @@ export default function ProductInfo({ productId }: ProductInfoProps) {
                 <label
                   htmlFor='my-modal'
                   className='btn btn-primary'
-                  onClick={() => addCart(productId, quantity)}
+                  onClick={handleAddCart}
                 >
                   장바구니 추가
                 </label>
               </>
             )}
-            <input type='checkbox' id='my-modal' className='modal-toggle' />
-            <div className='modal'>
-              <div className='modal-box'>
-                <h3 className='font-bold text-lg'>
-                  장바구니에 추가되었습니다.
-                </h3>
-                <div className='modal-action'>
-                  <label
-                    htmlFor='my-modal'
-                    className='btn btn-primary'
-                    onClick={() => navigate('/cart')}
-                  >
-                    장바구니 바로가기
-                  </label>
-                  <label htmlFor='my-modal' className='btn'>
-                    확인
-                  </label>
-                </div>
-              </div>
-            </div>
+            {isAddCart && <AddCartModal />}
           </div>
         </div>
         <p className='text-lg text-center font-semibold mt-10'>
           {product?.description}
         </p>
       </div>
+      <ToastContainer />
     </>
   );
 }
