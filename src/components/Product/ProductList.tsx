@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { getProducts } from '../../api/productsService';
+import Loading from './ProductsLoading';
 import ProductCard from './ProductCard';
+import ProductsError from './ProductsError';
 
 export type ProductType = {
   id: string;
@@ -35,8 +37,8 @@ export default function ProductList({
     { staleTime: 1000 * 60 }
   );
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Something is wrong...</p>;
+  if (isLoading) return <Loading />;
+  if (error) return <ProductsError />;
 
   return (
     <div className='max-w-screen-2xl m-auto px-5'>
