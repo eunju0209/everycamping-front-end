@@ -39,7 +39,7 @@ export default function ProductList({
   if (error) return <p>Something is wrong...</p>;
 
   return (
-    <>
+    <div className='max-w-screen-2xl m-auto px-5'>
       {keyword && products && products.length > 0 && (
         <p className='text-lg text-center mb-8'>
           "<span className='font-bold text-primary'>{keyword}</span>" 검색 결과
@@ -51,12 +51,12 @@ export default function ProductList({
           검색결과가 없습니다.
         </p>
       )}
-      <ul className='grid grid-cols-4 gap-6'>
+      <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
         {products &&
           products.map((product) => (
             <ProductCard key={product.id} product={product} seller={seller} />
           ))}
       </ul>
-    </>
+    </div>
   );
 }
