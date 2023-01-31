@@ -86,7 +86,9 @@ async function getItems(
   filter?: string
 ): Promise<ProductType[]> {
   const res = await axios.get(
-    `/api/products${category ? `?category=${category}` : '?size=4'}`
+    `/api/products${
+      category ? `?category=${category}` : `?size=4&sort=${filter},desc`
+    }`
   );
   return res.data.content;
 }
