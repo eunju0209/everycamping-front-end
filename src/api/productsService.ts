@@ -108,8 +108,8 @@ export async function getInfiniteItems(
   const res = await axios.get(
     `${PROXY}/products${
       category
-        ? `?category=${category}&page=${page}&size=4&sort=${filter},DESC`
-        : `?size=8&sort=${filter},DESC`
+        ? `?category=${category}&page=${page}&size=8&sort=${filter},DESC`
+        : `?size=4&sort=${filter},DESC`
     }`
   );
   return res.data.content;
