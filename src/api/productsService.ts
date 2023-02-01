@@ -99,3 +99,18 @@ async function getSellerItems() {
   const res = await authAxios.get(`${PROXY}/manage/products`);
   return res.data.content;
 }
+
+export async function getInfiniteItems(
+  category?: string,
+  filter?: string,
+  page?: number
+): Promise<ProductType[]> {
+  const res = await axios.get(
+    `${PROXY}/products${
+      category
+        ? `?category=${category}&page=${page}&size=4&sort=${filter},DESC`
+        : `?size=4&sort=${filter},DESC`
+    }`
+  );
+  return res.data.content;
+}

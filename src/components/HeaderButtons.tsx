@@ -43,7 +43,10 @@ export default function HeaderButtons() {
     <div className='flex items-center'>
       <div className='group dropdown dropdown-end relative'>
         {user && (
-          <label tabIndex={0} className='btn btn-primary rounded-full m-1 mr-3'>
+          <label
+            tabIndex={0}
+            className='btn btn-primary btn-circle m-1 mr-3 btn-sm md:btn-md'
+          >
             <FaUser />
           </label>
         )}
@@ -59,7 +62,7 @@ export default function HeaderButtons() {
       {getCookie('LoginType') === 'user' && (
         <button
           onClick={() => navigate('/cart')}
-          className='text-3xl mr-4 text-primary'
+          className='text-2xl md:text-3xl mr-4 text-primary'
         >
           <FaShoppingCart />
         </button>
