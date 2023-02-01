@@ -48,7 +48,7 @@ const CartItemCard = ({ id, img, title, count, price }: CartItemCardProps) => {
 
   return (
     <div className='flex rounded bg-white mt-3 p-2'>
-      <div className='flex align-center h-40 p-2'>
+      <div className='flex align-center h-40 w-40 p-2'>
         <img src={img} className='w-full rounded object-contain' />
       </div>
       <div className='flex justify-between w-full p-6'>
