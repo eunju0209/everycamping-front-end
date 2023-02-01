@@ -1,3 +1,4 @@
+import { PROXY } from './productsService';
 import axios from 'axios';
 import { NewReviewType } from '../components/Review/ReviewForm';
 import { ReviewType } from '../components/Review/ReviewList';
@@ -8,7 +9,7 @@ export async function getReviews(
   customerId?: number
 ): Promise<ReviewType[]> {
   const res = await axios.get(
-    `/api/reviews/${
+    `${PROXY}/reviews/${
       productId ? `products/${productId}` : `customers/${customerId}`
     }`
   );
@@ -16,7 +17,7 @@ export async function getReviews(
 }
 
 export async function getReviewDetail(reviewId: string): Promise<ReviewType> {
-  const res = await axios.get(`/api/reviews/${reviewId}`);
+  const res = await axios.get(`${PROXY}/reviews/${reviewId}`);
   return res.data;
 }
 
@@ -31,7 +32,7 @@ export async function addNewReview(
   });
   formData.append('form', blob);
   formData.append('image', image);
-  return authAxios.post(`/api/reviews/${productId}`, formData, {
+  return authAxios.post(`${PROXY}/reviews/${productId}`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -50,7 +51,7 @@ export async function updateReview(
   formData.append('form', blob);
   image && formData.append('image', image);
 
-  return authAxios.put(`/api/reviews/${reviewId}`, formData, {
+  return authAxios.put(`${PROXY}/reviews/${reviewId}`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -58,5 +59,5 @@ export async function updateReview(
 }
 
 export async function deleteReview(reviewId: string) {
-  return authAxios.delete(`/api/reviews/${reviewId}`);
+  return authAxios.delete(`${PROXY}/reviews/${reviewId}`);
 }

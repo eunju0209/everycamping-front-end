@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { getProducts } from '../../api/productsService';
+import Loading from './ProductsLoading';
 import ProductCard from './ProductCard';
+import ProductsError from './ProductsError';
 
 export type ProductType = {
   id: string;
@@ -15,6 +17,7 @@ type ProductsProps = {
   filter?: string;
   keyword?: string;
   seller?: boolean;
+  tag?: string;
 };
 
 export default function ProductList({
@@ -22,22 +25,23 @@ export default function ProductList({
   filter,
   keyword,
   seller,
+  tag,
 }: ProductsProps) {
   const {
     isLoading,
     error,
     data: products,
   } = useQuery<ProductType[]>(
-    ['products', seller, keyword, category, filter],
-    () => getProducts(category, filter, keyword, seller),
+    ['products', seller, keyword, category, filter, tag],
+    () => getProducts(category, filter, keyword, seller, tag),
     { staleTime: 1000 * 60 }
   );
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Something is wrong...</p>;
+  if (isLoading) return <Loading />;
+  if (error) return <ProductsError />;
 
   return (
-    <>
+    <div className='max-w-screen-2xl m-auto px-5'>
       {keyword && products && products.length > 0 && (
         <p className='text-lg text-center mb-8'>
           "<span className='font-bold text-primary'>{keyword}</span>" 검색 결과
@@ -49,12 +53,12 @@ export default function ProductList({
           검색결과가 없습니다.
         </p>
       )}
-      <ul className='grid grid-cols-4 gap-6'>
+      <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
         {products &&
           products.map((product) => (
             <ProductCard key={product.id} product={product} seller={seller} />
           ))}
       </ul>
-    </>
+    </div>
   );
 }

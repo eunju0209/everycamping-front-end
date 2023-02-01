@@ -1,12 +1,13 @@
 import { Stomp } from '@stomp/stompjs';
 import axios from 'axios';
-import SockJs from 'sockjs-client'
+import SockJs from 'sockjs-client';
 import { messageDataType } from '../components/Chatting/Chatting';
 import { getCookie } from '../store/cookie';
 import { authAxios } from './authAxios';
+import { PROXY } from './productsService';
 
-const stomp = Stomp.over(() => new SockJs('/api/websocket'));
 
+const stomp = Stomp.over(() => new SockJs(`${PROXY}/websocket`));
 
 export const getRoomId = async (
   requesterEmail: string,
@@ -14,7 +15,7 @@ export const getRoomId = async (
   requesteeEmail : string,
   requesteeUserType : 'CUSTOMER' | 'SELLER' | 'ADMIN'
 ) => {
-  const result = await axios.post('/api/chat-rooms', {
+  const result = await axios.post('${PROXY}/chat-rooms', {
     requesterEmail,
     requesterUserType,
     requesteeEmail,
@@ -23,8 +24,10 @@ export const getRoomId = async (
   return result.data
 }
 
-export const stompConnect = (roomId: string, setMessages: React.Dispatch<React.SetStateAction<messageDataType[]>>) => {
-
+export const stompConnect = (
+  roomId: string,
+  setMessages: React.Dispatch<React.SetStateAction<messageDataType[]>>
+) => {
   try {
     stomp.debug = () => {}
     stomp.connect(
@@ -37,11 +40,13 @@ export const stompConnect = (roomId: string, setMessages: React.Dispatch<React.S
     (error: any) => {
       console.error(error)
     }
+
     );
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 };
+
 
 const stompSubscribe = (roomId: string, setMessages: React.Dispatch<React.SetStateAction<messageDataType[]>>) => {
   stomp.debug = () => {}
@@ -56,9 +61,10 @@ const stompSubscribe = (roomId: string, setMessages: React.Dispatch<React.SetSta
 
 export const sendMessage = (roomId: string, message: string, userType:string) => {
   stomp.debug = () => {}
+
   const data = {
     content: message,
-    userType: userType
+    userType: userType,
   };
   stomp.send(`/chat-rooms/${roomId}`,
   {
@@ -87,3 +93,4 @@ export const deleteChatList = async (chatRoomId:number) => {
   const result = await authAxios.delete(`/api/chat-rooms/${chatRoomId}`);
   return result.data
 }
+

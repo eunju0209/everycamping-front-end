@@ -16,12 +16,12 @@ export default function ProductCard({ product, seller }: ProductCardProps) {
     <li className='card bg-base-100 shadow-xl'>
       <figure
         onClick={() => navigate(`/products/detail/${id}`, { state: { id } })}
-        className='hover:cursor-pointer hover:brightness-110 transition-all'
+        className='hover:cursor-pointer hover:brightness-110 transition-all bg-white'
       >
-        <img className='object-cover w-full h-56' src={imageUri} alt={name} />
+        <img className='object-contain w-full h-56' src={imageUri} alt={name} />
       </figure>
       <div className='card-body'>
-        <h2 className='card-title'>{name}</h2>
+        <h2 className='text-xl font-semibold truncate'>{name}</h2>
         <p>{price.toLocaleString()}원</p>
         {seller && (
           <div>

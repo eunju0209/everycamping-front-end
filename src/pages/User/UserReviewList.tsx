@@ -10,5 +10,5 @@ export default function UserReviewList() {
     userInfo.customerId ? setCustomerId(userInfo.customerId) : setCustomerId(0);
   }, [userInfo]);
 
-  return <>{customerId && <ReviewList customerId={customerId} />}</>;
+  return <>{customerId ? <ReviewList customerId={customerId} /> : ''}</>;
 }
