@@ -5,6 +5,7 @@ import { toastSuccess, toastWarn } from '../../util/reactToast';
 import { OrderItemsType } from './UserOrderDetail';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ChattingToSeller from '../Chatting/ChattingToSeller';
 
 type UserOrderDetailCardProps = {
   itemsDetail: OrderItemsType;
@@ -27,6 +28,7 @@ const UserOrderDetailCard = ({
   },
 }: UserOrderDetailCardProps) => {
   const navigate = useNavigate();
+  const [popDetail, setPopDetail] = useState(false);
   const [itemStatus, setItemStatus] = useState('');
   useEffect(() => {
     switchStatus();
@@ -87,6 +89,10 @@ const UserOrderDetailCard = ({
     });
   };
 
+  const chatToSeller = () => {
+    setPopDetail(true);
+  };
+
   return (
     <div>
       <div
@@ -110,7 +116,9 @@ const UserOrderDetailCard = ({
             <li>진행상황 : {itemStatus}</li>
           </ul>
           <ul className='flex flex-col justify-end text-sm'>
-            <li>판매자 : {sellerNickName}</li>
+            <li className='cursor-pointer' onClick={chatToSeller}>
+              판매자 : {sellerNickName}
+            </li>
             <li>판매자 연락처 : {sellerPhone}</li>
           </ul>
         </div>
@@ -149,6 +157,11 @@ const UserOrderDetailCard = ({
         </div>
       </div>
       <ToastContainer />
+      <ChattingToSeller
+        popDetail={popDetail}
+        setPopDetail={setPopDetail}
+        sellerEmail={sellerEmail}
+      />
     </div>
   );
 };
