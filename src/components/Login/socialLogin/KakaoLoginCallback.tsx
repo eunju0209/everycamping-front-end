@@ -16,7 +16,11 @@ const KaKaoLoginCallback = () => {
       ).searchParams.get('code');
 
       await axios
-        .post(`api/customers/signin/social/kakao`, AUTHORIZE_CODE)
+        .post(`api/customers/signin/social/kakao`, AUTHORIZE_CODE, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
         .then(async (result) => {
           setCookie('accessToken', result.data.accessToken, {
             path: '/',
