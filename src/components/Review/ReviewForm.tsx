@@ -1,6 +1,5 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { addNewReview } from '../../api/reviewService';
 import useReviews from '../../hooks/useReviews';
 
 export type NewReviewType = {
