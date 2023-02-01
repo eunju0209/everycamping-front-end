@@ -1,3 +1,2 @@
-/api/_ http://ec2-43-200-2-48.ap-northeast-2.compute.amazonaws.com/:splat 200
-/_ /index.html 200
-/\* /index.html 404
+/api/* http://ec2-43-200-2-48.ap-northeast-2.compute.amazonaws.com/:splat 200
+/* /index.html 200
