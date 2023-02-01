@@ -10,7 +10,7 @@ const PasswordEditComp = () => {
   const [newPasswordEdit, setNewPasswordEdit] = useState('');
   const [newPasswordEditConfirm, setNewPasswordEditConfirm] = useState('');
   const [oldPassword, setOldPassword] = useState('');
-  const { userInfo, setUserInfo } = useUserInfo();
+  const { userInfo } = useUserInfo();
   const navgate = useNavigate();
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {

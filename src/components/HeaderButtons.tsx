@@ -6,7 +6,7 @@ import {
   getSellerLogOut,
   getUserLogOut,
 } from '../api/userService';
-import { getCookie, removeCookie } from '../store/cookie';
+import { getCookie } from '../store/cookie';
 import { useUserInfo } from '../store/UserInfoProvider';
 import AdminLink from './MypageLink/AdminLink';
 import SellerLink from './MypageLink/SellerLink';

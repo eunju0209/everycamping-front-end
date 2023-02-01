@@ -18,11 +18,9 @@ export const getUserOrderLIst = async (sort?: { type: string; sort: string }, se
   if (searchDate) {
     const result = await authAxios.get(`/api/orders/customer?sort=${sort?.type},${sort?.sort}&startDate=${
     searchDate?.startDate}&endDate=${searchDate?.endDate}`)
-    console.log(result.data.content)
     return result.data.content
   } else {
     const result = await authAxios.get(`/api/orders/customer?sort=${sort?.type},${sort?.sort}`)
-    console.log(result.data.content)
     return result.data.content
   }
 }

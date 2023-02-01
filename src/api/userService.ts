@@ -30,21 +30,9 @@ export const postUserLogin = async (loginInfo: loginInfoType) => {
   setCookie('refreshToken', result.data.refreshToken, {
     path:'/'
   });
-  setCookie('LoginType', 'user');
-  console.log('login 성공')
-}
-
-export const postUserSocialLogin = async (email: string, nickName: string) => {
-    const result = await axios.post(`/api/customers/signin/social/kakao`, { email, nickName })
-
-  setCookie('accessToken', result.data.accessToken, {
+  setCookie('LoginType', 'user',{
     path:'/'
   });
-  setCookie('refreshToken', result.data.refreshToken, {
-    path:'/'
-  });
-  setCookie('LoginType', 'user');
-  console.log('social login 성공')
 }
 
 export const getUserNewToken = async () => {
@@ -59,7 +47,10 @@ export const getUserNewToken = async () => {
     setCookie('refreshToken', result.data.refreshToken, {
       path:'/'
     });
-    setCookie('LoginType', 'user');
+    setCookie('LoginType', 'user',{
+      path:'/'
+    });
+    console.log('토큰 재발급 성공')
   } catch (error) {
     console.log('토큰 재발급 실패')
     location.assign('http://localhost:5173/login')
@@ -73,13 +64,12 @@ export const getUserLogOut = async () => {
   removeCookie('LoginType');
   removeCookie('accessToken');
   removeCookie('refreshToken');
+  console.log('로그 아웃 성공')
 }
 export const getUserInfo = async () => {
   try {
     const result = await authAxios.get(`/api/customers/info`)
-    console.log(result)
     return result.data
-
   } catch (error) {
     console.error(error)
   }
@@ -113,9 +103,9 @@ export const postSellerLogin = async (loginInfo : loginInfoType) => {
   setCookie('refreshToken', result.data.refreshToken,{
       path:'/'
     });
-  setCookie('LoginType', 'seller');
-
-    console.log('Seller login 성공')
+  setCookie('LoginType', 'seller',{
+      path:'/'
+    });
 }
 
 export const getSellerNewToken = async () => {
@@ -131,7 +121,9 @@ export const getSellerNewToken = async () => {
     setCookie('refreshToken', result.data.refreshToken,{
       path:'/'
     });
-    setCookie('LoginType', 'seller');
+    setCookie('LoginType', 'seller',{
+      path:'/'
+    });
 
   } catch (error) {
     console.log('토큰 재발급 실패')
@@ -181,7 +173,9 @@ export const postAdminLogin = async (loginInfo: loginInfoType) => {
   setCookie('refreshToken', result.data.refreshToken, {
     path:'/'
   });
-  setCookie('LoginType', 'admin');
+  setCookie('LoginType', 'admin',{
+      path:'/'
+    });
 
   console.log('Admin login 성공')
 }
@@ -197,7 +191,9 @@ export const getAdminNewToken = async () => {
     setCookie('refreshToken', result.data.refreshToken, {
       path:'/'
     });
-    setCookie('LoginType', 'admin');
+    setCookie('LoginType', 'admin',{
+      path:'/'
+    });
   } catch (error) {
     console.log('토큰 재발급 실패')
     location.assign('http://localhost:5173/login')

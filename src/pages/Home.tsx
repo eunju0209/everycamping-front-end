@@ -12,7 +12,7 @@ export default function Home() {
         <ProductList filter='recency' />
         <h1 className='text-3xl font-semibold mb-4 mt-14 text-center'>BEST</h1>
         <ProductList filter='popul' />
-        {getCookie('LoginType') ? <Chatting /> : ''}
+        {getCookie('LoginType') === 'user' ? <Chatting /> : ''}
       </div>
     </>
   );

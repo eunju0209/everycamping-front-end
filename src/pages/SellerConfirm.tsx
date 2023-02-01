@@ -1,4 +1,5 @@
 import SellerConfirmCard from '../components/Admin/SellerConfirmCard';
+import EmptyPage from '../components/EmptyPage';
 import { queryGetAdminSellerList } from '../store/ReactQuery';
 
 export type AdminSellerCardType = {
@@ -7,13 +8,6 @@ export type AdminSellerCardType = {
   nickName: string;
   phone: string;
   registeredAt: string;
-};
-
-type SellerConfirmType = {
-  id: string;
-  name: string;
-  phone: string;
-  sellerConfirm: boolean;
 };
 
 const SellerConfirm = () => {
@@ -51,6 +45,7 @@ const SellerConfirm = () => {
             {getAdminSellerListFunc()}
           </table>
         </div>
+        {result ? '' : <EmptyPage text={'신청 판매자가 없습니다.'} />}
       </div>
     </div>
   );

@@ -69,13 +69,11 @@ const UserInfo = () => {
     if (!isEdit) return;
     try {
       if (userInfo.type === 'user') {
-        console.log(newUserInfo);
         await putUserInfo(newUserInfo).then(() => {
           toastSuccess('수정 성공');
           setUserInfo(newUserInfo);
         });
       } else if (userInfo.type === 'seller') {
-        console.log('put :', newUserInfo);
         await putSellerInfo(newUserInfo).then(() => {
           toastSuccess('수정 성공');
           setUserInfo(newUserInfo);
