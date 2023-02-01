@@ -1,6 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import useProducts from '../../hooks/useProducts';
+import { toastError } from '../../util/reactToast';
 
 export type NewProductType = {
   category: string;
@@ -57,7 +59,14 @@ export default function ProductForm() {
       detailImage &&
       addProductMutation.mutate(
         { product, image, detailImage },
-        { onSuccess: () => navigate(-1) }
+        {
+          onSuccess: () => navigate('/mypage/products'),
+          onError: (e: any) => {
+            if (e.response.status === 401) {
+              return toastError('판매자 승인이 완료되지 않았습니다.');
+            }
+          },
+        }
       );
   };
 
@@ -157,6 +166,7 @@ export default function ProductForm() {
       <button type='submit' className='btn btn-wide btn-primary mt-3'>
         등록하기
       </button>
+      <ToastContainer />
     </form>
   );
 }
