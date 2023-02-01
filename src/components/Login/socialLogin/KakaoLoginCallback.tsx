@@ -18,7 +18,9 @@ const KaKaoLoginCallback = () => {
       await axios
         .post(
           `api/customers/signin/social/kakao`,
-          JSON.stringify(AUTHORIZE_CODE),
+          {
+            code: JSON.stringify(AUTHORIZE_CODE),
+          },
           {
             headers: {
               'Content-Type': 'application/json',
