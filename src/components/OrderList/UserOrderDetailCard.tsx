@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Dispatch, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { patchOrderCancel, patchOrderConfirm } from '../../api/orderService';
 import { toastSuccess, toastWarn } from '../../util/reactToast';
@@ -9,6 +9,9 @@ import ChattingToSeller from '../Chatting/ChattingToSeller';
 
 type UserOrderDetailCardProps = {
   itemsDetail: OrderItemsType;
+  popChat: boolean;
+  setPopChat: Dispatch<React.SetStateAction<boolean>>;
+  setChatSellerEmail: Dispatch<React.SetStateAction<string>>;
 };
 
 const UserOrderDetailCard = ({
@@ -26,9 +29,12 @@ const UserOrderDetailCard = ({
     sellerEmail,
     sellerPhone,
   },
+  popChat,
+  setPopChat,
+  setChatSellerEmail,
 }: UserOrderDetailCardProps) => {
   const navigate = useNavigate();
-  const [popDetail, setPopDetail] = useState(false);
+  // const [popChat, setPopChat] = useState(false);
   const [itemStatus, setItemStatus] = useState('');
   useEffect(() => {
     switchStatus();
@@ -90,7 +96,8 @@ const UserOrderDetailCard = ({
   };
 
   const chatToSeller = () => {
-    setPopDetail(true);
+    setPopChat(true);
+    setChatSellerEmail(sellerEmail);
   };
 
   return (
@@ -157,11 +164,6 @@ const UserOrderDetailCard = ({
         </div>
       </div>
       <ToastContainer />
-      <ChattingToSeller
-        popDetail={popDetail}
-        setPopDetail={setPopDetail}
-        sellerEmail={sellerEmail}
-      />
     </div>
   );
 };
