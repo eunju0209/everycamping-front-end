@@ -1,6 +1,6 @@
 export default function ProductsError() {
   return (
-    <div className='alert alert-error shadow-lg text-white'>
+    <div className='alert alert-error shadow-lg text-white w-80 mx-auto'>
       <div>
         <svg
           xmlns='http://www.w3.org/2000/svg'

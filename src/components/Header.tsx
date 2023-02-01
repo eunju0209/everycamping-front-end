@@ -22,12 +22,12 @@ export default function Header() {
 
   return (
     <header className='w-full bg-white'>
-      <div className='flex items-center justify-between py-1 md:py-4 px-2 md:px-5 md:border-b border-base-100'>
+      <div className='flex items-center justify-between py-1 md:py-4 px-1 md:px-5 md:border-b border-base-100'>
         <Link
           to='/'
-          className='flex items-center text-2xl text-primary font-semibold'
+          className='flex items-center text-xl md:text-2xl text-primary font-semibold'
         >
-          <TbTent className='text-3xl mr-0.5' />
+          <TbTent className='text-2xl md:text-3xl mr-0.5' />
           <h1>EveryCamping</h1>
         </Link>
         <form
