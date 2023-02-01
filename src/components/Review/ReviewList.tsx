@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { getReviews } from '../../api/reviewService';
 import { getCookie } from '../../store/cookie';
+import EmptyPage from '../EmptyPage';
 
 import ReviewCard from './ReviewCard';
 
@@ -20,7 +21,6 @@ type ReviewListProps = {
 };
 
 export default function ReviewList({ productId, customerId }: ReviewListProps) {
-  const navigate = useNavigate();
   const { data: reviews } = useQuery(
     ['reviews', productId, customerId],
     () => getReviews(productId, customerId),
@@ -33,14 +33,17 @@ export default function ReviewList({ productId, customerId }: ReviewListProps) {
         <h2 className='text-3xl font-semibold text-center'>리뷰</h2>
       </div>
       <ul className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3'>
-        {reviews &&
+        {reviews ? (
           reviews.map((review) => (
             <ReviewCard
               key={review.id}
               review={review}
               customerId={customerId}
             />
-          ))}
+          ))
+        ) : (
+          <EmptyPage text='리뷰가 없습니다.' />
+        )}
       </ul>
     </div>
   );
