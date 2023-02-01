@@ -38,6 +38,8 @@ const KaKaoLoginCallback = () => {
             path: '/',
           });
 
+          navigate('/');
+
           const data = await getUserInfo();
           setUserInfo({
             email: data.email,
@@ -48,7 +50,6 @@ const KaKaoLoginCallback = () => {
           });
         });
     })();
-    navigate('/');
   }, []);
   return <div>...loading</div>;
 };
