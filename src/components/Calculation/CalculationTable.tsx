@@ -9,14 +9,12 @@ export type CalculationType = {
 };
 
 export default function CalculationTable() {
-  // const { data: calculations } = useQuery(['calculations'], () =>
-  //   getCalculations()
-  // );
-  const calculations = [
-    { id: 1, amount: 100000, targetDate: '2023-01-27' },
-    { id: 2, amount: 200000, targetDate: '2023-01-28' },
-    { id: 3, amount: 300000, targetDate: '2023-01-29' },
-  ];
+  const { data: calculations } = useQuery(
+    ['calculations'],
+    () => getCalculations(),
+    { staleTime: 1000 * 60 * 5 }
+  );
+
   return (
     <div className='overflow-x-auto'>
       <table className='table w-full text-center'>

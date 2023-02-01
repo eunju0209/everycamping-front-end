@@ -22,7 +22,7 @@ export default function Header() {
 
   return (
     <header className='w-full bg-white'>
-      <div className='flex items-center justify-between py-4 px-5 border-b border-base-100'>
+      <div className='flex items-center justify-between py-1 md:py-4 px-2 md:px-5 md:border-b border-base-100'>
         <Link
           to='/'
           className='flex items-center text-2xl text-primary font-semibold'
@@ -30,7 +30,10 @@ export default function Header() {
           <TbTent className='text-3xl mr-0.5' />
           <h1>EveryCamping</h1>
         </Link>
-        <form className='flex items-center w-2/6' onSubmit={handleSubmit}>
+        <form
+          className='hidden md:flex items-center w-2/6'
+          onSubmit={handleSubmit}
+        >
           <input
             type='text'
             placeholder='search'
@@ -47,6 +50,24 @@ export default function Header() {
         </form>
         <HeaderButtons />
       </div>
+      <form
+        className='flex md:hidden items-center w-full'
+        onSubmit={handleSubmit}
+      >
+        <input
+          type='text'
+          placeholder='search'
+          className='w-full h-10 px-2 outline-none border'
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+        />
+        <button
+          type='submit'
+          className='flex items-center justify-center text-xl w-12 h-10 bg-base-200 text-primary'
+        >
+          <BiSearch />
+        </button>
+      </form>
       <Navigation />
     </header>
   );

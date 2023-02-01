@@ -17,7 +17,7 @@ export default function ReviewCard({ review, customerId }: ReviewCardProps) {
   return (
     <li className='border-2 border-base-200'>
       <div className='flex justify-center'>
-        <img className='object-cover h-40' src={imageUri} alt='review' />
+        <img className='object-contain h-40' src={imageUri} alt='review' />
       </div>
       <div className='p-2'>
         <Rating score={score} id={id} />

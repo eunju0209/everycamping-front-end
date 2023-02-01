@@ -1,8 +1,9 @@
 import { authAxios } from './authAxios';
+import { PROXY } from './productsService';
 
 export const getCartItems = async () => {
-    const result = await authAxios.get(`/api/carts`)
-    return result.data.content;
+  const result = await authAxios.get(`${PROXY}/carts`);
+  return result.data.content;
 };
 
 export const patchCartItems = async ({
@@ -13,19 +14,19 @@ export const patchCartItems = async ({
   updateQuantity: number;
 }) => {
   try {
-    await authAxios.patch(`/api/carts/${id}`, { updateQuantity });
+    await authAxios.patch(`${PROXY}/carts/${id}`, { updateQuantity });
   } catch (error) {
     console.error(error);
   }
 };
 export const deleteCartItems = async (id: number) => {
   try {
-    await authAxios.delete(`/api/carts/${id}`);
+    await authAxios.delete(`${PROXY}/carts/${id}`);
   } catch (error) {
     console.error(error);
   }
 };
 
 export const addCart = async (productId: string, quantity: number) => {
-  return authAxios.post(`/api/carts/add/${productId}`, { quantity });
+  return authAxios.post(`${PROXY}/carts/add/${productId}`, { quantity });
 };

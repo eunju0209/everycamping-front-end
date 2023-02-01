@@ -41,7 +41,7 @@ export default function ReviewList({ productId, customerId }: ReviewListProps) {
           </button>
         )}
       </div>
-      <ul className='grid grid-cols-6 gap-3'>
+      <ul className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3'>
         {reviews &&
           reviews.map((review) => (
             <ReviewCard
