@@ -27,7 +27,7 @@ export default function ReviewList({ productId, customerId }: ReviewListProps) {
   );
 
   return (
-    <div>
+    <div className='max-w-screen-2xl m-auto px-5'>
       <div className='relative mb-5'>
         <h2 className='text-3xl font-semibold text-center'>리뷰</h2>
         {customerId ? (
