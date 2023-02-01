@@ -39,7 +39,6 @@ export default function UserOrderList() {
     const {
       target: { value },
     } = e;
-    console.log(value);
 
     value === 'DESC'
       ? setSorting((prev) => ({

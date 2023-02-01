@@ -23,13 +23,11 @@ export const getUserOrderLIst = async (
     const result = await authAxios.get(
       `${PROXY}/orders/customer?sort=${sort?.type},${sort?.sort}&startDate=${searchDate?.startDate}&endDate=${searchDate?.endDate}`
     );
-    console.log(result.data.content);
     return result.data.content;
   } else {
     const result = await authAxios.get(
       `${PROXY}/orders/customer?sort=${sort?.type},${sort?.sort}`
     );
-    console.log(result.data.content);
     return result.data.content;
   }
 };

@@ -18,7 +18,6 @@ import Products from './pages/Products';
 import Search from './pages/Search';
 import SellerConfirm from './pages/SellerConfirm';
 import UserInfo from './pages/User/UserInfo';
-import KaKaoLoginCallback from './components/Login/socialLogin/KakaoLoginCallback';
 import SellerOrderList from './pages/SellerOrderList';
 import PasswordEdit from './pages/User/PasswordEdit';
 import SellerProducts from './pages/SellerProducts';
@@ -28,7 +27,9 @@ import UpdateReview from './pages/UpdateReview';
 import SellerCalculation from './pages/SellerCalculation';
 import CalculationDetail from './pages/CalculationDetail';
 import ChatList from './pages/ChatList';
+import KaKaoLoginCallback from './components/Login/socialLogin/KakaoLoginCallback';
 import SearchTag from './pages/SearchTag';
+
 
 const router = createBrowserRouter([
   {
@@ -54,7 +55,6 @@ const router = createBrowserRouter([
       { path: 'mypage/user/reviews', element: <UserReviewList /> },
       { path: 'mypage/seller/orders', element: <SellerOrderList /> },
       { path: 'mypage/products', element: <SellerProducts /> },
-      { path: 'kakaoLoginCallback', element: <KaKaoLoginCallback /> },
       { path: 'sellerConfirm', element: <SellerConfirm /> },
       { path: 'userInfo', element: <UserInfo /> },
       { path: 'PasswordEdit', element: <PasswordEdit /> },
@@ -62,6 +62,7 @@ const router = createBrowserRouter([
       { path: 'mypage/seller/calculation', element: <SellerCalculation /> },
       { path: 'mypage/seller/calculation/:id', element: <CalculationDetail /> },
       { path: 'mypage/chatList', element: <ChatList /> },
+      { path: 'kakaoLoginCallback', element: <KaKaoLoginCallback /> },
     ],
   },
 ]);

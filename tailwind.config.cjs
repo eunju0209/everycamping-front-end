@@ -19,7 +19,8 @@ module.exports = {
       maxWidth: {
         '310px': '310px',
         'cartDiv': '800px',
-        'orderList' : '600px',
+        'orderList': '600px',
+        'chatList' : '500px'
       },
       minWidth: {
         '74px': '74px',
