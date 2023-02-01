@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import ChatCard from '../components/Chatting/ChatCard';
 import EmptyPage from '../components/EmptyPage';
 import { getCookie, removeCookie, setCookie } from '../store/cookie';
@@ -17,26 +16,11 @@ const ChatList = () => {
   const { userInfo } = useUserInfo();
 
   const { isLoading, data } = queryGetChatList(
-    getCookie('LoginType') === 'admin'
-      ? 'admin'
-      : userInfo.email
-      ? userInfo.email
-      : getCookie('Email'),
+    getCookie('LoginType') === 'admin' ? 'admin' : userInfo.email,
     getCookie('LoginType') === 'admin'
       ? 'ADMIN'
       : userTypeConvert(getCookie('LoginType'))
   );
-
-  useEffect(() => {
-    if (getCookie('Email')) return;
-    setCookie('Email', userInfo.email, {
-      path: '/',
-    });
-
-    return () => {
-      removeCookie('Email');
-    };
-  }, []);
 
   const getChatListFunc = () => {
     if (isLoading) return;

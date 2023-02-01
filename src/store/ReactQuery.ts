@@ -20,6 +20,6 @@ export const queryGetAdminSellerList = () => {
 }
 
 export const queryGetChatList = (userEmail : string, userType : 'CUSTOMER' | 'SELLER' | 'ADMIN') => {
-  const result = useQuery(['@ChatList'], () => getChatList(userEmail, userType))
+  const result = useQuery(['@ChatList',userEmail,userType], () => getChatList(userEmail, userType))
   return result
 }
