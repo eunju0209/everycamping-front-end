@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { BsChatRight } from 'react-icons/bs';
 import {
+  getChatMessageList,
   getRoomId,
   sendMessage,
   stompConnect,
   stompDisConnect,
 } from '../../api/chat';
 import { getCookie } from '../../store/cookie';
+import { useUserInfo } from '../../store/UserInfoProvider';
 import { userTypeConvert } from '../../util/userTypeConvert';
 
 export type messageDataType = {
@@ -20,6 +22,7 @@ const Chatting = () => {
   const [roomId, setRoomId] = useState<string>('');
   const messageBoxRef = useRef<HTMLDivElement>(null);
   const chatRef = useRef<HTMLDivElement>(null);
+  const { userInfo } = useUserInfo();
 
   const popChat = async () => {
     try {
@@ -30,10 +33,15 @@ const Chatting = () => {
         ) {
           chatRef.current.style.display = 'flex';
 
-          await getRoomId().then((roomId) => {
-            stompConnect(roomId, setMassage);
-            setRoomId(roomId);
-          });
+          await getRoomId(userInfo.email, 'CUSTOMER', 'admin', 'ADMIN').then(
+            (res) => {
+              stompConnect(res.chatRoomId, setMassage);
+              setRoomId(res.chatRoomId);
+              getChatMessageList(res.chatRoomId).then((res) => {
+                setMassage(res);
+              });
+            }
+          );
         } else if (chatRef.current.style.display === 'flex') {
           chatRef.current.style.display = 'none';
 

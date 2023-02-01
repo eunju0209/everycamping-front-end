@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import {
-  getRoomId,
+  getChatMessageList,
   sendMessage,
   stompConnect,
   stompDisConnect,
@@ -11,6 +11,7 @@ import { userTypeConvert } from '../../util/userTypeConvert';
 
 type ChatCardChattingProps = {
   popDetail: boolean;
+  chatRoomId: number;
   setPopDetail: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
@@ -21,6 +22,7 @@ export type messageDataType = {
 
 const ChatCardChatting = ({
   popDetail,
+  chatRoomId,
   setPopDetail,
 }: ChatCardChattingProps) => {
   const messageBoxRef = useRef<HTMLDivElement>(null);
@@ -50,9 +52,10 @@ const ChatCardChatting = ({
 
   useEffect(() => {
     if (popDetail) {
-      getRoomId().then((roomId) => {
-        stompConnect(roomId, setMassage);
-        setRoomId(roomId);
+      stompConnect(chatRoomId.toString(), setMassage);
+      setRoomId(chatRoomId.toString());
+      getChatMessageList(chatRoomId).then((res) => {
+        setMassage(res);
       });
     }
   }, [popDetail]);

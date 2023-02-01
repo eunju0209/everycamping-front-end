@@ -1,25 +1,71 @@
+import { useEffect } from 'react';
 import ChatCard from '../components/Chatting/ChatCard';
+import EmptyPage from '../components/EmptyPage';
+import { getCookie, removeCookie, setCookie } from '../store/cookie';
+import { queryGetChatList } from '../store/ReactQuery';
+import { useUserInfo } from '../store/UserInfoProvider';
+import { userTypeConvert } from '../util/userTypeConvert';
+
+type ChatListItemType = {
+  chatRoomId: number;
+  requesterEmail: string;
+  requesteeEmail: string;
+  createdAt: string;
+};
 
 const ChatList = () => {
-  const chatList = [
-    {
-      id: 1,
-      title: '채팅 리스트1',
-    },
-    {
-      id: 2,
-      title: '채팅 리스트2',
-    },
-  ];
+  const { userInfo } = useUserInfo();
+
+  const { isLoading, data } = queryGetChatList(
+    getCookie('LoginType') === 'admin'
+      ? 'admin'
+      : userInfo.email
+      ? userInfo.email
+      : getCookie('Email'),
+    getCookie('LoginType') === 'admin'
+      ? 'ADMIN'
+      : userTypeConvert(getCookie('LoginType'))
+  );
+
+  useEffect(() => {
+    if (getCookie('Email')) return;
+    setCookie('Email', userInfo.email, {
+      path: '/',
+    });
+
+    return () => {
+      removeCookie('Email');
+    };
+  }, []);
+
+  const getChatListFunc = () => {
+    if (isLoading) return;
+    if (data) {
+      return (
+        <div className='mt-7'>
+          {data.length !== 0 ? (
+            data.map((item: ChatListItemType) => (
+              <ChatCard
+                key={item.chatRoomId}
+                chatRoomId={item.chatRoomId}
+                requesterEmail={item.requesterEmail}
+                requesteeEmail={item.requesteeEmail}
+                createdAt={item.createdAt}
+              />
+            ))
+          ) : (
+            <EmptyPage text='채팅방이 없습니다.' />
+          )}
+        </div>
+      );
+    }
+  };
+
   return (
     <div>
-      <div className='flex flex-col justify-center mx-auto max-w-cartDiv'>
+      <div className='flex flex-col justify-center mx-auto max-w-chatList'>
         <h1 className='flex justify-center text-4xl'>1:1 문의 리스트</h1>
-        <div className='mt-7'>
-          {chatList.map((list) => (
-            <ChatCard key={list.id} title={list.title} />
-          ))}
-        </div>
+        {getChatListFunc()}
       </div>
     </div>
   );
