@@ -1,7 +1,9 @@
 const KakaoLogin = () => {
-  const REDIRECT_URI = 'http://localhost:5173/kakaoLoginCallback';
+  const REDIRECT_URI = `${
+    new URL(document.location.toString()).origin
+  }/kakaoLoginCallback`;
 
-  const onClick = async () => {
+  const onClick = () => {
     window.Kakao.Auth.authorize({
       redirectUri: REDIRECT_URI,
       prompts: 'login',
