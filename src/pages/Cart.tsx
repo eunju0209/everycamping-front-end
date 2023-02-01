@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom';
+import { getUserNewToken } from '../api/userService';
 import CartItemCard from '../components/CartItemCard';
+import EmptyPage from '../components/EmptyPage';
 import { queryGetCartItems } from '../store/ReactQuery';
 
 export type cartContentType = {
@@ -36,16 +38,20 @@ export default function Cart() {
       return (
         <>
           <div className='mt-7'>
-            {data.map((items: cartContentType) => (
-              <CartItemCard
-                key={items.productId}
-                id={items.productId}
-                img={items.imageUri}
-                title={items.name}
-                count={items.quantity}
-                price={items.price}
-              />
-            ))}
+            {data.length !== 0 ? (
+              data.map((items: cartContentType) => (
+                <CartItemCard
+                  key={items.productId}
+                  id={items.productId}
+                  img={items.imageUri}
+                  title={items.name}
+                  count={items.quantity}
+                  price={items.price}
+                />
+              ))
+            ) : (
+              <EmptyPage text={'장바구니가 비었습니다.'} />
+            )}
           </div>
           <div className='flex justify-end mt-6'>
             <div className='grid grid-cols-2 text-lg'>
