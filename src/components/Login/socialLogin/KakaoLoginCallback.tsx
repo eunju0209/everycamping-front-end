@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { getUserInfo } from '../../../api/userService';
 import { setCookie } from '../../../store/cookie';
 import { useUserInfo } from '../../../store/UserInfoProvider';
+import EmptyPage from '../../EmptyPage';
 
 const KaKaoLoginCallback = () => {
   const navigate = useNavigate();
@@ -51,7 +52,11 @@ const KaKaoLoginCallback = () => {
         });
     })();
   }, []);
-  return <div>...loading</div>;
+  return (
+    <div>
+      <EmptyPage text='Loading .... ... ' />
+    </div>
+  );
 };
 
 export default KaKaoLoginCallback;
