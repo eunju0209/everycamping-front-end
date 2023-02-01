@@ -12,7 +12,6 @@ authAxios.interceptors.request.use(
    function (config) {
     if (config.headers) {
       config.headers.Authorization = getCookie('accessToken')
-      // config.headers['Content-Type'] = 'application/json'
     }
     return config;
   },
@@ -32,7 +31,7 @@ authAxios.interceptors.response.use(
     const refreshToken = getCookie('refreshToken');
 
     if (
-      error.response.status === 403 &&
+      error.response.status === 406 &&
       errorAPI.retry === undefined &&
       refreshToken
     ) {
