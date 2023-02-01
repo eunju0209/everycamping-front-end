@@ -81,16 +81,16 @@ export const stompDisConnect = () => {
 };
 
 export const getChatList = async (userEmail : string ,userType : 'CUSTOMER' | 'SELLER' | 'ADMIN') => {
-  const result = await authAxios.get(`/api/chat-rooms?userEmail=${userEmail}&userType=${userType}`)
+  const result = await authAxios.get(`${PROXY}/chat-rooms?userEmail=${userEmail}&userType=${userType}`)
   return result.data
 }
 
 export const getChatMessageList = async (chatRoomId:number) => {
-  const result = await authAxios.get(`/api/chat-rooms/${chatRoomId}/messages`);
+  const result = await authAxios.get(`${PROXY}/chat-rooms/${chatRoomId}/messages`);
   return result.data
 }
 export const deleteChatList = async (chatRoomId:number) => {
-  const result = await authAxios.delete(`/api/chat-rooms/${chatRoomId}`);
+  const result = await authAxios.delete(`${PROXY}/chat-rooms/${chatRoomId}`);
   return result.data
 }
 
