@@ -9,7 +9,7 @@ type ChatCardType = {
   chatRoomId: number;
   requesterEmail: string;
   requesteeEmail: string;
-  createdAt: string;
+  createdAt: string[];
 };
 
 const ChatCard = ({
@@ -42,7 +42,11 @@ const ChatCard = ({
         onClick={popUpDetail}
       >
         <div className='flex flex-col justify-between w-full p-1'>
-          <div>{createdAt}</div>
+          <div>{`${createdAt[0]}-${createdAt[1]
+            .toString()
+            .padStart(2, '0')}-${createdAt[2]
+            .toString()
+            .padStart(2, '0')}에 대화 생성`}</div>
           <div>
             {getCookie('LoginType') === 'user'
               ? `To : ${requesteeEmail}`
