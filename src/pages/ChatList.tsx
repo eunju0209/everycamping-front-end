@@ -10,7 +10,7 @@ type ChatListItemType = {
   chatRoomId: number;
   requesterEmail: string;
   requesteeEmail: string;
-  createdAt: string;
+  createdAt: string[];
 };
 
 const ChatList = () => {
