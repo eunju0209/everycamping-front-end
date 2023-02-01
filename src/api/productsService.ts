@@ -90,7 +90,7 @@ async function getItems(
 ): Promise<ProductType[]> {
   const res = await axios.get(
     `${PROXY}/products${
-      category ? `?category=${category}` : `?size=4&sort=${filter},desc`
+      category ? `?category=${category}` : `?size=4&sort=${filter},DESC`
     }`
   );
   return res.data.content;
