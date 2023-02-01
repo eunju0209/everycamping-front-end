@@ -1,4 +1,5 @@
 import { Dispatch, useEffect, useState } from 'react';
+import { ToastContainer } from 'react-toastify';
 import { getUserOrderDetail } from '../../api/orderService';
 import ChattingToSeller from '../Chatting/ChattingToSeller';
 import UserOrderDetailCard from './UserOrderDetailCard';
@@ -81,7 +82,6 @@ const UserOrderDetail = ({
             <UserOrderDetailCard
               key={items.id}
               itemsDetail={items}
-              popChat={popChat}
               setPopChat={setPopChat}
               setChatSellerEmail={setChatSellerEmail}
             />
@@ -129,6 +129,7 @@ const UserOrderDetail = ({
         setPopChat={setPopChat}
         sellerEmail={chatSellerEmail}
       />
+      <ToastContainer />
     </div>
   );
 };
