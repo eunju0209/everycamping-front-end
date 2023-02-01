@@ -3,13 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { patchOrderCancel, patchOrderConfirm } from '../../api/orderService';
 import { toastSuccess, toastWarn } from '../../util/reactToast';
 import { OrderItemsType } from './UserOrderDetail';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ChattingToSeller from '../Chatting/ChattingToSeller';
 
 type UserOrderDetailCardProps = {
   itemsDetail: OrderItemsType;
-  popChat: boolean;
   setPopChat: Dispatch<React.SetStateAction<boolean>>;
   setChatSellerEmail: Dispatch<React.SetStateAction<string>>;
 };
@@ -29,12 +26,10 @@ const UserOrderDetailCard = ({
     sellerEmail,
     sellerPhone,
   },
-  popChat,
   setPopChat,
   setChatSellerEmail,
 }: UserOrderDetailCardProps) => {
   const navigate = useNavigate();
-  // const [popChat, setPopChat] = useState(false);
   const [itemStatus, setItemStatus] = useState('');
   useEffect(() => {
     switchStatus();
@@ -163,7 +158,6 @@ const UserOrderDetailCard = ({
           </button>
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };
