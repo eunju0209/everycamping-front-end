@@ -15,7 +15,7 @@ export const getRoomId = async (
   requesteeEmail : string,
   requesteeUserType : 'CUSTOMER' | 'SELLER' | 'ADMIN'
 ) => {
-  const result = await axios.post('${PROXY}/chat-rooms', {
+  const result = await axios.post(`${PROXY}/chat-rooms`, {
     requesterEmail,
     requesterUserType,
     requesteeEmail,
