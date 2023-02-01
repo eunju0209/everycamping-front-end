@@ -1,5 +1,6 @@
 import { Dispatch, useEffect, useState } from 'react';
 import { getUserOrderDetail } from '../../api/orderService';
+import ChattingToSeller from '../Chatting/ChattingToSeller';
 import UserOrderDetailCard from './UserOrderDetailCard';
 
 export type OrderItemsType = {
@@ -44,6 +45,8 @@ const UserOrderDetail = ({
 }: UserOrderDetailProps) => {
   const [orderItems, setOrderItems] = useState<OrderItemsType[]>([]);
   const [orderDetail, setOrderDetail] = useState<OrderDetailType>();
+  const [popChat, setPopChat] = useState(false);
+  const [chatSellerEmail, setChatSellerEmail] = useState('');
 
   useEffect(() => {
     if (popDetail) {
@@ -75,7 +78,13 @@ const UserOrderDetail = ({
         </h3>
         <div>
           {orderItems.map((items) => (
-            <UserOrderDetailCard key={items.id} itemsDetail={items} />
+            <UserOrderDetailCard
+              key={items.id}
+              itemsDetail={items}
+              popChat={popChat}
+              setPopChat={setPopChat}
+              setChatSellerEmail={setChatSellerEmail}
+            />
           ))}
         </div>
         <div className='divider'></div>
@@ -115,6 +124,11 @@ const UserOrderDetail = ({
           </button>
         </div>
       </div>
+      <ChattingToSeller
+        popChat={popChat}
+        setPopChat={setPopChat}
+        sellerEmail={chatSellerEmail}
+      />
     </div>
   );
 };

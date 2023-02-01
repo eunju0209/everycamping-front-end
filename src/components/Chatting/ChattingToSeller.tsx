@@ -12,9 +12,9 @@ import { useUserInfo } from '../../store/UserInfoProvider';
 import { userTypeConvert } from '../../util/userTypeConvert';
 
 type ChattingToSellerProps = {
-  popDetail: boolean;
+  popChat: boolean;
   sellerEmail: string;
-  setPopDetail: React.Dispatch<React.SetStateAction<boolean>>;
+  setPopChat: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export type messageDataType = {
@@ -23,9 +23,9 @@ export type messageDataType = {
 };
 
 const ChattingToSeller = ({
-  popDetail,
+  popChat,
   sellerEmail,
-  setPopDetail,
+  setPopChat,
 }: ChattingToSellerProps) => {
   const messageBoxRef = useRef<HTMLDivElement>(null);
   const [message, setMassage] = useState<messageDataType[]>([]);
@@ -34,7 +34,7 @@ const ChattingToSeller = ({
   const { userInfo } = useUserInfo();
 
   useEffect(() => {
-    if (popDetail) {
+    if (popChat) {
       getRoomId(userInfo.email, 'CUSTOMER', sellerEmail, 'SELLER').then(
         (res) => {
           stompConnect(res.chatRoomId, setMassage);
@@ -45,7 +45,7 @@ const ChattingToSeller = ({
         }
       );
     }
-  }, [popDetail]);
+  }, [popChat]);
 
   const handleMessageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewMessage(event.target.value);
@@ -68,14 +68,14 @@ const ChattingToSeller = ({
   }, [message]);
 
   const popUpDetail = () => {
-    setPopDetail(false);
+    setPopChat(false);
     stompDisConnect();
   };
 
   return (
     <div
       className={`modal ${
-        popDetail ? 'visible opacity-100 pointer-events-auto' : ''
+        popChat ? 'visible opacity-100 pointer-events-auto' : ''
       } `}
     >
       <div className='flex flex-col justify-end w-96 h-600px bg-white rounded-lg border border-gray-300'>
