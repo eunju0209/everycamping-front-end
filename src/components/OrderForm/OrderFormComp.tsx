@@ -43,7 +43,11 @@ const OrderFormComp = () => {
       target: { name, value },
     } = event;
     if (name === 'user') {
-      setIsUser((prev) => !prev);
+      setOrderInfo((prev) => ({
+        ...prev,
+        name: userInfo.nickName,
+        phone: userInfo.phoneNumber,
+      }));
     }
     setOrderInfo((prev) => ({
       ...prev,
@@ -73,7 +77,6 @@ const OrderFormComp = () => {
   }, []);
 
   const formSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log(orderInfo, orderItems, orderProductFormList);
     e.preventDefault();
     try {
       if (orderInfo.address === '') {
@@ -122,7 +125,7 @@ const OrderFormComp = () => {
               name='name'
               placeholder='이름'
               onChange={(e) => onChange(e)}
-              value={isUser ? userInfo.nickName : orderInfo.name}
+              value={orderInfo.name}
               required
               autoComplete='off'
             />
@@ -139,7 +142,7 @@ const OrderFormComp = () => {
             name='phone'
             type='tel'
             placeholder='연락처'
-            value={isUser ? userInfo.phoneNumber : orderInfo.phone}
+            value={orderInfo.phone}
             required
             autoComplete='off'
             pattern='[0,1]{3}-[0-9]{4}-[0-9]{4}'
