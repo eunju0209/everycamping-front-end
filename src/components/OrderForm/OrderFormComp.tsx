@@ -23,7 +23,6 @@ const OrderFormComp = () => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const orderDetailRef = useRef<HTMLDivElement>(null);
   const { userInfo } = useUserInfo();
-  const [isUser, setIsUser] = useState(false);
   const [orderInfo, setOrderInfo] = useState<OrderInfo>({
     name: '',
     phone: '',
@@ -83,8 +82,8 @@ const OrderFormComp = () => {
         return toastWarn('주소를 입력하세요');
       }
       await postOrders({
-        name: isUser ? userInfo.nickName : orderInfo.name,
-        phone: isUser ? userInfo.phoneNumber : orderInfo.phone,
+        name: orderInfo.name,
+        phone: orderInfo.phone,
         address: orderInfo.address,
         request: orderInfo.request,
         orderProductFormList,
@@ -110,7 +109,6 @@ const OrderFormComp = () => {
               type='checkbox'
               className='checkbox mr-1'
               name='user'
-              checked={isUser}
               onChange={(e) => onChange(e)}
             />
             <span>주문자와 일치</span>
