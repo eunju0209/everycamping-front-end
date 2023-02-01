@@ -109,7 +109,7 @@ export async function getInfiniteItems(
     `${PROXY}/products${
       category
         ? `?category=${category}&page=${page}&size=4&sort=${filter},DESC`
-        : `?size=4&sort=${filter},DESC`
+        : `?size=8&sort=${filter},DESC`
     }`
   );
   return res.data.content;
