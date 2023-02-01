@@ -4,8 +4,7 @@ import { ProductDetailType } from '../components/Product/ProductInfo';
 import { NewProductType } from '../components/Product/ProductForm';
 import { authAxios } from './authAxios';
 
-export const PROXY =
-  window.location.hostname === 'localhost' ? '/api' : '/proxy';
+export const PROXY = window.location.hostname === 'localhost' ? '/api' : '/api';
 
 export async function getProducts(
   category?: string,
