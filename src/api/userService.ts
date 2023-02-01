@@ -40,6 +40,7 @@ export const postUserLogin = async (loginInfo: loginInfoType) => {
   });
 }
 
+
 export const getUserNewToken = async () => {
   try {
     const result = await axios.post(`${PROXY}/customers/reissue`, {
@@ -69,7 +70,8 @@ export const getUserLogOut = async () => {
   removeCookie('LoginType');
   removeCookie('accessToken');
   removeCookie('refreshToken');
-};
+  console.log('로그 아웃 성공')
+}
 export const getUserInfo = async () => {
   try {
     const result = await authAxios.get(`${PROXY}/customers/info`);
