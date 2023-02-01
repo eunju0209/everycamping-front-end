@@ -1,3 +1,4 @@
+import ProductInfiniteList from '../components/Product/ProductInfiniteList';
 import ProductList from '../components/Product/ProductList';
 
 type ProductsProps = {
@@ -10,7 +11,7 @@ export default function Products({ category }: ProductsProps) {
       {category && (
         <h1 className='text-4xl mb-8 text-center uppercase'>{category}</h1>
       )}
-      <ProductList category={category} filter='createdAt' />
+      <ProductInfiniteList category={category} filter='createdAt' />
     </>
   );
 }
