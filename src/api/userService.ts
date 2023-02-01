@@ -134,7 +134,6 @@ export const getSellerNewToken = async () => {
       path:'/'
     });
 
-
   } catch (error) {
     console.log('토큰 재발급 실패');
     location.assign('http://localhost:5173/login');
