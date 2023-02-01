@@ -31,7 +31,7 @@ authAxios.interceptors.response.use(
     const refreshToken = getCookie('refreshToken');
 
     if (
-      error.response.status === 406 &&
+      (error.response.status === 406 || error.response.status === 401) &&
       errorAPI.retry === undefined &&
       refreshToken
     ) {
