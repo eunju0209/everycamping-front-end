@@ -5,7 +5,12 @@ export const getAdminSellerList = async () => {
     return result.data.content
 }
 export const putAdminSellerList = async ( id : number) => {
-    const result = await authAxios.put(`/api/admins/seller`, 
-        JSON.stringify([id])
+    await authAxios.put(`/api/admins/seller`,
+        JSON.stringify([id]), {
+            headers:
+            {
+                'Content-Type': 'application/json'
+            }
+    }
     )
 }
