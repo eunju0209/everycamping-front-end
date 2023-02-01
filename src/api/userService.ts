@@ -59,7 +59,7 @@ export const getUserNewToken = async () => {
     console.log('토큰 재발급 성공')
   } catch (error) {
     console.log('토큰 재발급 실패');
-    location.assign(`${new URL(document.location.toString()).origin}/login`);
+    // location.assign(`${new URL(document.location.toString()).origin}/login`);
     removeCookie('LoginType');
     removeCookie('accessToken');
     removeCookie('refreshToken');
