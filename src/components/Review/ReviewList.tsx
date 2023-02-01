@@ -27,24 +27,34 @@ export default function ReviewList({ productId, customerId }: ReviewListProps) {
     { staleTime: 1000 * 60 * 5 }
   );
 
+  const reviewListFunc = () => {
+    if (reviews) {
+      return (
+        <>
+          {reviews.length !== 0 ? (
+            <ul className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3'>
+              {reviews.map((review) => (
+                <ReviewCard
+                  key={review.id}
+                  review={review}
+                  customerId={customerId}
+                />
+              ))}
+            </ul>
+          ) : (
+            <EmptyPage text='리뷰가 없습니다.' />
+          )}
+        </>
+      );
+    }
+  };
+
   return (
     <div className='max-w-screen-2xl m-auto px-5'>
       <div className='relative mb-5'>
         <h2 className='text-3xl font-semibold text-center'>리뷰</h2>
       </div>
-      <ul className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3'>
-        {reviews ? (
-          reviews.map((review) => (
-            <ReviewCard
-              key={review.id}
-              review={review}
-              customerId={customerId}
-            />
-          ))
-        ) : (
-          <EmptyPage text='리뷰가 없습니다.' />
-        )}
-      </ul>
+      {reviewListFunc()}
     </div>
   );
 }
