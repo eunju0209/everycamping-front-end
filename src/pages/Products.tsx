@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import ProductInfiniteList from '../components/Product/ProductInfiniteList';
-import ProductList from '../components/Product/ProductList';
 
 type ProductsProps = {
   category?: 'ALL' | 'TENT' | 'COOK' | 'ACCESSORY';
@@ -8,6 +7,10 @@ type ProductsProps = {
 
 export default function Products({ category }: ProductsProps) {
   const [filter, setFilter] = useState('createdAt');
+
+  useEffect(() => {
+    setFilter('createdAt');
+  }, [category]);
 
   return (
     <div className='max-w-screen-2xl m-auto px-5'>
