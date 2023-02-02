@@ -13,8 +13,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target:
-          'http://ec2-43-200-2-48.ap-northeast-2.compute.amazonaws.com',
+        target: 'http://everycamping.shop',
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/api/, ''),
