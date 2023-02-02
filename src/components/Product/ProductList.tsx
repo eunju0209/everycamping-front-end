@@ -13,7 +13,7 @@ export type ProductType = {
 };
 
 type ProductsProps = {
-  category?: 'ALL' | 'TENT' | 'COOK' | 'ACCESSORY';
+  category?: string;
   filter?: string;
   keyword?: string;
   seller?: boolean;

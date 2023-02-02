@@ -16,7 +16,9 @@ export async function getProducts(
   if (seller) {
     return getSellerItems();
   }
-  return keyword || tag ? search(keyword, tag) : getItems(category, filter);
+  return keyword || tag
+    ? search(category, keyword, tag)
+    : getItems(category, filter);
 }
 
 export async function getProductDetail(id: string): Promise<ProductDetailType> {
@@ -76,9 +78,21 @@ export async function deleteProduct(productId: string) {
   return authAxios.delete(`${PROXY}/manage/products/${productId}`);
 }
 
-async function search(keyword?: string, tag?: string): Promise<ProductType[]> {
+async function search(
+  category?: string,
+  keyword?: string,
+  tag?: string
+): Promise<ProductType[]> {
+  if (tag) {
+    const res = await axios.get(`${PROXY}/products?tags=${tag}`);
+    return res.data.content;
+  }
   const res = await axios.get(
-    `${PROXY}/products?${keyword ? `name=${keyword}` : `tags=${tag}`}`
+    `${PROXY}/products?${
+      category === 'ALL'
+        ? `name=${keyword}`
+        : `category=${category}&name=${keyword}`
+    }`
   );
   return res.data.content;
 }
