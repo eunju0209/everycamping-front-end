@@ -30,7 +30,6 @@ import ChatList from './pages/ChatList';
 import KaKaoLoginCallback from './components/Login/socialLogin/KakaoLoginCallback';
 import SearchTag from './pages/SearchTag';
 
-
 const router = createBrowserRouter([
   {
     path: '/',
@@ -43,7 +42,7 @@ const router = createBrowserRouter([
       { path: 'tent', element: <Products category='TENT' /> },
       { path: 'cook', element: <Products category='COOK' /> },
       { path: 'accessory', element: <Products category='ACCESSORY' /> },
-      { path: 'products/:keyword', element: <Search /> },
+      { path: 'products/:category/:keyword', element: <Search /> },
       { path: 'products/tag/:tag', element: <SearchTag /> },
       { path: 'products/detail/:id', element: <ProductDetail /> },
       { path: 'products/new', element: <NewProduct /> },
