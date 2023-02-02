@@ -29,13 +29,13 @@ export default function ReviewCard({ review, customerId }: ReviewCardProps) {
         {customerId && (
           <div>
             <button
-              className='btn btn-sm mr-2'
+              className='btn btn-sm mr-2 mt-2'
               onClick={() => deleteReviewMutation.mutate({ id })}
             >
               삭제하기
             </button>
             <button
-              className='btn btn-sm'
+              className='btn btn-sm mt-2'
               onClick={() => navigate(`/reviews/update/${id}`)}
             >
               수정하기
