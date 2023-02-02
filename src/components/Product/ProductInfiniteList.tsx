@@ -42,10 +42,10 @@ export default function ProductInfiniteList({
       .then((data) => {
         setProducts(data);
       });
-  }, [category]);
+  }, [category, filter]);
 
   return (
-    <div className='max-w-screen-2xl m-auto px-5'>
+    <>
       <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
         {products &&
           products.map((product) => (
@@ -57,6 +57,6 @@ export default function ProductInfiniteList({
           <ProductsLoading />
         </div>
       )}
-    </div>
+    </>
   );
 }
