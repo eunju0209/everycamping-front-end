@@ -68,9 +68,12 @@ export default function ProductInfo({ productId }: ProductInfoProps) {
             <p className='text-lg md:text-xl mb-3'>
               {product?.price.toLocaleString()}원
             </p>
-            <span className='text-sm mb-3 text-gray-500'>
+            <p className='text-sm mb-1 text-primary font-semibold'>
+              평균평점: {product?.avgScore}
+            </p>
+            <p className='text-sm mb-3 text-gray-500 font-semibold'>
               판매자: {product?.sellerName}
-            </span>
+            </p>
             {getCookie('LoginType') === 'user' && (
               <>
                 <div className='btn-group mb-8 block'>
