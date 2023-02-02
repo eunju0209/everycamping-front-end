@@ -35,13 +35,13 @@ export default function HeaderSearch() {
       <input
         type='text'
         placeholder='search'
-        className='w-full h-10 px-2 outline-none border rounded-l-lg'
+        className='w-full h-10 px-2 outline-none border md:rounded-l-lg'
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
       <button
         type='submit'
-        className='flex items-center justify-center text-xl w-12 h-10 rounded-r-lg bg-base-200 text-primary'
+        className='flex items-center justify-center text-xl w-12 h-10 md:rounded-r-lg bg-base-200 text-primary'
       >
         <BiSearch />
       </button>
