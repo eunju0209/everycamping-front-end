@@ -67,10 +67,10 @@ export default function ReviewUpdateForm({ reviewId }: ReviewUpdateFormProps) {
           type='number'
           name='score'
           value={updatedreview.score ?? ''}
-          min='0'
+          min='1'
           max='5'
-          step={0.5}
-          placeholder='0 ~ 5'
+          step={1}
+          placeholder='1 ~ 5'
           className='input bg-white w-full'
           required
           onChange={handleChange}

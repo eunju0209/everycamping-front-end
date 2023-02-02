@@ -19,7 +19,7 @@ export default function ReviewForm() {
     state: { productId },
   } = useLocation() as RouteState;
   const [image, setImage] = useState<File>();
-  const [review, setReview] = useState({ score: 0, text: '' });
+  const [review, setReview] = useState({ score: 3, text: '' });
   const { addReviewMutation } = useReviews();
 
   const handleChange = (
@@ -59,10 +59,10 @@ export default function ReviewForm() {
           type='number'
           name='score'
           value={review.score ?? ''}
-          min='0'
+          min='1'
           max='5'
-          step={0.5}
-          placeholder='0 ~ 5'
+          step={1}
+          placeholder='1 ~ 5'
           className='input bg-white w-full'
           required
           onChange={handleChange}
