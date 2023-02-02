@@ -106,11 +106,7 @@ export async function getInfiniteItems(
   page?: number
 ): Promise<ProductType[]> {
   const res = await axios.get(
-    `${PROXY}/products${
-      category
-        ? `?category=${category}&page=${page}&size=8&sort=${filter},DESC`
-        : `?size=4&sort=${filter},DESC`
-    }`
+    `${PROXY}/products?category=${category}&page=${page}&size=8&sort=${filter},DESC`
   );
   return res.data.content;
 }

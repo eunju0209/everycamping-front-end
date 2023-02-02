@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
 import { getProducts } from '../../api/productsService';
+import { useUserInfo } from '../../store/UserInfoProvider';
 import ProductCard from './ProductCard';
 import ProductsError from './ProductsError';
 import ProductsLoading from './ProductsLoading';
@@ -36,6 +38,12 @@ export default function ProductList({
     () => getProducts(category, filter, keyword, seller, tag),
     { staleTime: 1000 * 60 }
   );
+  const [sellerId, setSellerId] = useState(0);
+  const { userInfo } = useUserInfo();
+
+  useEffect(() => {
+    userInfo.type === 'seller' && setSellerId(userInfo.customerId);
+  }, [sellerId]);
 
   if (isLoading) return <ProductsLoading />;
   if (error) return <ProductsError />;

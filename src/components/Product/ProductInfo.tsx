@@ -16,6 +16,7 @@ export type ProductDetailType = {
   avgScore: number;
   description: string;
   stock: number;
+  sellerName: string;
 };
 
 type ProductInfoProps = {
@@ -67,6 +68,9 @@ export default function ProductInfo({ productId }: ProductInfoProps) {
             <p className='text-lg md:text-xl mb-3'>
               {product?.price.toLocaleString()}원
             </p>
+            <span className='text-sm mb-3 text-gray-500'>
+              판매자: {product?.sellerName}
+            </span>
             {getCookie('LoginType') === 'user' && (
               <>
                 <div className='btn-group mb-8 block'>

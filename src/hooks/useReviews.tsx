@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { addNewReview, deleteReview } from '../api/reviewService';
+import { addNewReview, deleteReview, updateReview } from '../api/reviewService';
 import { NewReviewType } from '../components/Review/ReviewForm';
 
 export default function useReviews() {
@@ -22,6 +22,23 @@ export default function useReviews() {
     }
   );
 
+  const updateReviewMutation = useMutation(
+    ({
+      reviewId,
+      updatedreview,
+      image,
+    }: {
+      reviewId: string;
+      updatedreview: NewReviewType;
+      image?: File;
+    }) => updateReview(reviewId, updatedreview, image),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['reviews']);
+      },
+    }
+  );
+
   const deleteReviewMutation = useMutation(
     ({ id }: { id: string }) => deleteReview(id),
     {
@@ -31,5 +48,5 @@ export default function useReviews() {
     }
   );
 
-  return { addReviewMutation, deleteReviewMutation };
+  return { addReviewMutation, deleteReviewMutation, updateReviewMutation };
 }

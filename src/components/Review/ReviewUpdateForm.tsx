@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getReviewDetail, updateReview } from '../../api/reviewService';
+import useReviews from '../../hooks/useReviews';
 
 type ReviewUpdateFormProps = {
   reviewId: string;
@@ -19,6 +20,7 @@ export default function ReviewUpdateForm({ reviewId }: ReviewUpdateFormProps) {
     score: 0,
     text: '',
   });
+  const { updateReviewMutation } = useReviews();
 
   useEffect(() => {
     reviewDetail &&
@@ -42,8 +44,12 @@ export default function ReviewUpdateForm({ reviewId }: ReviewUpdateFormProps) {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    updateReview(reviewId, updatedreview, image) //
-      .then(() => navigate(-1));
+    updateReviewMutation.mutate(
+      { reviewId, updatedreview, image },
+      {
+        onSuccess: () => navigate(-1),
+      }
+    );
   };
 
   return (
