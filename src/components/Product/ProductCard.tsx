@@ -13,7 +13,7 @@ export default function ProductCard({ product, seller }: ProductCardProps) {
   const { deleteProductMutation } = useProducts();
 
   return (
-    <li className='card bg-base-100 shadow-xl'>
+    <li className='card bg-base-100 min-h-350px shadow-xl'>
       <figure
         onClick={() => navigate(`/products/detail/${id}`, { state: { id } })}
         className='hover:cursor-pointer hover:brightness-110 transition-all bg-white'

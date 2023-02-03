@@ -20,7 +20,7 @@ export default function Slider() {
       infiniteLoop={true}
       autoPlay
       dynamicHeight={false}
-      className='relative -top-10'
+      className='relative min-h-610px -top-10'
     >
       {banners.map((banner, idx) => (
         <div key={idx} className='w-full max-h-700px'>

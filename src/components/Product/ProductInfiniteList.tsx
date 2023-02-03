@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import useInfiniteScroll from 'react-infinite-scroll-hook';
 import { getInfiniteItems } from '../../api/productsService';
 import ProductCard from './ProductCard';
-import ProductCardEmpty from './ProductCardEmpty';
 import { ProductType } from './ProductList';
 import ProductsLoading from './ProductsLoading';
 
@@ -48,15 +47,12 @@ export default function ProductInfiniteList({
   return (
     <>
       <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
-        {products ? (
+        {products &&
           products.map((product) => (
             <ProductCard key={product.id} product={product} />
-          ))
-        ) : (
-          <ProductCardEmpty />
-        )}
+          ))}
       </ul>
-      {!isLast && (
+      {products.length === 0 && (
         <div ref={infiniteRef} className='mt-10'>
           <ProductsLoading />
         </div>

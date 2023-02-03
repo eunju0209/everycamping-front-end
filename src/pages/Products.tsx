@@ -13,7 +13,7 @@ export default function Products({ category }: ProductsProps) {
   }, [category]);
 
   return (
-    <div className='max-w-screen-2xl m-auto px-5'>
+    <div className='max-w-screen-2xl min-h-800px m-auto px-5'>
       {category && (
         <h1 className='text-4xl mb-8 text-center uppercase'>{category}</h1>
       )}
